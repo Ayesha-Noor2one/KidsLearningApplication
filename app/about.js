@@ -5,7 +5,7 @@ import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-ico
 const AboutScreen = () => {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>🧠 Kids Learning App</Text>
+      <Text style={styles.title}>🧠 Kids Learning Application</Text>
       <Text style={styles.subtitle}>Learning made fun, colorful, and magical!</Text>
 
       <View style={styles.section}>
