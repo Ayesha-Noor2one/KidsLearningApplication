@@ -11,8 +11,10 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { findByEmail, updateParent } from './database';
 import { useRouter } from "expo-router";
+import { send, EmailJSResponseStatus } from "@emailjs/react-native";
+import { findByEmail } from "./database";
+
 
 const EditProfileScreen = () => {
   const router = useRouter();
@@ -45,19 +47,57 @@ const EditProfileScreen = () => {
     }
   };
 
+  const generateOTP = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  };
+
   const handleInputChange = (setter) => (value) => setter(value);
+const sendEmail = async () => {
+    const otp = generateOTP();
+    const otpGeneratedAt = Date.now();
+
+    try {
+      await send(
+        "service_qmep2dp",
+        "template_7haipk9",
+        {
+          name,
+          email,
+          message: "This is static message",
+          otp,
+        },
+        {
+          publicKey: "ucV02B72O55XZL_uf"
+        }
+      );
+
+      return { otp, otpGeneratedAt };
+    } catch (err) {
+      if (err instanceof EmailJSResponseStatus) {
+        console.warn("EmailJS error", err);
+      }
+      return null;
+    }
+  };
 
   const handleSave = async () => {
     try {
       const payload = { id, name, email, password };
-      const res = await updateParent(payload);
-      if (res.changes === 1) {
-        Alert.alert("Success", "Profile updated successfully!", [
-          { text: "OK", onPress: () => router.push("/Settings") }
-        ]);
-      } else {
-        Alert.alert("Error", "No changes made.");
+
+      const find = await findByEmail(payload.email);
+      if (find?.id !== payload.id) {
+        Alert.alert("Email already exists");
+        return;
       }
+
+      const result = await sendEmail();
+      if (!result) throw new Error("Failed to send OTP");
+
+      const { otp, otpGeneratedAt } = result;
+      router.push({
+        pathname: "/updateVerification",
+        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload), isEdit:true },
+      });
     } catch (error) {
       console.error('Error updating profile:', error);
       Alert.alert("Error", "Failed to update profile.");

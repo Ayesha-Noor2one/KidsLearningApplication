@@ -52,7 +52,7 @@ export default function SignUp() {
 
     try {
       await send(
-        "service_m3ctqjp",
+        "service_qmep2dp",
         "template_7haipk9",
         {
           name,
@@ -61,7 +61,7 @@ export default function SignUp() {
           otp,
         },
         {
-          publicKey: "ucV02B72O55XZL_uf",
+          publicKey: "ucV02B72O55XZL_uf"
         }
       );
 
@@ -91,7 +91,7 @@ export default function SignUp() {
       const { otp, otpGeneratedAt } = result;
       router.push({
         pathname: "/OtpVerificationScreen",
-        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload) },
+        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload),isEdit:false },
       });
     } catch (error) {
       console.error("Error during sign-up:", error);

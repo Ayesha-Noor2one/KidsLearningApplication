@@ -5,7 +5,7 @@ let db; // This will hold the reference to the SQLite database
 // Function to initialize the database
 export const initDatabase = async () => {
   if (!db) {
-    db = await SQLite.openDatabaseAsync('kidsLearningApplication.db'); // Open or create the database
+    db = await SQLite.openDatabaseAsync('kidAppFinals.db'); // Open or create the database
     await setupDatabase(db); // Set up the database (create tables, insert data, etc.)
   }
   return db; // Return the database reference
@@ -21,7 +21,7 @@ const setupDatabase = async (db) => {
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        age INTEGER NOT NULL,
+        age INTEGER NULL,
         email TEXT NOT NULL,
         password TEXT NOT NULL,
         role TEXT NOT NULL,
