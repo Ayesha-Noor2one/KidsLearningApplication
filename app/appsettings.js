@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, Dimensions, TouchableOpacity } from 
 import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
-import bgMusic from '../assets/sounds/GuppyGoopBigBadFish.mp3';
+import bgMusic from '../assets/sounds/a.mp3';
 import * as Notifications from 'expo-notifications';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
