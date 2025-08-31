@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { hasDone } from './database';
-const countingPlay = 'CountingPlay';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicon
-const countingLearn = 'CountingLearn';
+import { Ionicons } from '@expo/vector-icons';
 
+const SHAPES_PLAY = 'GuessShape';
+const SHAPES_LEARN = 'LearnShapes';
 
-export default function CountingScreen() {
+export default function ShapesScreen() {
   const router = useRouter();
-  const [countPlayDone, setCountPlayDone] = useState(0);
-  const [countLearnDone, setCountLearnDone] = useState(0);
+  const [shapePlayDone, setShapePlayDone] = useState(0);
+  const [shapeLearnDone, setShapeLearnDone] = useState(0);
 
   const checkIfDone = async () => {
     try {
       const kidId = await AsyncStorage.getItem('kidId');
-      const res = await hasDone(kidId, countingPlay);
-      const res2 = await hasDone(kidId, countingLearn);
+      const res = await hasDone(kidId, SHAPES_PLAY);
+      const res2 = await hasDone(kidId, SHAPES_LEARN);
       if (res?.isDone === 1) {
-        setCountPlayDone(1);
+        setShapePlayDone(1);
       }
       if (res2?.isDone === 1) {
-        setCountLearnDone(1);
+        setShapeLearnDone(1);
       }
     } catch (error) {
       console.error('Error checking if done:', error);
@@ -33,53 +32,44 @@ export default function CountingScreen() {
   useEffect(() => {
     checkIfDone();
   }, []);
+
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
         {/* Back Button */}
-        <TouchableOpacity style={styles.backButton} onPress={() => router.push('/learnandfun')}>
-          <FontAwesome name="arrow-left" size={24} color="white" />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push('/learnandfun')}
+        >
+          <Ionicons name="arrow-back" size={28} color="white" />
         </TouchableOpacity>
 
         <Text style={styles.title}>Shapes</Text>
 
         <View style={styles.cardContainer}>
+          {/* Learn Button */}
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}
             onPress={() => router.push('/learnShapes')}
           >
-
             <Text style={styles.cardTitle}>
               Learn
-              {countLearnDone === 1 ? (
+              {shapeLearnDone === 1 ? (
                 <Ionicons name="checkmark-circle" size={30} color="green" style={styles.tickIcon} />
               ) : (
                 <Ionicons name="hourglass" size={30} color="white" style={styles.tickIcon} />
               )}
             </Text>
-
           </TouchableOpacity>
 
-          {/* <TouchableOpacity
-            style={[styles.card, styles.pinkCard]}
-            onPress={() => router.push('/CPlay')}
-          >
-            <Text style={styles.cardTitle}>
-              Play
-              {countPlayDone === 1 ? (
-                <Ionicons name="checkmark-circle" size={30} color="green" style={styles.tickIcon} />
-              ) : (
-                <Ionicons name="hourglass" size={30} color="white" style={styles.tickIcon} />
-              )}
-            </Text>
-          </TouchableOpacity> */}
+          {/* Play Button */}
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push('/GuessShape')}
           >
             <Text style={styles.cardTitle}>
               Play
-              {countPlayDone === 1 ? (
+              {shapePlayDone === 1 ? (
                 <Ionicons name="checkmark-circle" size={30} color="green" style={styles.tickIcon} />
               ) : (
                 <Ionicons name="hourglass" size={30} color="white" style={styles.tickIcon} />
@@ -94,12 +84,12 @@ export default function CountingScreen() {
 
 const styles = StyleSheet.create({
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 40,
     left: 20,
-    backgroundColor: '#4B5563',
-    padding: 10,
-    borderRadius: 50,
+    backgroundColor: "#00000088",
+    padding: 8,
+    borderRadius: 25,
     zIndex: 1,
   },
   background: {

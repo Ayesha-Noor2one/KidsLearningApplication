@@ -4,10 +4,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { hasDone } from './database';
-const countingPlay = 'GuessNumber';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicon
-const countingLearn = 'CountingLearn';
+import { Ionicons } from '@expo/vector-icons';
 
+const countingPlay = 'GuessNumber';
+const countingLearn = 'CountingLearn';
 
 export default function CountingScreen() {
   const router = useRouter();
@@ -19,12 +19,8 @@ export default function CountingScreen() {
       const kidId = await AsyncStorage.getItem('kidId');
       const res = await hasDone(kidId, countingPlay);
       const res2 = await hasDone(kidId, countingLearn);
-      if (res?.isDone === 1) {
-        setCountPlayDone(1);
-      }
-      if (res2?.isDone === 1) {
-        setCountLearnDone(1);
-      }
+      if (res?.isDone === 1) setCountPlayDone(1);
+      if (res2?.isDone === 1) setCountLearnDone(1);
     } catch (error) {
       console.error('Error checking if done:', error);
     }
@@ -33,6 +29,7 @@ export default function CountingScreen() {
   useEffect(() => {
     checkIfDone();
   }, []);
+
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
@@ -44,11 +41,11 @@ export default function CountingScreen() {
         <Text style={styles.title}>Counting</Text>
 
         <View style={styles.cardContainer}>
+          {/* Learn Button */}
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}
             onPress={() => router.push('/CLearn')}
           >
-
             <Text style={styles.cardTitle}>
               Learn
               {countLearnDone === 1 ? (
@@ -57,22 +54,9 @@ export default function CountingScreen() {
                 <Ionicons name="hourglass" size={30} color="white" style={styles.tickIcon} />
               )}
             </Text>
-
           </TouchableOpacity>
 
-          {/* <TouchableOpacity
-            style={[styles.card, styles.pinkCard]}
-            onPress={() => router.push('/CPlay')}
-          >
-            <Text style={styles.cardTitle}>
-              Play
-              {countPlayDone === 1 ? (
-                <Ionicons name="checkmark-circle" size={30} color="green" style={styles.tickIcon} />
-              ) : (
-                <Ionicons name="hourglass" size={30} color="white" style={styles.tickIcon} />
-              )}
-            </Text>
-          </TouchableOpacity> */}
+          {/* Play Button */}
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push('/GuessNumber')}

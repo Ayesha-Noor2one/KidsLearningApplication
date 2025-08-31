@@ -28,6 +28,15 @@ const setupDatabase = async (db) => {
         UNIQUE (email, role, name)
       );
 
+      CREATE TABLE IF NOT EXISTS UsageLimit (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            childId INTEGER,
+            parentId INTEGER,
+            allowedHours INTEGER,
+            usedMinutes INTEGER,
+            lastDate TEXT
+        );
+
       CREATE TABLE IF NOT EXISTS user_pictures (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -62,10 +71,10 @@ export const findById = async (id) => {
 
   try {
 
-const  result = await db.getFirstAsync(
-        `SELECT * FROM users WHERE id = ?`,
-        [id]);
-    
+    const result = await db.getFirstAsync(
+      `SELECT * FROM users WHERE id = ?`,
+      [id]);
+
     if (result) {
       return result; // User found, return the user data
     } else {
@@ -343,5 +352,89 @@ export const findAllByEmail = async (email) => {
   } catch (error) {
     console.error('Error during find:', error);
     return null;
+  }
+};
+
+const findAllUageByParentId = async (parentId) => {
+
+  try {
+
+    const result = await db.getAllAsync(
+      `SELECT * FROM UsageLimit WHERE parentId = ? `,
+      [parentId]
+    );
+
+    if (result) {
+      return result; // User found, return the user data
+    } else {
+      return null; // No user found with the provided credentials
+    }
+  } catch (error) {
+    console.error('Error during find all usage limit:', error);
+    return null;
+  }
+};
+
+
+export const loadUsageLimit = async (userEmail, parentId) => {
+  const allowedHours = 24;     // default hours
+  const today = new Date().toDateString();
+
+  const children = await findAllByEmail(userEmail);
+  const childIds = Array.isArray(children) && children.length > 0
+    ? children.map(child => child.id)
+    : [];
+
+  const usageChildren = await findAllUageByParentId(parentId);
+  const usageChildIds = Array.isArray(usageChildren) && usageChildren.length > 0
+    ? usageChildren.map(child => child.id)
+    : [];
+
+  if (childIds.length != usageChildIds.length) {
+    childIds.forEach((childId) => {
+      db.runAsync(
+        `INSERT OR REPLACE INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
+         VALUES (?, ?, ?, 0, ?);`,
+        [childId, parentId, allowedHours, today]
+      );
+    });
+  }
+
+
+};
+
+export const getUsageTime = async (parentId) => {
+
+  try {
+
+    const result = await db.getFirstAsync(
+      `SELECT allowedHours 
+   FROM UsageLimit 
+   WHERE parentId = ? 
+   ORDER BY id DESC 
+   LIMIT 1 `,
+      [parentId]
+    );
+
+    if (result) {
+      return result; // User found, return the user data
+    } else {
+      return null; // No user found with the provided credentials
+    }
+  } catch (error) {
+    console.error('Error during getUsageTime:', error);
+    return null;
+  }
+};
+
+export const updateUsageTime = async (parentId, allowedHours) => {
+  try {
+    const result = await db.runAsync(
+      `UPDATE UsageLimit SET allowedHours = ? WHERE parentId = ?`,
+      [allowedHours,parentId]
+    );
+    return result;
+  } catch (error) {
+    console.error('Error updated user:', error);
   }
 };

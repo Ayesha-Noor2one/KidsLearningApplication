@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { findByEmail } from './database';
+import { findByEmail,loadUsageLimit } from './database';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
@@ -31,9 +31,23 @@ const Settings = () => {
         console.error('Error loading profile data:', error);
       }
     };
+     const loadAppUsageLimit = async () => {
+      try {
+        const storedEmail = await AsyncStorage.getItem('userEmail');
+        const parentId = await AsyncStorage.getItem('parentId'); 
+        await loadUsageLimit(storedEmail,parentId);
+      } catch (error) {
+        console.error('Error loading app usage limit for parent:', error);
+      }
+    };
 
     loadProfile();
+    loadAppUsageLimit();
   }, []);
+
+
+
+
 
   return (
     <ImageBackground

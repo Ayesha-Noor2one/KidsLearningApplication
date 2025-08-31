@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { useRouter, Link } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function FruitVegeScreen() {
   const router = useRouter();
@@ -9,13 +9,13 @@ export default function FruitVegeScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        <Link href="/StartScreen" style={styles.homeButton}>
-          <FontAwesome name="home" size={24} color="white" />
-        </Link>
-
-        <Link href="/Settings" style={styles.settingsButton}>
-          <FontAwesome name="cog" size={24} color="white" />
-        </Link>
+        {/* Back Icon */}
+        <TouchableOpacity
+          style={styles.backIcon}
+          onPress={() => router.push('/learnandfun')}
+        >
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
 
         <Text style={styles.title}>Fruit and Vegetables</Text>
 
@@ -33,6 +33,14 @@ export default function FruitVegeScreen() {
           >
             <Text style={styles.cardTitle}>Vegetables</Text>
           </TouchableOpacity>
+
+          {/* Play Button */}
+          <TouchableOpacity
+            style={[styles.card, styles.pinkCard]}
+            onPress={() => router.push('/Guessfv')}
+          >
+            <Text style={styles.cardTitle}>Play</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ImageBackground>
@@ -40,21 +48,14 @@ export default function FruitVegeScreen() {
 }
 
 const styles = StyleSheet.create({
-  homeButton: {
+  backIcon: {
     position: 'absolute',
     top: 40,
     left: 20,
-    backgroundColor: '#4B5563',
-    padding: 10,
-    borderRadius: 50,
-  },
-  settingsButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
-    backgroundColor: '#4B5563',
-    padding: 10,
-    borderRadius: 50,
+    zIndex: 10,
+    backgroundColor: '#00000088',
+    padding: 8,
+    borderRadius: 25,
   },
   background: {
     flex: 1,
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center', // Center vertically
+    justifyContent: 'center',
     marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

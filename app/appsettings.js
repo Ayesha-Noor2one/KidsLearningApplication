@@ -4,7 +4,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
 import bgMusic from '../assets/sounds/a.mp3';
-import * as Notifications from 'expo-notifications';
+import { getUsageTime,updateUsageTime  } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const BORDER_COLOR = '#8B0000'; // Dark red
@@ -13,30 +14,25 @@ const CARD_BG = '#FFD700';      // Gold
 export default function SettingsScreen() {
     const router = useRouter();
     const [musicOn, setMusicOn] = useState(false);
-    const [notificationsOn, setNotificationsOn] = useState(true);
-    const [usageLimit, setUsageLimit] = useState(30);
+    const [usageLimit, setUsageLimit] = useState(0);
     const soundRef = useRef(new Audio.Sound());
     const [soundLoaded, setSoundLoaded] = useState(false);
 
     // Load & start music on mount
     useEffect(() => {
 
-        Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+     const loadUsageLimitTime = async () => {
+      try {
+        const parentId = await AsyncStorage.getItem('parentId');
+        const res = await getUsageTime(parentId);
+        setUsageLimit(res.allowedHours)
+      } catch (error) {
+        console.error('Error loading profile data:', error);
+      }
+    };
+    loadUsageLimitTime();
 
-        const askNotificationPermission = async () => {
-            const { status } = await Notifications.requestPermissionsAsync();
-            if (status !== 'granted') {
-                alert('Notification permissions not granted!');
-            }
-        };
 
-        askNotificationPermission();
 
 
 
@@ -58,6 +54,9 @@ export default function SettingsScreen() {
             isMounted = false;
             soundRef.current.unloadAsync();
         };
+
+        
+
     }, []);
 
     // Play / pause based on musicOn
@@ -76,43 +75,42 @@ export default function SettingsScreen() {
         })();
     }, [musicOn, soundLoaded]);
 
-   const toggleMusic = async () => {
-  if (soundLoaded) setMusicOn(prev => !prev);
+    const toggleMusic = async () => {
+        if (soundLoaded) setMusicOn(prev => !prev);
+    };
+    
+    
 
-  const { status } = await Notifications.getPermissionsAsync();
-  if (status !== 'granted') {
-    alert('Notification permission not granted');
-    return;
-  }
-
+const increaseLimit = async () => {
   try {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: '🎵 khota!',
-        body: 'Let’s turn the music back on and play!',
-        sound: 'default',
-      },
-      trigger: {
-    type: 'date',
-    timestamp: new Date(Date.now() + 10 * 1000), // 20 seconds from now
-  },
-    });
+    const parentId = await AsyncStorage.getItem('parentId');
+    const newLimit = usageLimit + 5;
+
+    const res = await updateUsageTime(parentId, newLimit); // ✅ use await
+
+    if (res && res.changes > 0) {
+      setUsageLimit(newLimit);
+    }
   } catch (error) {
-    console.warn('Notification error:', error);
+    console.error("Error increaseLimit limit:", error);
+  }
+};
+
+const decreaseLimit = async () => {
+  try {
+    const parentId = await AsyncStorage.getItem('parentId');
+    const newLimit = Math.max(0, usageLimit - 5);
+
+    const res = await updateUsageTime(parentId, newLimit); // ✅ use await
+    if (res && res.changes > 0) {
+      setUsageLimit(newLimit);
+    }
+  } catch (error) {
+    console.error("Error decreaseLimit limit:", error);
   }
 };
 
 
-
-    async function requestPermission() {
-        const { status } = await Notifications.requestPermissionsAsync();
-        if (status !== 'granted') {
-            alert('Permission not granted!');
-        }
-    }
-    const toggleNotifications = () => setNotificationsOn(n => !n);
-    const increaseLimit = () => setUsageLimit(u => u + 5);
-    const decreaseLimit = () => setUsageLimit(u => Math.max(0, u - 5));
 
     return (
         <View style={styles.container}>
@@ -138,32 +136,14 @@ export default function SettingsScreen() {
                     </Pressable>
                 </View>
 
-                {/* Notifications */}
-                <View style={styles.row}>
-                    <Text style={styles.label}>Notifications</Text>
-                    <Pressable
-                        style={[styles.toggleButton, notificationsOn ? styles.on : styles.off]}
-                        onPress={toggleNotifications}
-                    >
-                        <FontAwesome
-                            name={notificationsOn ? 'bell' : 'bell-slash'}
-                            size={20}
-                            color="#fff"
-                        />
-                        <Text style={styles.toggleText}>
-                            {notificationsOn ? 'On' : 'Off'}
-                        </Text>
-                    </Pressable>
-                </View>
-
                 {/* App Usage Limit */}
                 <View style={styles.row}>
-                    <Text style={styles.label}>App Usage Limit</Text>
+                    <Text style={styles.label}>App Timer</Text>
                     <View style={styles.usageContainer}>
                         <Pressable style={styles.limitButton} onPress={decreaseLimit}>
                             <Text style={styles.limitText}>–</Text>
                         </Pressable>
-                        <Text style={styles.usageText}>{usageLimit} min</Text>
+                        <Text style={styles.usageText}>{usageLimit} hours/day</Text>
                         <Pressable style={styles.limitButton} onPress={increaseLimit}>
                             <Text style={styles.limitText}>+</Text>
                         </Pressable>

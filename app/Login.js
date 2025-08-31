@@ -35,6 +35,7 @@ export default function Login() {
 
       if (res?.email === username && res?.role === 'PARENT') {
         await AsyncStorage.setItem('userEmail', username);
+        await AsyncStorage.setItem('parentId', JSON.stringify(res.id));
         router.push("/Settings");
         return;
       }

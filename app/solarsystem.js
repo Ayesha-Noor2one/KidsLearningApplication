@@ -1,166 +1,166 @@
-import React, { useState, useRef } from 'react';
-import { View, Pressable, StyleSheet, Dimensions, Image, Text } from 'react-native';
-import { Audio } from 'expo-av';
-import GestureRecognizer from 'react-native-swipe-gestures';
-import { Ionicons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
-import { useFonts } from 'expo-font';
+// SolarSystemScreen.js
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { hasDone } from "./database";
 
-const { width } = Dimensions.get('window');
+const SOLAR_PLAY = "GuessSolarSystem";
+const SOLAR_LEARN = "LearnSolarSystem";
 
-const planets = [
-  {
-    name: 'Mercury',
-    relatedImage: require('../assets/images/mercury.jpg'),
-    sound: require('../assets/sounds/mercury.wav'),
-    description: 'Mercury is the closest planet to the Sun. It’s small, rocky, and super hot!',
-  },
-  {
-    name: 'Venus',
-    relatedImage: require('../assets/images/venus.jpg'),
-    sound: require('../assets/sounds/venus.wav'),
-    description: 'Venus is covered in thick clouds and is even hotter than Mercury!',
-  },
-  {
-    name: 'Earth',
-    relatedImage: require('../assets/images/earth.jpg'),
-    sound: require('../assets/sounds/earth.wav'),
-    description: 'Earth is our home! It’s the only planet we know with life and oceans.',
-  },
-  {
-    name: 'Mars',
-    relatedImage: require('../assets/images/mars.webp'),
-    sound: require('../assets/sounds/mars.wav'),
-    description: 'Mars is called the Red Planet. It has the tallest volcano in the solar system!',
-  },
-  {
-    name: 'Jupiter',
-    relatedImage: require('../assets/images/jupitor.jpg'),
-    sound: require('../assets/sounds/jupiter.wav'),
-    description: 'Jupiter is the biggest planet! It’s a gas giant with a giant red storm.',
-  },
-  {
-    name: 'Saturn',
-    relatedImage: require('../assets/images/saturn.jpg'),
-    sound: require('../assets/sounds/saturn.wav'),
-    description: 'Saturn has beautiful rings made of ice and rock. It’s a gas giant too!',
-  },
-  {
-    name: 'Uranus',
-    relatedImage: require('../assets/images/uranus.jpg'),
-    sound: require('../assets/sounds/uranus.wav'),
-    description: 'Uranus spins on its side and has faint rings. It’s a chilly planet!',
-  },
-  {
-    name: 'Neptune',
-    relatedImage: require('../assets/images/neptune.jpg'),
-    sound: require('../assets/sounds/neptune.wav'),
-    description: 'Neptune is deep blue, windy, and super far from the Sun!',
-  },
-];
+export default function SolarSystemScreen() {
+  const router = useRouter();
+  const [solarPlayDone, setSolarPlayDone] = useState(0);
+  const [solarLearnDone, setSolarLearnDone] = useState(0);
 
-export default function SolarSystemFlashcards() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const [fontsLoaded] = useFonts({
-    'FredokaOne': require('../assets/fonts/Fredokaone-Regular.ttf'),
-  });
-
-  if (!fontsLoaded) return null;
-
-  const playSound = async (soundFile) => {
-    const { sound } = await Audio.Sound.createAsync(soundFile);
-    await sound.playAsync();
-  };
-
-  const onCardPress = () => {
-    playSound(planets[currentIndex].sound);
-  };
-
-  const onSwipeLeft = () => {
-    if (currentIndex < planets.length - 1) {
-      const newIndex = currentIndex + 1;
-      setCurrentIndex(newIndex);
-      playSound(planets[newIndex].sound);
+  const checkIfDone = async () => {
+    try {
+      const kidId = await AsyncStorage.getItem("kidId");
+      const res = await hasDone(kidId, SOLAR_PLAY);
+      const res2 = await hasDone(kidId, SOLAR_LEARN);
+      if (res?.isDone === 1) setSolarPlayDone(1);
+      if (res2?.isDone === 1) setSolarLearnDone(1);
+    } catch (error) {
+      console.error("Error checking if done:", error);
     }
   };
 
-  const onSwipeRight = () => {
-    if (currentIndex > 0) {
-      const newIndex = currentIndex - 1;
-      setCurrentIndex(newIndex);
-      playSound(planets[newIndex].sound);
-    }
-  };
+  useEffect(() => {
+    checkIfDone();
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <GestureRecognizer onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
-        <Pressable onPress={onCardPress}>
-          <View style={styles.card}>
-            <Text style={styles.planetText}>{planets[currentIndex].name}</Text>
-            <View style={styles.relatedCard}>
-              <Image source={planets[currentIndex].relatedImage} style={styles.relatedImage} />
-              <Text style={styles.description}>{planets[currentIndex].description}</Text>
-            </View>
-          </View>
-        </Pressable>
-      </GestureRecognizer>
+    <ImageBackground
+      source={require("../assets/images/mou.jpg")}
+      style={styles.background}
+    >
+      <SafeAreaView style={styles.container}>
+        {/* Back Button */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push("/learnandfun")}
+        >
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
 
-      <Pressable onPress={onSwipeRight} style={styles.arrowLeft} disabled={currentIndex === 0}>
-        <Ionicons name="arrow-back-circle" size={50} color={currentIndex === 0 ? '#ccc' : '#4b87ff'} />
-      </Pressable>
+        <Text style={styles.title}>Solar System</Text>
 
-      <Pressable onPress={onSwipeLeft} style={styles.arrowRight} disabled={currentIndex === planets.length - 1}>
-        <Ionicons name="arrow-forward-circle" size={50} color={currentIndex === planets.length - 1 ? '#ccc' : '#4b87ff'} />
-      </Pressable>
+        <View style={styles.cardContainer}>
+          {/* Learn Button */}
+          <TouchableOpacity
+            style={[styles.card, styles.blueCard]}
+            onPress={() => router.push("/learnsolarsystem")}
+          >
+            <Text style={styles.cardTitle}>
+              Learn{" "}
+              {solarLearnDone === 1 ? (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={30}
+                  color="green"
+                  style={styles.tickIcon}
+                />
+              ) : (
+                <Ionicons
+                  name="hourglass"
+                  size={30}
+                  color="white"
+                  style={styles.tickIcon}
+                />
+              )}
+            </Text>
+          </TouchableOpacity>
 
-      <Link href="/StartScreen" style={styles.homeIcon}>
-        <Ionicons name="home" size={40} color="#4b87ff" />
-      </Link>
-    </View>
+          {/* Play Button */}
+          <TouchableOpacity
+            style={[styles.card, styles.pinkCard]}
+            onPress={() => router.push("/GuessSolarSystem")}
+          >
+            <Text style={styles.cardTitle}>
+              Play{" "}
+              {solarPlayDone === 1 ? (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={30}
+                  color="green"
+                  style={styles.tickIcon}
+                />
+              ) : (
+                <Ionicons
+                  name="hourglass"
+                  size={30}
+                  color="white"
+                  style={styles.tickIcon}
+                />
+              )}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  backButton: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+    backgroundColor: "#00000088",
+    padding: 8,
+    borderRadius: 25,
+    zIndex: 1,
+  },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#001f3f', // space vibes
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 35,
+    color: "#FFD700",
+    fontWeight: "bold",
+    marginBottom: 20,
+    textShadowColor: "black",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
+  },
+  cardContainer: {
+    width: "80%",
   },
   card: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 60,
-    paddingBottom: 60,
+    borderRadius: 30,
+    paddingVertical: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  planetText: {
-    fontSize: 65,
-    color: '#ffd700',
-    fontFamily: 'FredokaOne',
-    fontWeight: 'bold',
+  blueCard: { backgroundColor: "#3B82F6" },
+  pinkCard: { backgroundColor: "#F472B6" },
+  cardTitle: {
+    color: "white",
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
   },
-  relatedCard: {
-    width: width * 0.8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 25,
-    marginBottom: 25,
+  tickIcon: {
+    marginLeft: 10,
   },
-  relatedImage: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'contain',
-  },
-  description: {
-    fontSize: 26,
-    color: '#ffffff',
-    marginTop: 20,
-    textAlign: 'center',
-    fontFamily: 'FredokaOne',
-  },
-  arrowLeft: { position: 'absolute', left: 20, bottom: '10%' },
-  arrowRight: { position: 'absolute', right: 20, bottom: '10%' },
-  homeIcon: { position: 'absolute', top: 20, right: 20 },
 });
