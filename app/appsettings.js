@@ -112,7 +112,8 @@ export default function SettingsScreen() {
                         <TextInput
                             style={styles.input}
                             keyboardType="numeric"
-                            value={usageLimit.toString()}
+                          value={usageLimit !== null ? usageLimit.toString() : ""}
+
                             onChangeText={(text) => {
                                 const minutes = parseInt(text) || 0;
                                 setUsageLimit(minutes);

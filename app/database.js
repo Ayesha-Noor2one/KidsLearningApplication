@@ -377,7 +377,13 @@ const findAllUageByParentId = async (parentId) => {
 
 
 export const insertKidUsageLimit = async (parentId, childId) => {
-  const allowedHours = 1440;     // default hours = 24 hours = 1440 minutes
+  const existing =await getUsageTime(parentId).allowedHours;
+  let allowedHours = 0;
+  if(existing && existing>0){
+    allowedHours = existing;
+  }else{
+    allowedHours = 1
+  }
   const today = new Date().toISOString().split("T")[0];
 
   try {
