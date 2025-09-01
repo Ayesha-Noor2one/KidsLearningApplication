@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { insertUser, findAllByEmail, update, deleteUser } from './database';
+import { insertUser, findAllByEmail, update, deleteUser, insertKidUsageLimit } from './database';
 import { Ionicons } from '@expo/vector-icons';
 
 const showToast = (message) => {
@@ -59,6 +59,7 @@ const ChildrenForm = () => {
 
   const handleAddOrEdit = async () => {
     const userEmail = await AsyncStorage.getItem('userEmail');
+    const parentId = await AsyncStorage.getItem('parentId');
 
     if (editingIndex === null && children.length >= 5) {
       showToast('You can only add up to 5 children.');
@@ -109,7 +110,13 @@ const ChildrenForm = () => {
           role: 'kid',
         };
         const res = await insertUser(payload);
-        if (res.changes === 1) fetchProfileData();
+        if (res.changes === 1) {
+          const insertedId = res.lastInsertRowId;
+          const res2 = await insertKidUsageLimit(parentId,insertedId);
+          if (res2.changes === 1) {
+            fetchProfileData();
+          }
+        }
       } catch (error) {
         console.error('Error adding child:', error);
       }

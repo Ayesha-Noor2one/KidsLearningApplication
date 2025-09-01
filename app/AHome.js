@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React, { useState, useEffect } from 'react';
-import { initDatabase } from './database';
+import { initDatabase,truncateTest } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter, Link } from "expo-router";
 import { UsageTimerProvider } from "./UsageTimerContext";
@@ -13,6 +13,7 @@ export default function Home() {
   useEffect(() => {
     const initialize = async () => {
       await initDatabase(); 
+      await truncateTest();
       const userEmail = await AsyncStorage.getItem('userEmail');
       if(userEmail && userEmail.role == 'kid'){
         router.push("/StartScreen");

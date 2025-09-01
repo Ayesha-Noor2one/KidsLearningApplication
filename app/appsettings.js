@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
 import bgMusic from '../assets/sounds/a.mp3';
-import { getUsageTime,updateUsageTime  } from './database';
+import { getUsageTime, updateParentUsageTime } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -21,16 +21,16 @@ export default function SettingsScreen() {
     // Load & start music on mount
     useEffect(() => {
 
-     const loadUsageLimitTime = async () => {
-      try {
-        const parentId = await AsyncStorage.getItem('parentId');
-        const res = await getUsageTime(parentId);
-        setUsageLimit(res.allowedHours)
-      } catch (error) {
-        console.error('Error loading profile data:', error);
-      }
-    };
-    loadUsageLimitTime();
+        const loadUsageLimitTime = async () => {
+            try {
+                const parentId = await AsyncStorage.getItem('parentId');
+                const res = await getUsageTime(parentId);
+                setUsageLimit(res.allowedHours)
+            } catch (error) {
+                console.error('Error loading profile data:', error);
+            }
+        };
+        loadUsageLimitTime();
 
 
 
@@ -55,7 +55,7 @@ export default function SettingsScreen() {
             soundRef.current.unloadAsync();
         };
 
-        
+
 
     }, []);
 
@@ -78,38 +78,6 @@ export default function SettingsScreen() {
     const toggleMusic = async () => {
         if (soundLoaded) setMusicOn(prev => !prev);
     };
-    
-    
-
-const increaseLimit = async () => {
-  try {
-    const parentId = await AsyncStorage.getItem('parentId');
-    const newLimit = usageLimit + 1;
-
-    const res = await updateUsageTime(parentId, newLimit); // ✅ use await
-
-    if (res && res.changes > 0) {
-      setUsageLimit(newLimit);
-    }
-  } catch (error) {
-    console.error("Error increaseLimit limit:", error);
-  }
-};
-
-const decreaseLimit = async () => {
-  try {
-    const parentId = await AsyncStorage.getItem('parentId');
-    const newLimit = Math.max(0, usageLimit - 1);
-
-    const res = await updateUsageTime(parentId, newLimit); // ✅ use await
-    if (res && res.changes > 0) {
-      setUsageLimit(newLimit);
-    }
-  } catch (error) {
-    console.error("Error decreaseLimit limit:", error);
-  }
-};
-
 
 
     return (
@@ -136,19 +104,35 @@ const decreaseLimit = async () => {
                     </Pressable>
                 </View>
 
+
                 {/* App Usage Limit */}
                 <View style={styles.row}>
                     <Text style={styles.label}>App Timer</Text>
                     <View style={styles.usageContainer}>
-                        <Pressable style={styles.limitButton} onPress={decreaseLimit}>
-                            <Text style={styles.limitText}>–</Text>
-                        </Pressable>
-                        <Text style={styles.usageText}>{usageLimit} minutes/day</Text>
-                        <Pressable style={styles.limitButton} onPress={increaseLimit}>
-                            <Text style={styles.limitText}>+</Text>
-                        </Pressable>
+                        <TextInput
+                            style={styles.input}
+                            keyboardType="numeric"
+                            value={usageLimit.toString()}
+                            onChangeText={(text) => {
+                                const minutes = parseInt(text) || 0;
+                                setUsageLimit(minutes);
+                            }}
+                            onEndEditing={async () => {
+                                try {
+                                    const parentId = await AsyncStorage.getItem('parentId');
+                                    const res = await updateParentUsageTime(parentId, usageLimit);
+                                    if (!res || res.changes === 0) {
+                                        console.warn("No update in DB");
+                                    }
+                                } catch (error) {
+                                    console.error("Error updating limit:", error);
+                                }
+                            }}
+                        />
+                        <Text style={styles.usageText}>minutes/day</Text>
                     </View>
                 </View>
+
             </View>
         </View>
     );
@@ -168,6 +152,18 @@ const styles = StyleSheet.create({
         left: 20,
         zIndex: 2,
     },
+    input: {
+  width: 80,
+  height: 40,
+  borderWidth: 2,
+  borderColor: BORDER_COLOR,
+  borderRadius: 10,
+  textAlign: "center",
+  fontSize: 18,
+  backgroundColor: "#fff",
+  marginHorizontal: 8,
+},
+
     header: {
         fontSize: 32,
         fontWeight: 'bold',

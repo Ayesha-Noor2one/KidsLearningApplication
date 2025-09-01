@@ -376,29 +376,42 @@ const findAllUageByParentId = async (parentId) => {
 };
 
 
-export const loadUsageLimit = async (userEmail, parentId) => {
-  const allowedHours = 24;     // default hours
-  const today = new Date().toDateString();
+export const insertKidUsageLimit = async (parentId, childId) => {
+  const allowedHours = 1440;     // default hours = 24 hours = 1440 minutes
+  const today = new Date().toISOString().split("T")[0];
 
-  const children = await findAllByEmail(userEmail);
-  const childIds = Array.isArray(children) && children.length > 0
-    ? children.map(child => child.id)
-    : [];
-
-  const usageChildren = await findAllUageByParentId(parentId);
-  const usageChildIds = Array.isArray(usageChildren) && usageChildren.length > 0
-    ? usageChildren.map(child => child.id)
-    : [];
-
-  if (childIds.length != usageChildIds.length) {
-    childIds.forEach((childId) => {
-      db.runAsync(
-        `INSERT OR REPLACE INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
+  try {
+    const result = await db.runAsync(
+      `INSERT INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
          VALUES (?, ?, ?, 0, ?);`,
-        [childId, parentId, allowedHours, today]
-      );
-    });
+      [childId, parentId, allowedHours, today]
+    );
+    return result;
+  } catch (error) {
+    console.error('Error inserting insertKidUsageLimit:', error);
   }
+
+
+
+  // const children = await findAllByEmail(userEmail);
+  // const childIds = Array.isArray(children) && children.length > 0
+  //   ? children.map(child => child.id)
+  //   : [];
+
+  // const usageChildren = await findAllUageByParentId(parentId);
+  // const usageChildIds = Array.isArray(usageChildren) && usageChildren.length > 0
+  //   ? usageChildren.map(child => child.id)
+  //   : [];
+
+  // if (childIds.length != usageChildIds.length) {
+  //   childIds.forEach((childId) => {
+  //     db.runAsync(
+  //       `INSERT OR REPLACE INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
+  //        VALUES (?, ?, ?, 0, ?);`,
+  //       [childId, parentId, allowedHours, today]
+  //     );
+  //   });
+  // }
 
 
 };
@@ -427,7 +440,19 @@ export const getUsageTime = async (parentId) => {
   }
 };
 
-export const updateUsageTime = async (childId) => {
+export const updateParentUsageTime = async (parentId,newLimit) => {
+  try {
+    const result = await db.runAsync(
+      `UPDATE UsageLimit SET allowedHours = ? WHERE parentId = ?`,
+      [newLimit,parentId]
+    );
+    return result;
+  } catch (error) {
+    console.error('Error updated child use  time:', error);
+  }
+};
+
+export const updateKidUsageTime = async (childId) => {
   try {
     const result = await db.runAsync(
       `UPDATE UsageLimit SET usedMinutes = usedMinutes+1 WHERE childId = ?`,
@@ -480,5 +505,74 @@ export const getKidUsage = async (kidId) => {
   } catch (error) {
     console.error('Error during getUsageOfKid:', error);
     return null;
+  }
+};
+
+export const truncateTest = async () => {
+  try {
+    // const result = await db.runAsync(`delete from UsageLimit ;`);
+
+    // const result2 = await db.getAllAsync(
+    //   `SELECT * FROM UsageLimit`
+    // );
+    // console.log('truncate result is...');
+
+    // console.log(result2);
+
+  } catch (error) {
+    console.error('Error truncateTest:', error);
+  }
+
+
+
+  // const children = await findAllByEmail(userEmail);
+  // const childIds = Array.isArray(children) && children.length > 0
+  //   ? children.map(child => child.id)
+  //   : [];
+
+  // const usageChildren = await findAllUageByParentId(parentId);
+  // const usageChildIds = Array.isArray(usageChildren) && usageChildren.length > 0
+  //   ? usageChildren.map(child => child.id)
+  //   : [];
+
+  // if (childIds.length != usageChildIds.length) {
+  //   childIds.forEach((childId) => {
+  //     db.runAsync(
+  //       `INSERT OR REPLACE INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
+  //        VALUES (?, ?, ?, 0, ?);`,
+  //       [childId, parentId, allowedHours, today]
+  //     );
+  //   });
+  // }
+
+
+};
+
+export const resetUsageTime = async (childId) => {
+  try {
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+
+    // get current row for child
+    const row = await db.getFirstAsync(
+      `SELECT * FROM UsageLimit WHERE childId = ? `,
+      [childId]
+    );
+
+    if (row) {
+      if (row.lastDate !== today) {
+        // date changed → reset usage
+        await db.runAsync(
+          `UPDATE UsageLimit 
+       SET usedMinutes = 0, lastDate = ? 
+       WHERE childId = ? `,
+          [today, childId]
+        );
+        console.log("✅ Reset usage for new day");
+      } else {
+        console.log("👉 Same day, keep tracking usage");
+      }
+    }
+  } catch (error) {
+    console.error('Error updated child use  time:', error);
   }
 };

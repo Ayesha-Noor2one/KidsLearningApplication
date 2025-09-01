@@ -29,12 +29,12 @@ export default function Login() {
       const res = await loginUser(username, password, kidName);
       if (res?.email === username && res?.role === 'kid') {
         const limit = await getKidUsage(res.id);
+        console.log(limit);
+        
         if(limit.usedMinutes >= limit.allowedHours){
           Alert.alert("Time is up for today!.");
           return;
         }
-        
-        
         await AsyncStorage.setItem('userEmail', username);
         await AsyncStorage.setItem('kidName', kidName);
         await AsyncStorage.setItem('kidId', JSON.stringify(res.id));
