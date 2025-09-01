@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from "react-native";
 import { useRouter, Link } from "expo-router";
-import { loginUser, findImageByEmail } from './database';
+import { loginUser, getKidUsageTime, getKidUsage } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Login() {
   const router = useRouter();
+  const [timeLeft, setTimeLeft] = useState(0);
+
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +28,13 @@ export default function Login() {
     try {
       const res = await loginUser(username, password, kidName);
       if (res?.email === username && res?.role === 'kid') {
+        const limit = await getKidUsage(res.id);
+        if(limit.usedMinutes >= limit.allowedHours){
+          Alert.alert("Time is up for today!.");
+          return;
+        }
+        
+        
         await AsyncStorage.setItem('userEmail', username);
         await AsyncStorage.setItem('kidName', kidName);
         await AsyncStorage.setItem('kidId', JSON.stringify(res.id));

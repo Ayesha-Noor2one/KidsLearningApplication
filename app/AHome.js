@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { initDatabase } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter, Link } from "expo-router";
+import { UsageTimerProvider } from "./UsageTimerContext";
 
 export default function Home() {
   const [items, setItems] = useState([]);

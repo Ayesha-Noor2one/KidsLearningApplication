@@ -84,7 +84,7 @@ export default function SettingsScreen() {
 const increaseLimit = async () => {
   try {
     const parentId = await AsyncStorage.getItem('parentId');
-    const newLimit = usageLimit + 5;
+    const newLimit = usageLimit + 1;
 
     const res = await updateUsageTime(parentId, newLimit); // ✅ use await
 
@@ -99,7 +99,7 @@ const increaseLimit = async () => {
 const decreaseLimit = async () => {
   try {
     const parentId = await AsyncStorage.getItem('parentId');
-    const newLimit = Math.max(0, usageLimit - 5);
+    const newLimit = Math.max(0, usageLimit - 1);
 
     const res = await updateUsageTime(parentId, newLimit); // ✅ use await
     if (res && res.changes > 0) {
@@ -143,7 +143,7 @@ const decreaseLimit = async () => {
                         <Pressable style={styles.limitButton} onPress={decreaseLimit}>
                             <Text style={styles.limitText}>–</Text>
                         </Pressable>
-                        <Text style={styles.usageText}>{usageLimit} hours/day</Text>
+                        <Text style={styles.usageText}>{usageLimit} minutes/day</Text>
                         <Pressable style={styles.limitButton} onPress={increaseLimit}>
                             <Text style={styles.limitText}>+</Text>
                         </Pressable>

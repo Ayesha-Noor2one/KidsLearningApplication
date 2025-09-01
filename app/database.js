@@ -427,14 +427,58 @@ export const getUsageTime = async (parentId) => {
   }
 };
 
-export const updateUsageTime = async (parentId, allowedHours) => {
+export const updateUsageTime = async (childId) => {
   try {
     const result = await db.runAsync(
-      `UPDATE UsageLimit SET allowedHours = ? WHERE parentId = ?`,
-      [allowedHours,parentId]
+      `UPDATE UsageLimit SET usedMinutes = usedMinutes+1 WHERE childId = ?`,
+      [childId]
     );
     return result;
   } catch (error) {
-    console.error('Error updated user:', error);
+    console.error('Error updated child use  time:', error);
+  }
+};
+
+
+export const getKidUsageTime = async (kidId) => {
+
+  try {
+
+    const result = await db.getFirstAsync(
+      `SELECT allowedHours 
+   FROM UsageLimit 
+   WHERE childId = ?`,
+      [kidId]
+    );
+
+    if (result) {
+      return result; // User found, return the user data
+    } else {
+      return null; // No user found with the provided credentials
+    }
+  } catch (error) {
+    console.error('Error during getUsageTime:', error);
+    return null;
+  }
+};
+
+export const getKidUsage = async (kidId) => {
+
+  try {
+    const result = await db.getFirstAsync(
+      `SELECT * 
+   FROM UsageLimit 
+   WHERE childId = ?`,
+      [kidId]
+    );
+
+    if (result) {
+      return result; // User found, return the user data
+    } else {
+      return null; // No user found with the provided credentials
+    }
+  } catch (error) {
+    console.error('Error during getUsageOfKid:', error);
+    return null;
   }
 };

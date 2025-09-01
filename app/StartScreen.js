@@ -10,6 +10,8 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ add this import
+
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
@@ -29,7 +31,14 @@ export default function HomeScreen() {
 
       <ScrollView contentContainerStyle={styles.overlay}>
         {/* Back Button */}
-        <TouchableOpacity style={styles.backButton} onPress={() => router.push('/AHome')}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={async () => {
+            await AsyncStorage.removeItem("kidId"); // ✅ remove kidId
+            console.log("🚪 Kid logged out");
+            router.replace("/Login"); // ✅ redirect to login
+          }}
+        >
           <FontAwesome name="arrow-left" size={24} color="white" />
         </TouchableOpacity>
 
