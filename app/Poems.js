@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { View, FlatList, Text, Image, TouchableOpacity, StyleSheet, Modal, Pressable } from 'react-native';
 import { Audio } from 'expo-av';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const poems = [
   { id: '1', title: 'Twinkle Twinkle Little Star', image: require('../assets/images/twinkle.jpg'), audio: require('../assets/sounds/twinkle.mp3') },
@@ -22,6 +24,7 @@ const poems = [
 export default function PoemsListScreen() {
   const [selectedPoem, setSelectedPoem] = useState(null);
   const sound = useRef(new Audio.Sound());
+  const router = useRouter();
 
   const playAudio = async (audioFile) => {
     try {
@@ -45,11 +48,16 @@ export default function PoemsListScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/poemstory')}>
+        <Ionicons name="arrow-back" size={28} color="black" />
+      </TouchableOpacity>
+
       <FlatList
         data={poems}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 20, paddingTop: 50 }}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.card} onPress={() => openPoem(item)}>
             <Image source={item.image} style={styles.cardImage} />
@@ -79,6 +87,18 @@ export default function PoemsListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', padding: 10 },
+
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 15,
+    zIndex: 10,
+    backgroundColor: '#fce4ec',
+    padding: 8,
+    borderRadius: 50,
+    elevation: 3,
+  },
+
   card: {
     flex: 1,
     margin: 10,

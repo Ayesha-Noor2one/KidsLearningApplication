@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, Image, ImageBackground, Text, Alert,
-  Pressable
- } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, StyleSheet, Dimensions, Image, ImageBackground, Text, Alert, Pressable } from 'react-native';
 import { Audio } from 'expo-av';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +7,8 @@ import { Link } from 'expo-router';
 import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { markDone } from './database';
-const { width, height } = Dimensions.get('window');
+
+const { width } = Dimensions.get('window');
 
 const numbers = [
   { number: '1', relatedImage: require('../assets/images/1.jpg'), sound: require('../assets/sounds/one.wav') },
@@ -26,16 +25,15 @@ const numbers = [
 
 export default function CountingFlashcards() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [completed, setCompleted] = useState(new Array(numbers.length).fill(false)); // Track completion of each number
+  const [completed, setCompleted] = useState(new Array(numbers.length).fill(false));
   const scrollViewRef = useRef(null);
-const screenName = 'CountingLearn';
+  const screenName = 'CountingLearn';
+
   const [fontsLoaded] = useFonts({
     'FredokaOne': require('../assets/fonts/Fredokaone-Regular.ttf'),
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  if (!fontsLoaded) return null;
 
   const playSound = async (soundFile) => {
     const { sound } = await Audio.Sound.createAsync(soundFile);
@@ -63,7 +61,6 @@ const screenName = 'CountingLearn';
   };
 
   const markCompleted = (index) => {
-    // Mark the current number as completed
     const updatedCompleted = [...completed];
     updatedCompleted[index] = true;
     setCompleted(updatedCompleted);
@@ -79,17 +76,14 @@ const screenName = 'CountingLearn';
     }
   };
 
-  // Check if all numbers are completed
-  const checkAllCompleted = async(completedList) => {    
+  const checkAllCompleted = async (completedList) => {
     if (completedList.every((status) => status)) {
-      
-       const kidId = await AsyncStorage.getItem('kidId');
-        await markDone(kidId, screenName, 1);
-        showCompletedMessage(); // All numbers are completed
+      const kidId = await AsyncStorage.getItem('kidId');
+      await markDone(kidId, screenName, 1);
+      showCompletedMessage();
     }
   };
 
-  // Show completed message
   const showCompletedMessage = () => {
     Alert.alert('Congratulations!', 'You have learned all the numbers!');
   };
@@ -114,10 +108,7 @@ const screenName = 'CountingLearn';
           <Ionicons name="arrow-forward-circle" size={50} color={currentIndex === numbers.length - 1 ? '#ccc' : '#ff6666'} />
         </Pressable>
 
-        <Link href="/StartScreen" style={styles.homeIcon}>
-          <Ionicons name="home" size={40} color="#ff6666" />
-        </Link>
-        <Link href="/counting" style={styles.arrowButton}>
+        <Link href="/Counting" style={styles.backButton}>
           <Ionicons name="arrow-back" size={40} color="#ff6666" />
         </Link>
       </ImageBackground>
@@ -134,6 +125,5 @@ const styles = StyleSheet.create({
   relatedImage: { width: '90%', height: '150%', resizeMode: 'contain' },
   arrowLeft: { position: 'absolute', left: 20, bottom: '25%' },
   arrowRight: { position: 'absolute', right: 20, bottom: '25%' },
-  homeIcon: { position: 'absolute', top: 20, right: 20 },
-  arrowButton: { position: 'absolute', top: 20, left: 20 },
+  backButton: { position: 'absolute', top: 20, left: 20 },
 });

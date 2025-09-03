@@ -9,9 +9,9 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  Alert,
 } from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ add this import
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
@@ -20,6 +20,29 @@ const BUTTON_SIZE = width * 0.42;
 
 export default function HomeScreen() {
   const router = useRouter();
+
+  const handleBackPress = () => {
+    Alert.alert(
+      "Exit",
+      "Do you want to exit?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("❌ Exit canceled"),
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: async () => {
+            await AsyncStorage.removeItem("kidId");
+            console.log("🚪 Kid logged out");
+            router.replace("/Login");
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
   return (
     <ImageBackground
@@ -33,11 +56,7 @@ export default function HomeScreen() {
         {/* Back Button */}
         <TouchableOpacity
           style={styles.backButton}
-          onPress={async () => {
-            await AsyncStorage.removeItem("kidId"); // ✅ remove kidId
-            console.log("🚪 Kid logged out");
-            router.replace("/Login"); // ✅ redirect to login
-          }}
+          onPress={handleBackPress}
         >
           <FontAwesome name="arrow-left" size={24} color="white" />
         </TouchableOpacity>
@@ -72,14 +91,6 @@ export default function HomeScreen() {
             <Text style={styles.circleButtonText}>Play Time</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          style={[styles.circleButton, styles.bottomButton, { backgroundColor: '#FFD700' }]}
-          onPress={() => router.push('/rewards')}
-        >
-          <FontAwesome name="star" size={30} color="#FFFFFF" />
-          <Text style={styles.circleButtonText}>View Rewards</Text>
-        </TouchableOpacity>
       </ScrollView>
     </ImageBackground>
   );
@@ -154,9 +165,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 6,
     padding: 10,
-  },
-  bottomButton: {
-    marginTop: 10,
   },
   circleButtonText: {
     marginTop: 10,

@@ -12,9 +12,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useRoute } from '@react-navigation/native';
-import { updatePassword } from './database';
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRoute } from "@react-navigation/native";
+import { updatePassword } from "./database";
 import { Ionicons } from "@expo/vector-icons";
 
 import resetImage from "../assets/images/6321602 (4).png";
@@ -35,7 +35,7 @@ export default function ResetPassword() {
       Alert.alert("Success", "Password changed successfully!");
       router.push("/Login");
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
       Alert.alert("Error", "Something went wrong.");
     }
   };
@@ -43,6 +43,10 @@ export default function ResetPassword() {
   const handleResetPassword = () => {
     if (!newPassword || !confirmPassword) {
       Alert.alert("Error", "Both fields are required.");
+      return;
+    }
+    if (newPassword.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters long.");
       return;
     }
     if (newPassword !== confirmPassword) {
@@ -64,6 +68,14 @@ export default function ResetPassword() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
+          {/* 🔙 Back Button */}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.push("/ForgotPassword")}
+          >
+            <Ionicons name="arrow-back" size={28} color="#8B0000" />
+          </TouchableOpacity>
+
           <View style={styles.box}>
             <Image source={resetImage} style={styles.image} />
 
@@ -131,6 +143,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 40,
+  },
+  backButton: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+    zIndex: 10,
+    backgroundColor: "#FFD700",
+    borderRadius: 20,
+    padding: 6,
+    elevation: 5,
   },
   box: {
     backgroundColor: "#FFD700",

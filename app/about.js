@@ -1,11 +1,22 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const AboutScreen = () => {
+  const router = useRouter();
+
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>🧠 Kids Learning Application</Text>
+      {/* Header with Back Button */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.push("/Settings")}>
+          <Ionicons name="arrow-back" size={24} color="#8B0000" />
+        </TouchableOpacity>
+        <Text style={styles.title}>About Us</Text>
+        <View style={{ width: 24 }} /> 
+      </View>
+
       <Text style={styles.subtitle}>Learning made fun, colorful, and magical!</Text>
 
       <View style={styles.section}>
@@ -78,12 +89,18 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#F3E38D',
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
   title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#FF6B6B',
-    marginBottom: 8,
-    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#8B0000",
+    textAlign: "center",
+    flex: 1,
   },
   subtitle: {
     fontSize: 16,
@@ -121,5 +138,3 @@ const styles = StyleSheet.create({
 });
 
 export default AboutScreen;
-
-

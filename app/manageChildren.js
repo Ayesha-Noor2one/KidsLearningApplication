@@ -17,6 +17,7 @@ import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { insertUser, findAllByEmail, update, deleteUser, insertKidUsageLimit } from './database';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const showToast = (message) => {
   if (Platform.OS === 'android') {
@@ -35,6 +36,7 @@ const ChildrenForm = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     fetchProfileData();
@@ -112,7 +114,7 @@ const ChildrenForm = () => {
         const res = await insertUser(payload);
         if (res.changes === 1) {
           const insertedId = res.lastInsertRowId;
-          const res2 = await insertKidUsageLimit(parentId,insertedId);
+          const res2 = await insertKidUsageLimit(parentId, insertedId);
           if (res2.changes === 1) {
             fetchProfileData();
           }
@@ -160,7 +162,14 @@ const ChildrenForm = () => {
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.container}>
-            <Text style={styles.title}>Children List ({children.length}/5)</Text>
+            {/* Header with back button + centered title */}
+            <View style={styles.header}>
+              <TouchableOpacity onPress={() => router.push('/Settings')}>
+                <Ionicons name="arrow-back" size={24} color="#8B0000" />
+              </TouchableOpacity>
+              <Text style={styles.title}>Children List ({children.length}/5)</Text>
+              <View style={{ width: 24 }} /> 
+            </View>
 
             {children.length > 0 ? (
               <FlatList
@@ -290,11 +299,18 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 10,
     color: '#8B0000',
+    textAlign: 'center',
+    flex: 1,
   },
   noChildren: {
     textAlign: 'center',

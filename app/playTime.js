@@ -27,6 +27,14 @@ export default function LearnAndFun() {
       style={styles.background}
     >
       <View style={styles.container}>
+        {/* Back Button */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push('/StartScreen')}
+        >
+          <FontAwesome5 name="arrow-left" size={20} color="white" />
+        </TouchableOpacity>
+
         <Text style={styles.header}>Play Time</Text>
 
         <TouchableOpacity
@@ -44,8 +52,6 @@ export default function LearnAndFun() {
           <FontAwesome5 name="sort-numeric-up" size={22} color="#fff" />
           <Text style={styles.buttonText}>Games</Text>
         </TouchableOpacity>
-
-       
       </View>
     </ImageBackground>
   );
@@ -60,6 +66,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 70,
     alignItems: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    backgroundColor: '#4B5563',
+    padding: 10,
+    borderRadius: 50,
+    zIndex: 10,
   },
   header: {
     fontSize: 30,

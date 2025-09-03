@@ -1,15 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Image,
+  StyleSheet,
+  Alert,
+  BackHandler,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter, Link } from "expo-router";
-import { loginUser, getKidUsageTime, getKidUsage } from './database';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginUser, getKidUsage } from "./database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Login() {
   const router = useRouter();
-  const [timeLeft, setTimeLeft] = useState(0);
-
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [kidName, setKidName] = useState("");
@@ -18,7 +25,9 @@ export default function Login() {
 
   const validateForm = () => {
     if (!username || !password || (role === "kid" && !kidName)) {
-      Alert.alert("Validation Error", "All fields are required.", [{ text: "OK" }]);
+      Alert.alert("Validation Error", "All fields are required.", [
+        { text: "OK" },
+      ]);
       return false;
     }
     return true;
@@ -27,31 +36,30 @@ export default function Login() {
   const login = async (username, password, kidName) => {
     try {
       const res = await loginUser(username, password, kidName);
-      if (res?.email === username && res?.role === 'kid') {
+      if (res?.email === username && res?.role === "kid") {
         const limit = await getKidUsage(res.id);
-        console.log(limit);
-        
-        if(limit.usedMinutes >= limit.allowedHours){
+
+        if (limit.usedMinutes >= limit.allowedHours) {
           Alert.alert("Time is up for today!.");
           return;
         }
-        await AsyncStorage.setItem('userEmail', username);
-        await AsyncStorage.setItem('kidName', kidName);
-        await AsyncStorage.setItem('kidId', JSON.stringify(res.id));
+        await AsyncStorage.setItem("userEmail", username);
+        await AsyncStorage.setItem("kidName", kidName);
+        await AsyncStorage.setItem("kidId", JSON.stringify(res.id));
         router.push("/StartScreen");
         return;
       }
 
-      if (res?.email === username && res?.role === 'PARENT') {
-        await AsyncStorage.setItem('userEmail', username);
-        await AsyncStorage.setItem('parentId', JSON.stringify(res.id));
+      if (res?.email === username && res?.role === "PARENT") {
+        await AsyncStorage.setItem("userEmail", username);
+        await AsyncStorage.setItem("parentId", JSON.stringify(res.id));
         router.push("/Settings");
         return;
       }
 
       Alert.alert("Account not found");
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
     }
   };
 
@@ -60,8 +68,21 @@ export default function Login() {
     login(username, password, kidName);
   };
 
+  // Back button alert
+  const handleExit = () => {
+    Alert.alert("Exit", "Do you want to exit?", [
+      { text: "No", style: "cancel" },
+      { text: "Yes", onPress: () => BackHandler.exitApp() },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
+      {/* Back Button (top-left corner) */}
+      <TouchableOpacity style={styles.backButton} onPress={handleExit}>
+        <Ionicons name="arrow-back" size={28} color="#8B0000" />
+      </TouchableOpacity>
+
       <View style={styles.card}>
         <Image
           source={require("../assets/images/DOG (1).png")}
@@ -72,7 +93,10 @@ export default function Login() {
 
         <View style={styles.roleSelector}>
           <Pressable
-            style={[styles.roleButton, role === "PARENT" && styles.selectedRole]}
+            style={[
+              styles.roleButton,
+              role === "PARENT" && styles.selectedRole,
+            ]}
             onPress={() => setRole("PARENT")}
           >
             <Text style={styles.roleText}>Guardian</Text>
@@ -102,8 +126,15 @@ export default function Login() {
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
           />
-          <Pressable onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-            <Ionicons name={showPassword ? "eye" : "eye-off"} size={22} color="#FFD700" />
+          <Pressable
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          >
+            <Ionicons
+              name={showPassword ? "eye" : "eye-off"}
+              size={22}
+              color="#FFD700"
+            />
           </Pressable>
         </View>
 
@@ -147,6 +178,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+  },
+  backButton: {
+    position: "absolute",
+    top: 60,
+    left: 20,
+    zIndex: 10,
   },
   card: {
     width: "90%",

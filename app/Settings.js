@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { findByEmail} from './database';
+import { findByEmail } from './database';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
@@ -19,6 +19,7 @@ const TILE_SIZE = (width - 80) / 3;
 const Settings = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -34,9 +35,18 @@ const Settings = () => {
     loadProfile();
   }, []);
 
-
-
-
+  // 🔙 Back button handler
+  const handleBackPress = () => {
+    Alert.alert(
+      "Confirmation",
+      "Do you want to go to Login page?",
+      [
+        { text: "No", style: "cancel" },
+        { text: "Yes", onPress: () => router.replace("/Login") },
+      ],
+      { cancelable: true }
+    );
+  };
 
   return (
     <ImageBackground
@@ -44,6 +54,12 @@ const Settings = () => {
       style={styles.background}
     >
       <View style={styles.overlay}>
+        
+        {/* 🔙 Back button on top-left */}
+        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
+          <FontAwesome name="arrow-left" size={24} color="#8B0000" />
+        </TouchableOpacity>
+
         <View style={styles.card}>
           <Text style={styles.username}>
             🎉 Welcome{name ? `, ${name}` : ''}
@@ -105,6 +121,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  // 🔙 Back button style
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 10,
+    borderColor: '#8B0000',
   },
   card: {
     backgroundColor: '#FFD700',

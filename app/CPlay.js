@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Modal } from "react-native";
-import { Audio } from "expo-av";
 import { Link } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,7 +9,7 @@ const PlayScreen = () => {
   const [currentNumberIndex, setCurrentNumberIndex] = useState(0);
   const [shuffledNumbers, setShuffledNumbers] = useState([]);
   const [sequence, setSequence] = useState("");
-  const [isGameComplete, setIsGameComplete] = useState(false); // New state for completion
+  const [isGameComplete, setIsGameComplete] = useState(false);
   const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
   const screenName = 'CountingPlay';
 
@@ -18,81 +17,44 @@ const PlayScreen = () => {
     setShuffledNumbers([...numbers].sort(() => Math.random() - 0.5));
   }, []);
 
-  const playErrorSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require("../assets/sounds/wrong.wav")
-    );
-    await sound.playAsync();
-  };
-
-  const playSuccessSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require("../assets/sounds/amazing.wav")
-    );
-    await sound.playAsync();
-  };
-
-  const playVictorySound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require("../assets/sounds/victory.wav") // Add a victory sound file
-    );
-    await sound.playAsync();
-  };
-
   const handleNumberPress = async (number) => {
     if (number === numbers[currentNumberIndex]) {
-      await playSuccessSound();
       setSequence((prev) => prev + number);
       setCurrentNumberIndex(currentNumberIndex + 1);
 
       if (currentNumberIndex + 1 === numbers.length) {
         setIsGameComplete(true);
-        playVictorySound();
         const kidId = await AsyncStorage.getItem('kidId');
         await markDone(kidId, screenName, 1);
       }
-    } else {
-      playErrorSound();
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Background Image */}
       <Image source={require("../assets/images/mou.jpg")} style={styles.backgroundImage} />
 
-      {/* Header with back and home buttons */}
-      <View style={styles.header}>
-        <Link href="/counting" asChild>
-          <TouchableOpacity>
-            <FontAwesome name="arrow-left" size={40} color="white" />
-          </TouchableOpacity>
-        </Link>
-        <Link href="/StartScreen" asChild>
-          <TouchableOpacity>
-            <FontAwesome name="home" size={40} color="white" />
-          </TouchableOpacity>
-        </Link>
-      </View>
+      <Link href="/Counting" asChild>
+        <TouchableOpacity style={styles.backButton}>
+          <FontAwesome name="arrow-left" size={36} color="black" />
+        </TouchableOpacity>
+      </Link>
 
-      {/* Number bubbles */}
       <View style={styles.bubblesContainer}>
         {shuffledNumbers.map((number, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.bubble, { backgroundColor: colors[index % colors.length] }]}
             onPress={() => handleNumberPress(number)}
-            disabled={isGameComplete} // Disable buttons if game is complete
+            disabled={isGameComplete}
           >
             <Text style={styles.letter}>{number}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      {/* Sequence Display */}
       <Text style={styles.sequenceText}>{sequence}</Text>
 
-      {/* Reward Modal */}
       <Modal visible={isGameComplete} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -110,12 +72,6 @@ const PlayScreen = () => {
             >
               <Text style={styles.buttonText}>Play Again</Text>
             </TouchableOpacity>
-
-            <Link href="/StartScreen" asChild>
-              <TouchableOpacity style={styles.modalButton}>
-                <Text style={styles.buttonText}>Go Home</Text>
-              </TouchableOpacity>
-            </Link>
           </View>
         </View>
       </Modal>
@@ -138,14 +94,11 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
   },
-  header: {
+  backButton: {
     position: "absolute",
     top: 40,
     left: 20,
-    right: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "90%",
+    zIndex: 10,
   },
   bubblesContainer: {
     flexDirection: "row",

@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Image,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
-import { findByEmail } from './database';
+import { Ionicons } from "@expo/vector-icons";
+import { findByEmail } from "./database";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -16,14 +26,14 @@ export default function ForgotPassword() {
       const res = await findByEmail(email);
       if (res && res.email === email) {
         router.push({
-          pathname: '/resetpassword',
+          pathname: "/resetpassword",
           params: { email },
         });
       } else {
         Alert.alert("Email Not Found", "No account found with that email address.");
       }
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
       Alert.alert("Error", "Something went wrong. Please try again later.");
     }
   };
@@ -40,11 +50,21 @@ export default function ForgotPassword() {
 
   return (
     <View style={styles.container}>
+      {/* 🔙 Back Button */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.push("/Login")}
+      >
+        <Ionicons name="arrow-back" size={28} color="#8B0000" />
+      </TouchableOpacity>
+
       <View style={styles.card}>
         <Image source={require("../assets/images/cat.png")} style={styles.image} />
 
         <Text style={styles.title}>Forgot Password?</Text>
-        <Text style={styles.subtitle}>Enter your email address to reset your password.</Text>
+        <Text style={styles.subtitle}>
+          Enter your email address to reset your password.
+        </Text>
 
         <TextInput
           style={styles.input}
@@ -71,6 +91,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    zIndex: 10,
+    backgroundColor: "#FFD700",
+    borderRadius: 50,
+    padding: 6,
+    borderWidth: 2,
+    borderColor: "#8B0000",
   },
   card: {
     width: "90%",

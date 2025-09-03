@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,13 +8,14 @@ import {
   Alert,
   ActivityIndicator,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import { useRouter, Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { send, EmailJSResponseStatus } from "@emailjs/react-native";
-import { findByEmail, insertUser } from "./database";
+import { findByEmail } from "./database";
 
 export default function SignUp() {
   const router = useRouter();
@@ -27,6 +28,19 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("PARENT");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Exit App", "Do you want to exit?", [
+        { text: "No", style: "cancel" },
+        { text: "Yes", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true; // prevent default back action
+    };
+
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => backHandler.remove();
+  }, []);
 
   const isValidEmail = (email) => {
     return /^[^\s@]+@(gmail\.com|yahoo\.com|outlook\.com)$/i.test(email);
@@ -60,11 +74,8 @@ export default function SignUp() {
           message: "This is static message",
           otp,
         },
-        {
-          publicKey: "ucV02B72O55XZL_uf"
-        }
+        { publicKey: "ucV02B72O55XZL_uf" }
       );
-
       return { otp, otpGeneratedAt };
     } catch (err) {
       if (err instanceof EmailJSResponseStatus) {
@@ -91,7 +102,7 @@ export default function SignUp() {
       const { otp, otpGeneratedAt } = result;
       router.push({
         pathname: "/OtpVerificationScreen",
-        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload),isEdit:false },
+        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload), isEdit: false },
       });
     } catch (error) {
       console.error("Error during sign-up:", error);
@@ -103,6 +114,19 @@ export default function SignUp() {
 
   return (
     <View style={styles.container}>
+      {/* Back button (NO background) */}
+      <TouchableOpacity
+        onPress={() => {
+          Alert.alert("Exit App", "Do you want to exit?", [
+            { text: "No", style: "cancel" },
+            { text: "Yes", onPress: () => BackHandler.exitApp() },
+          ]);
+        }}
+        style={styles.backButton}
+      >
+        <Ionicons name="arrow-back" size={28} color="#8B0000" />
+      </TouchableOpacity>
+
       <View style={styles.card}>
         <Text style={styles.title}>Sign Up</Text>
 
@@ -132,10 +156,7 @@ export default function SignUp() {
             placeholderTextColor="#FFD700"
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.eyeIcon}
-          >
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
             <Icon name={showPassword ? "eye-off" : "eye"} size={22} color="#FFD700" />
           </TouchableOpacity>
         </View>
@@ -149,10 +170,7 @@ export default function SignUp() {
             placeholderTextColor="#FFD700"
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.eyeIcon}
-          >
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
             <Icon name={showPassword ? "eye-off" : "eye"} size={22} color="#FFD700" />
           </TouchableOpacity>
         </View>
@@ -185,6 +203,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    zIndex: 10,
   },
   card: {
     width: "100%",

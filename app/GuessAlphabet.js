@@ -6,10 +6,13 @@ import {
   Pressable,
   Animated,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { markDone } from './database';
+import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const ALL_ALPHABETS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -21,11 +24,11 @@ export default function AlphabetGuessGame() {
   const [options, setOptions] = useState([]);
   const [showBurst, setShowBurst] = useState(false);
   const shakeAnimation = useRef(new Animated.Value(0)).current;
-const screenName = 'GuessAlphabet';
-  // Helper to determine completion
+  const screenName = 'GuessAlphabet';
+  const router = useRouter();
+
   const isGameComplete = () => remaining.length === 0;
 
-  // Optionally mark completion in database
   useEffect(() => {
     if (!isGameComplete()) return;
     (async () => {
@@ -83,6 +86,10 @@ const screenName = 'GuessAlphabet';
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/Alphabets')}>
+        <FontAwesome name="arrow-left" size={36} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>Which Alphabet is This?</Text>
       <Text style={styles.counter}>
         {answeredCount + 1} / {ALL_ALPHABETS.length}
@@ -141,6 +148,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 10,
   },
   title: {
     fontSize: 26,

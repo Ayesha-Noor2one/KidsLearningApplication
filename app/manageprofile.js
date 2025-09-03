@@ -15,7 +15,6 @@ import { useRouter } from "expo-router";
 import { send, EmailJSResponseStatus } from "@emailjs/react-native";
 import { findByEmail } from "./database";
 
-
 const EditProfileScreen = () => {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -52,7 +51,8 @@ const EditProfileScreen = () => {
   };
 
   const handleInputChange = (setter) => (value) => setter(value);
-const sendEmail = async () => {
+
+  const sendEmail = async () => {
     const otp = generateOTP();
     const otpGeneratedAt = Date.now();
 
@@ -96,7 +96,7 @@ const sendEmail = async () => {
       const { otp, otpGeneratedAt } = result;
       router.push({
         pathname: "/updateVerification",
-        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload), isEdit:true },
+        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload), isEdit: true },
       });
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -111,7 +111,14 @@ const sendEmail = async () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>Manage Profile</Text>
+        {/* Header with back button */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.push("/Settings")}>
+            <Ionicons name="arrow-back" size={24} color="#8B0000" />
+          </TouchableOpacity>
+          <Text style={styles.title}>Manage Profile</Text>
+          <View style={{ width: 24 }} /> 
+        </View>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>NAME</Text>
@@ -192,12 +199,18 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 10,
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     color: "#8B0000",
-    marginBottom: 24,
     textAlign: "center",
+    flex: 1,
   },
   inputContainer: {
     marginBottom: 20,

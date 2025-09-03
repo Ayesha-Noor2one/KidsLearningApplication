@@ -13,7 +13,7 @@ const circleSize = screenWidth / GRID_SIZE - 20;
 const GameScreen = () => {
   const [dogIndex, setDogIndex] = useState(Math.floor(Math.random() * TOTAL_CIRCLES));
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(15);
   const [gameOver, setGameOver] = useState(false);
   const [sound, setSound] = useState();
   const [isPlayingConfetti, setIsPlayingConfetti] = useState(false);
@@ -86,8 +86,9 @@ const GameScreen = () => {
   return (
     <View style={styles.container}>
       {/* Home Icon */}
-      <TouchableOpacity onPress={() => router.push('/start')} style={styles.homeIcon}>
-        <Ionicons name="home" size={32} color="black" />
+      <TouchableOpacity 
+      onPress={() => router.push('/memorygames')} style={styles.homeIcon}>
+        <Ionicons name="arrow-back" size={32} color="#333" />
       </TouchableOpacity>
 
       {/* Heading */}
@@ -133,10 +134,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  homeIcon: {
+backButton: {
     position: 'absolute',
     top: 20,
-    left: 20,
+    left: 50,
     zIndex: 10,
   },
   heading: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useRouter, Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 export default function FruitVegeScreen() {
   const router = useRouter();
@@ -9,13 +9,10 @@ export default function FruitVegeScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        <Link href="/StartScreen" style={styles.homeButton}>
-          <FontAwesome name="home" size={24} color="white" />
-        </Link>
-
-        <Link href="/Settings" style={styles.settingsButton}>
-          <FontAwesome name="cog" size={24} color="white" />
-        </Link>
+        {/* Back Button */}
+        <TouchableOpacity style={styles.backButton} onPress={() => router.push('/playTime')}>
+          <FontAwesome name="arrow-left" size={24} color="white" />
+        </TouchableOpacity>
 
         <Text style={styles.title}>Poems and Stories</Text>
 
@@ -40,18 +37,10 @@ export default function FruitVegeScreen() {
 }
 
 const styles = StyleSheet.create({
-  homeButton: {
+  backButton: {
     position: 'absolute',
     top: 40,
     left: 20,
-    backgroundColor: '#4B5563',
-    padding: 10,
-    borderRadius: 50,
-  },
-  settingsButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
     backgroundColor: '#4B5563',
     padding: 10,
     borderRadius: 50,
@@ -81,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center', // Center vertically
+    justifyContent: 'center',
     marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -97,7 +86,5 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-  }
+  },
 });
-
-

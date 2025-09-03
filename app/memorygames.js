@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 const memoryGames = [
@@ -24,6 +24,8 @@ const memoryGames = [
 ];
 
 export default function MemoryGamesMainScreen() {
+  const router = useRouter();
+
   const renderItem = ({ item }) => (
     <Link href={item.href} asChild>
       <TouchableOpacity style={styles.card}>
@@ -35,12 +37,13 @@ export default function MemoryGamesMainScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Back Button to playTime */}
-      <Link href="/playTime" asChild>
-        <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="arrow-back" size={28} color="orange" />
-        </TouchableOpacity>
-      </Link>
+      {/* Back Button */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.push("/playTime")}
+      >
+        <Ionicons name="arrow-back" size={28} color="#8B0000" />
+      </TouchableOpacity>
 
       <Text style={styles.title}>Games</Text>
 

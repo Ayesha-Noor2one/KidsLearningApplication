@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, SafeAreaView } from 'react-native';
-import { kidDoneScreens, findAllByEmail, findById } from './database'; // You must define this DB function
+import { View, Text, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { kidDoneScreens, findAllByEmail, findById } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const ProgressList = () => {
   const [progressData, setProgressData] = useState([]);
+  const router = useRouter();
+
   const modules = ['Alphabets', 'Counting', 'Shapes', 'Body Parts', 'Solar System'];
   const flashScreen = 'Flashcards';
   const guessAlphabet = 'GuessAlphabet';
@@ -33,11 +37,9 @@ const ProgressList = () => {
         const moduleStatuses = modules.map(module => {
           if (module === 'Alphabets') {
             return { module, status: isAlphabetsDone ? 'Done' : 'In Progress' };
-          }
-          else if (module === 'Counting') {
+          } else if (module === 'Counting') {
             return { module, status: isCountingDone ? 'Done' : 'In Progress' };
-          }
-          else {
+          } else {
             return { module, status: 'In Progress' };
           }
         });
@@ -52,25 +54,30 @@ const ProgressList = () => {
     }
   };
 
-
-
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.childHeader}>{item.childName}</Text>
       {item.modules.map((mod, index) => (
-  <View key={index} style={styles.moduleRow}>
-  <Text style={styles.text}>• {mod.module}</Text>
-  <Text style={[styles.text, { marginLeft: 10 }]}>
-    {mod.status === 'Done' ? '✅' : '⏳'}
-  </Text>
-</View>
-))}
+        <View key={index} style={styles.moduleRow}>
+          <Text style={styles.text}>• {mod.module}</Text>
+          <Text style={[styles.text, { marginLeft: 10 }]}>
+            {mod.status === 'Done' ? '✅' : '⏳'}
+          </Text>
+        </View>
+      ))}
     </View>
   );
 
   return (
     <SafeAreaView style={styles.safe}>
-      <Text style={styles.header}>Children Progress</Text>
+      <View style={styles.headerRow}>
+        <TouchableOpacity onPress={() => router.push('/Settings')}>
+          <Ionicons name="arrow-back" size={24} color="#8B0000" />
+        </TouchableOpacity>
+        <Text style={styles.header}>Children Progress</Text>
+        <View style={{ width: 24 }} /> 
+      </View>
+
       <FlatList
         data={progressData}
         keyExtractor={(item, index) => index.toString()}
@@ -89,15 +96,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffefa',
     padding: 20,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#8B0000',
     textAlign: 'center',
-    marginBottom: 20,
     fontFamily: 'Consolas',
     textDecorationLine: 'underline',
     textTransform: 'uppercase',
+    flex: 1,
   },
   list: {
     paddingBottom: 30,
@@ -136,4 +149,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Consolas',
   },
 });
-
