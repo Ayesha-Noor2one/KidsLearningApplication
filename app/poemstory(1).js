@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center', // Center vertically
+    justifyContent: 'center',
     marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

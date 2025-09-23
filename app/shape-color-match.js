@@ -49,7 +49,7 @@ export default function ColorShapeMatchScreen() {
 
   useEffect(() => {
     const shuffled = shuffle(ALL_PAIRS);
-    const selectedSet = shuffled.slice(0, 4 + Math.floor(Math.random() * 2)); // random 4 or 5
+    const selectedSet = shuffled.slice(0, 4 + Math.floor(Math.random() * 2));
     setColors(shuffle(selectedSet));
     const objs = selectedSet.map(({ id, emoji, color }) => ({
       id,

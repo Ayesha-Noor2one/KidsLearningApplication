@@ -35,7 +35,6 @@ const Settings = () => {
     loadProfile();
   }, []);
 
-  // 🔙 Back button handler
   const handleBackPress = () => {
     Alert.alert(
       "Confirmation",
@@ -55,7 +54,7 @@ const Settings = () => {
     >
       <View style={styles.overlay}>
         
-        {/* 🔙 Back button on top-left */}
+        
         <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
           <FontAwesome name="arrow-left" size={24} color="#8B0000" />
         </TouchableOpacity>
@@ -122,7 +121,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // 🔙 Back button style
   backButton: {
     position: 'absolute',
     top: 50,

@@ -1,17 +1,15 @@
 import * as SQLite from 'expo-sqlite';
 
-let db; // This will hold the reference to the SQLite database
-
-// Function to initialize the database
+let db; 
 export const initDatabase = async () => {
   if (!db) {
-    db = await SQLite.openDatabaseAsync('kidAppFinals.db'); // Open or create the database
-    await setupDatabase(db); // Set up the database (create tables, insert data, etc.)
+    db = await SQLite.openDatabaseAsync('kidAppFinals.db'); 
+    await setupDatabase(db); 
   }
-  return db; // Return the database reference
+  return db; 
 };
 
-// Function to set up the database (create table, insert data, etc.)
+
 const setupDatabase = async (db) => {
   try {
 
@@ -66,7 +64,7 @@ CREATE TABLE IF NOT EXISTS screenDone (
   }
 };
 
-// Function to handle login request
+
 export const findById = async (id) => {
 
   try {
@@ -76,9 +74,9 @@ export const findById = async (id) => {
       [id]);
 
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null; 
     }
   } catch (error) {
     console.error('Error during findbyid:', error);
@@ -151,15 +149,15 @@ export const kidDoneScreens = async (userId, isDone) => {
 
 export const loadProgressFromDB = async (userId, screenName) => {
   try {
-    // Execute the query to find the user by email and password
+  
     const result = await db.getAllAsync(
       'SELECT learned_index FROM progress WHERE user_id = ? AND screen = ?',
       [userId, screenName]
     );
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null; 
     }
   } catch (error) {
     console.error('Error during load progress from db:', error);
@@ -180,7 +178,7 @@ export const insertUserPicture = async (userId, base64Image) => {
 };
 
 
-// Function to fetch all items from the database
+
 export const fetchUsers = async () => {
   if (!db) {
     console.error("Database is not initialized!");
@@ -267,11 +265,11 @@ export const insertUser = async (payload) => {
 };
 
 
-// Function to handle login request
+
 export const loginUser = async (email, password, name) => {
 
   try {
-    // Execute the query to find the user by email and password
+  
 
     let result;
     if (name && name != null) {
@@ -284,9 +282,9 @@ export const loginUser = async (email, password, name) => {
     }
 
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null;
     }
   } catch (error) {
     console.error('Error during login:', error);
@@ -297,7 +295,7 @@ export const loginUser = async (email, password, name) => {
 export const findByEmail = async (email) => {
 
   try {
-    // Execute the query to find the user by email and password
+   
     const result = await db.getFirstAsync(
       `SELECT * FROM users WHERE email = ? AND role = ?`,
       [email, 'PARENT']
@@ -305,9 +303,9 @@ export const findByEmail = async (email) => {
 
     if (result) {
 
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null;
     }
   } catch (error) {
     console.error('Error during find:', error);
@@ -318,16 +316,16 @@ export const findByEmail = async (email) => {
 export const findImageByEmail = async (email) => {
 
   try {
-    // Execute the query to find the user by email and password
+   
     const result = await db.getFirstAsync(
       `SELECT * FROM user_pictures WHERE user_id = ? `,
       [email]
     );
 
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null; 
     }
   } catch (error) {
     console.error('Error during find:', error);
@@ -338,16 +336,16 @@ export const findImageByEmail = async (email) => {
 export const findAllByEmail = async (email) => {
 
   try {
-    // Execute the query to find the user by email and password
+    
     const result = await db.getAllAsync(
       `SELECT * FROM users WHERE email = ? AND role = ?`,
       [email, 'kid']
     );
 
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null; 
     }
   } catch (error) {
     console.error('Error during find:', error);
@@ -365,9 +363,9 @@ const findAllUageByParentId = async (parentId) => {
     );
 
     if (result) {
-      return result; // User found, return the user data
+      return result;
     } else {
-      return null; // No user found with the provided credentials
+      return null; 
     }
   } catch (error) {
     console.error('Error during find all usage limit:', error);
@@ -397,29 +395,6 @@ export const insertKidUsageLimit = async (parentId, childId) => {
     console.error('Error inserting insertKidUsageLimit:', error);
   }
 
-
-
-  // const children = await findAllByEmail(userEmail);
-  // const childIds = Array.isArray(children) && children.length > 0
-  //   ? children.map(child => child.id)
-  //   : [];
-
-  // const usageChildren = await findAllUageByParentId(parentId);
-  // const usageChildIds = Array.isArray(usageChildren) && usageChildren.length > 0
-  //   ? usageChildren.map(child => child.id)
-  //   : [];
-
-  // if (childIds.length != usageChildIds.length) {
-  //   childIds.forEach((childId) => {
-  //     db.runAsync(
-  //       `INSERT OR REPLACE INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
-  //        VALUES (?, ?, ?, 0, ?);`,
-  //       [childId, parentId, allowedHours, today]
-  //     );
-  //   });
-  // }
-
-
 };
 
 export const getUsageTime = async (parentId) => {
@@ -436,9 +411,9 @@ export const getUsageTime = async (parentId) => {
     );
 
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null;
     }
   } catch (error) {
     console.error('Error during getUsageTime:', error);
@@ -483,9 +458,9 @@ export const getKidUsageTime = async (kidId) => {
     );
 
     if (result) {
-      return result; // User found, return the user data
+      return result;
     } else {
-      return null; // No user found with the provided credentials
+      return null;
     }
   } catch (error) {
     console.error('Error during getUsageTime:', error);
@@ -504,9 +479,9 @@ export const getKidUsage = async (kidId) => {
     );
 
     if (result) {
-      return result; // User found, return the user data
+      return result; 
     } else {
-      return null; // No user found with the provided credentials
+      return null; 
     }
   } catch (error) {
     console.error('Error during getUsageOfKid:', error);
@@ -516,49 +491,18 @@ export const getKidUsage = async (kidId) => {
 
 export const truncateTest = async () => {
   try {
-    // const result = await db.runAsync(`delete from UsageLimit ;`);
-
-    // const result2 = await db.getAllAsync(
-    //   `SELECT * FROM UsageLimit`
-    // );
-    // console.log('truncate result is...');
-
-    // console.log(result2);
+    
 
   } catch (error) {
     console.error('Error truncateTest:', error);
   }
 
-
-
-  // const children = await findAllByEmail(userEmail);
-  // const childIds = Array.isArray(children) && children.length > 0
-  //   ? children.map(child => child.id)
-  //   : [];
-
-  // const usageChildren = await findAllUageByParentId(parentId);
-  // const usageChildIds = Array.isArray(usageChildren) && usageChildren.length > 0
-  //   ? usageChildren.map(child => child.id)
-  //   : [];
-
-  // if (childIds.length != usageChildIds.length) {
-  //   childIds.forEach((childId) => {
-  //     db.runAsync(
-  //       `INSERT OR REPLACE INTO UsageLimit (childId, parentId, allowedHours, usedMinutes, lastDate) 
-  //        VALUES (?, ?, ?, 0, ?);`,
-  //       [childId, parentId, allowedHours, today]
-  //     );
-  //   });
-  // }
-
-
 };
 
 export const resetUsageTime = async (childId) => {
   try {
-    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+    const today = new Date().toISOString().split("T")[0]; 
 
-    // get current row for child
     const row = await db.getFirstAsync(
       `SELECT * FROM UsageLimit WHERE childId = ? `,
       [childId]
@@ -566,16 +510,15 @@ export const resetUsageTime = async (childId) => {
 
     if (row) {
       if (row.lastDate !== today) {
-        // date changed → reset usage
         await db.runAsync(
           `UPDATE UsageLimit 
        SET usedMinutes = 0, lastDate = ? 
        WHERE childId = ? `,
           [today, childId]
         );
-        console.log("✅ Reset usage for new day");
+        console.log("Reset usage for new day");
       } else {
-        console.log("👉 Same day, keep tracking usage");
+        console.log("Same day, keep tracking usage");
       }
     }
   } catch (error) {

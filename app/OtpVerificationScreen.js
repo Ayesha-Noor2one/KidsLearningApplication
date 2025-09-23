@@ -17,7 +17,7 @@ export default function OtpVerification() {
 
     if (now - otpGeneratedAt > fiveMinutes) {
       Alert.alert('Expired', 'Your OTP has expired. Please try again.');
-      navigation.goBack(); // or navigate to resend OTP
+      navigation.goBack();
       return;
     }
 
@@ -36,7 +36,7 @@ export default function OtpVerification() {
 
       if (res.changes === 1) {
         Alert.alert('Success', 'Registration complete. Please log in.');
-        navigation.navigate('Login'); // 👈 use screen name from your navigator
+        navigation.navigate('Login');
       } else {
         Alert.alert('Error', 'User could not be registered.');
       }

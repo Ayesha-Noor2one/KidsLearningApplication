@@ -68,7 +68,7 @@ export default function ResetPassword() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
-          {/* 🔙 Back Button */}
+         
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => router.push("/ForgotPassword")}
@@ -81,7 +81,7 @@ export default function ResetPassword() {
 
             <Text style={styles.title}>Reset Password</Text>
 
-            {/* New Password */}
+           
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
@@ -103,7 +103,7 @@ export default function ResetPassword() {
               </TouchableOpacity>
             </View>
 
-            {/* Confirm Password */}
+            
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}

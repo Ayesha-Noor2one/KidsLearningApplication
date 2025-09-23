@@ -38,7 +38,7 @@ export default function StoriesListScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Back Button */}
+      
       <TouchableOpacity style={styles.backButton} onPress={() => router.push('/poemstory')}>
         <Ionicons name="arrow-back" size={28} color="#333" />
       </TouchableOpacity>

@@ -47,14 +47,14 @@ export default function ColorsScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.bg}>
       <SafeAreaView style={styles.container}>
-        {/* Home Icon */}
+      
         <TouchableOpacity
           style={styles.homeIcon}
           onPress={() => navigation.navigate('StartScreen')}>
           <Ionicons name="home" size={30} color="white" />
         </TouchableOpacity>
 
-        {/* Heading */}
+      
         <Text style={styles.heading}>
           <Text style={{ color: 'red' }}>L</Text>
           <Text style={{ color: 'orange' }}>E</Text>
@@ -69,7 +69,6 @@ export default function ColorsScreen() {
           <Text style={{ color: 'purple' }}>S</Text>
         </Text>
 
-        {/* Color Grid */}
         <FlatList
           data={colors}
           keyExtractor={(item) => item.name}

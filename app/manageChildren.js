@@ -162,13 +162,12 @@ const ChildrenForm = () => {
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.container}>
-            {/* Header with back button + centered title */}
             <View style={styles.header}>
               <TouchableOpacity onPress={() => router.push('/Settings')}>
                 <Ionicons name="arrow-back" size={24} color="#8B0000" />
               </TouchableOpacity>
               <Text style={styles.title}>Children List ({children.length}/5)</Text>
-              <View style={{ width: 24 }} /> 
+              <View style={{ width: 24 }} />
             </View>
 
             {children.length > 0 ? (
@@ -177,6 +176,7 @@ const ChildrenForm = () => {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}
                 style={styles.list}
+                scrollEnabled={false}
               />
             ) : (
               <Text style={styles.noChildren}>No children added yet.</Text>

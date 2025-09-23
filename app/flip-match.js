@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Image, StyleSheet, Text, Alert, ImageBackground } from 'react-native';
-import { Audio } from 'expo-av';
+import { 
+  View, TouchableOpacity, Image, StyleSheet, 
+  Text, Alert, ImageBackground, Animated 
+} from 'react-native';
 import { Link } from 'expo-router'; 
 import { Ionicons } from '@expo/vector-icons';
 
-// ✅ Reduced to 4 card types for kids
 const cardImages = [
   require('../assets/images/card1.jpg'),
   require('../assets/images/card2.jpg'),
@@ -13,36 +14,25 @@ const cardImages = [
 ];
 
 function shuffleCards() {
-  const paired = [...cardImages, ...cardImages]; // 4 pairs = 8 cards
+  const paired = [...cardImages, ...cardImages];
   return paired
-    .map((img, index) => ({ id: index + '', img, flipped: false, matched: false }))
+    .map((img, index) => ({
+      id: index + '',
+      img,
+      flipped: false,
+      matched: false,
+      scale: new Animated.Value(1),
+    }))
     .sort(() => Math.random() - 0.5);
 }
 
 export default function FlipMatchScreen() {
   const [cards, setCards] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [sound, setSound] = useState(null);
 
   useEffect(() => {
     setCards(shuffleCards());
-    playBackgroundMusic();
-
-    return () => {
-      if (sound) {
-        sound.unloadAsync();
-      }
-    };
   }, []);
-
-  async function playBackgroundMusic() {
-    const { sound } = await Audio.Sound.createAsync(
-      require('../assets/sounds/bg.mp3'),
-      { isLooping: true, volume: 0.1 }
-    );
-    setSound(sound);
-    await sound.playAsync();
-  }
 
   function handleCardPress(index) {
     const newCards = [...cards];
@@ -60,6 +50,22 @@ export default function FlipMatchScreen() {
         if (match) {
           newCards[firstIdx].matched = true;
           newCards[secondIdx].matched = true;
+
+        
+          [firstIdx, secondIdx].forEach(idx => {
+            Animated.sequence([
+              Animated.timing(newCards[idx].scale, {
+                toValue: 1.2,
+                duration: 250,
+                useNativeDriver: true,
+              }),
+              Animated.timing(newCards[idx].scale, {
+                toValue: 1,
+                duration: 200,
+                useNativeDriver: true,
+              }),
+            ]).start();
+          });
         } else {
           newCards[firstIdx].flipped = false;
           newCards[secondIdx].flipped = false;
@@ -74,7 +80,6 @@ export default function FlipMatchScreen() {
   function checkWin(cards) {
     if (cards.every(card => card.matched)) {
       Alert.alert('🎉 Yay!', 'You matched all the cards!');
-      // Wait a bit and load next round
       setTimeout(() => {
         setCards(shuffleCards());
         setSelected([]);
@@ -97,12 +102,18 @@ export default function FlipMatchScreen() {
 
       <View style={styles.grid}>
         {cards.map((card, index) => (
-          <TouchableOpacity key={card.id} onPress={() => handleCardPress(index)} style={styles.card}>
-            {card.flipped || card.matched ? (
-              <Image source={card.img} style={styles.image} />
-            ) : (
-              <View style={styles.cardBack} />
-            )}
+          <TouchableOpacity 
+            key={card.id} 
+            onPress={() => handleCardPress(index)} 
+            style={styles.card}
+          >
+            <Animated.View style={{ transform: [{ scale: card.scale }] }}>
+              {card.flipped || card.matched ? (
+                <Image source={card.img} style={styles.image} />
+              ) : (
+                <View style={styles.cardBack} />
+              )}
+            </Animated.View>
           </TouchableOpacity>
         ))}
       </View>
@@ -111,9 +122,7 @@ export default function FlipMatchScreen() {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-  },
+  background: { flex: 1 },
   header: {
     paddingTop: 60,
     marginBottom: 20,
@@ -121,16 +130,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  arrowButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
+  arrowButton: { position: 'absolute', top: 20, left: 20 },
+  title: { fontSize: 26, fontWeight: 'bold', color: '#fff' },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -144,15 +145,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
   },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-  cardBack: {
-    backgroundColor: '#FFCC80',
-    width: '100%',
-    height: '100%',
-    borderRadius: 12,
-  },
+  image: { width: '100%', height: '100%', resizeMode: 'contain' },
+  cardBack: { backgroundColor: '#FFCC80', width: '100%', height: '100%', borderRadius: 12 },
 });

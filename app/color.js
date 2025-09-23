@@ -16,14 +16,14 @@ export default function ColorsScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.bg}>
       <SafeAreaView style={styles.container}>
-        {/* Back Icon */}
+       
         <TouchableOpacity
           style={styles.backIcon}
           onPress={() => navigation.navigate('learnandfun')}>
           <Ionicons name="arrow-back" size={28} color="white" />
         </TouchableOpacity>
 
-        {/* Heading */}
+       
         <Text style={styles.heading}>
           <Text style={{ color: 'red' }}>C</Text>
           <Text style={{ color: 'orange' }}>O</Text>
@@ -33,7 +33,7 @@ export default function ColorsScreen() {
           <Text style={{ color: 'purple' }}>S</Text>
         </Text>
 
-        {/* Buttons */}
+        
         <View style={styles.cardContainer}>
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}

@@ -1,4 +1,4 @@
-// GuessSolarSystem.js
+
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -92,7 +92,7 @@ export default function GuessSolarSystem() {
   };
 
   const restartGame = () => {
-    setPlanets(shuffleArray(planetsData)); // shuffle again
+    setPlanets(shuffleArray(planetsData)); 
     setCurrent(0);
     setShowCongrats(false);
   };
@@ -114,19 +114,19 @@ export default function GuessSolarSystem() {
     );
   }
 
-  if (!planets[current]) return null; // prevent undefined error
+  if (!planets[current]) return null; 
 
   return (
     <View style={styles.container}>
-      {/* Back Button */}
+      
       <TouchableOpacity style={styles.backButton} onPress={confirmGoBack}>
         <FontAwesome name="arrow-left" size={24} color="black" />
       </TouchableOpacity>
 
-      {/* Question */}
+      
       <Text style={styles.question}>Which planet is this?</Text>
 
-      {/* Planet Image */}
+      
       <Animated.View
         style={{
           transform: [{ translateX: shakeAnim }],
@@ -136,7 +136,7 @@ export default function GuessSolarSystem() {
         <Image source={planets[current].image} style={styles.image} />
       </Animated.View>
 
-      {/* Options in 3 per row */}
+     
       <View style={styles.optionsContainer}>
         {options.map((option, index) => (
           <TouchableOpacity
@@ -149,7 +149,6 @@ export default function GuessSolarSystem() {
         ))}
       </View>
 
-      {/* Burst Animation */}
       {showBurst && (
         <LottieView
           source={require("../assets/animations/burst.json")}

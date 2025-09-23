@@ -5,7 +5,7 @@ import { loginUser} from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Logout() {
-  const router = useRouter(); // useRouter hook for manual navigation
+  const router = useRouter(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,7 +26,7 @@ export default function Logout() {
             router.push("/Welcome");
           }
         } catch (error) {
-          console.error('Error posting data:', error); // Handle any errors here
+          console.error('Error posting data:', error);
         }
   };
 
@@ -47,16 +47,14 @@ export default function Logout() {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        {/* Header Image */}
+        
         <Image
           source={require("../assets/images/DOG (1).png")}
           style={styles.image}
         />
 
-        {/* Title */}
         <Text style={styles.title}>Log In</Text>
 
-        {/* Username Input */}
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -65,7 +63,6 @@ export default function Logout() {
           onChangeText={setUsername}
         />
 
-        {/* Password Input */}
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -75,19 +72,17 @@ export default function Logout() {
           secureTextEntry
         />
 
-        {/* Forgot Password */}
         <Link href="/Forgotpassword" asChild>
           <Pressable>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </Pressable>
         </Link>
 
-        {/* Log In Button (Fixed) */}
+    
         <Pressable style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Log in</Text>
         </Pressable>
 
-        {/* Footer Text */}
         <Text style={styles.footerText}>
           Don't have an account? {" "}
           <Link href="/SignUp" asChild>

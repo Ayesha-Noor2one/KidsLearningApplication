@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TextInput, Switch } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
-import bgMusic from '../assets/sounds/abcsong.mp3';
+import bgMusic from '../assets/sounds/bro.mpeg';
 import { getUsageTime, updateParentUsageTime } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,7 +14,7 @@ const CARD_BG = '#FFD700';
 export default function SettingsScreen() {
   const router = useRouter();
   const [musicOn, setMusicOn] = useState(false);
-  const [usageLimit, setUsageLimit] = useState(0);
+  const [usageLimit, setUsageLimit] = useState(1);
   const soundRef = useRef(null);
 
   useEffect(() => {
@@ -22,12 +22,30 @@ export default function SettingsScreen() {
       try {
         const parentId = await AsyncStorage.getItem('parentId');
         const res = await getUsageTime(parentId);
-        setUsageLimit(res.allowedHours);
+        if (res?.allowedHours && res.allowedHours >= 1) {
+          setUsageLimit(res.allowedHours);
+        } else {
+          setUsageLimit(1);
+        }
       } catch (error) {
         console.error('Error loading profile data:', error);
       }
     };
     loadUsageLimitTime();
+
+    const prepareSound = async () => {
+      try {
+        const { sound } = await Audio.Sound.createAsync(bgMusic, {
+          shouldPlay: false,
+          isLooping: true,
+          volume: 0.1,
+        });
+        soundRef.current = sound;
+      } catch (e) {
+        console.error('Error loading sound:', e);
+      }
+    };
+    prepareSound();
 
     return () => {
       if (soundRef.current) {
@@ -36,74 +54,72 @@ export default function SettingsScreen() {
     };
   }, []);
 
-  const toggleMusic = async () => {
+  const handleMusicToggle = async (value) => {
+    if (!soundRef.current) return;
     try {
-      if (!musicOn) {
-        const { sound } = await Audio.Sound.createAsync(bgMusic, {
-          shouldPlay: true,
-          isLooping: true,
-          volume: 0.5,
-        });
-        soundRef.current = sound;
+      if (value) {
+        await soundRef.current.playAsync();
         setMusicOn(true);
       } else {
-        if (soundRef.current) {
-          await soundRef.current.stopAsync();
-          await soundRef.current.unloadAsync();
-          soundRef.current = null;
-        }
+        await soundRef.current.pauseAsync();
         setMusicOn(false);
       }
     } catch (e) {
-      console.warn('Music toggle error:', e);
+      console.error('Music toggle error:', e);
     }
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
-        <FontAwesome name="arrow-left" size={24} color={BORDER_COLOR} />
-      </TouchableOpacity>
+      <FontAwesome
+        name="arrow-left"
+        size={24}
+        color={BORDER_COLOR}
+        style={styles.backIcon}
+        onPress={() => router.back()}
+      />
 
       <Text style={styles.header}>SETTINGS*</Text>
 
       <View style={styles.card}>
-        {/* Background Music Toggle */}
+        
         <View style={styles.row}>
           <Text style={styles.label}>Background Music</Text>
-          <Pressable
-            style={[styles.toggleButton, musicOn ? styles.on : styles.off]}
-            onPress={toggleMusic}
-          >
-            <FontAwesome name="music" size={20} color="#fff" />
-            <Text style={styles.toggleText}>{musicOn ? 'On' : 'Off'}</Text>
-          </Pressable>
+          <Switch
+            trackColor={{ false: '#F44336', true: '#4CAF50' }}
+            thumbColor="#fff"
+            value={musicOn}
+            onValueChange={handleMusicToggle}
+          />
         </View>
 
-        {/* App Usage Limit */}
         <View style={styles.row}>
           <Text style={styles.label}>App Timer</Text>
           <View style={styles.usageContainer}>
             <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              value={usageLimit !== null ? usageLimit.toString() : ''}
-              onChangeText={(text) => {
-                const minutes = parseInt(text) || 0;
-                setUsageLimit(minutes);
-              }}
-              onEndEditing={async () => {
-                try {
-                  const parentId = await AsyncStorage.getItem('parentId');
-                  const res = await updateParentUsageTime(parentId, usageLimit);
-                  if (!res || res.changes === 0) {
-                    console.warn('No update in DB');
-                  }
-                } catch (error) {
-                  console.error('Error updating limit:', error);
-                }
-              }}
-            />
+  style={styles.input}
+  keyboardType="numeric"
+  value={usageLimit.toString()}
+  onChangeText={(text) => {
+    
+    const minutes = parseInt(text) || 0;
+    setUsageLimit(minutes);
+  }}
+  onEndEditing={async () => {
+    try {
+      const parentId = await AsyncStorage.getItem('parentId');
+      const safeLimit = usageLimit < 1 ? 1 : usageLimit; 
+      setUsageLimit(safeLimit);
+      const res = await updateParentUsageTime(parentId, safeLimit);
+      if (!res || res.changes === 0) {
+        console.warn('No update in DB');
+      }
+    } catch (error) {
+      console.error('Error updating limit:', error);
+    }
+  }}
+/>
+
             <Text style={styles.usageText}>minutes/day</Text>
           </View>
         </View>
@@ -127,10 +143,6 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 25 },
   label: { fontSize: 20, fontWeight: '600', color: BORDER_COLOR },
-  toggleButton: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 25 },
-  on: { backgroundColor: '#4CAF50' },
-  off: { backgroundColor: '#F44336' },
-  toggleText: { color: '#fff', fontSize: 18, marginLeft: 8, fontWeight: '500' },
   usageContainer: { flexDirection: 'row', alignItems: 'center' },
   usageText: { fontSize: 20, color: BORDER_COLOR, minWidth: 60, textAlign: 'center', fontWeight: '500' },
 });

@@ -17,7 +17,7 @@ export default function UpdateVerification() {
 
     if (now - otpGeneratedAt > fiveMinutes) {
       Alert.alert('Expired', 'Your OTP has expired. Please try again.');
-      navigation.goBack(); // or navigate to resend OTP
+      navigation.goBack();
       return;
     }
 

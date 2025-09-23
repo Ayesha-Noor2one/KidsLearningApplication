@@ -28,14 +28,14 @@ export default function HomeScreen() {
       [
         {
           text: "No",
-          onPress: () => console.log("❌ Exit canceled"),
+          onPress: () => console.log("Exit canceled"),
           style: "cancel",
         },
         {
           text: "Yes",
           onPress: async () => {
             await AsyncStorage.removeItem("kidId");
-            console.log("🚪 Kid logged out");
+            console.log("Kid logged out");
             router.replace("/Login");
           },
         },
@@ -53,7 +53,7 @@ export default function HomeScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
       <ScrollView contentContainerStyle={styles.overlay}>
-        {/* Back Button */}
+      
         <TouchableOpacity
           style={styles.backButton}
           onPress={handleBackPress}
@@ -61,7 +61,7 @@ export default function HomeScreen() {
           <FontAwesome name="arrow-left" size={24} color="white" />
         </TouchableOpacity>
 
-        {/* Cartoon Dog Icon */}
+       
         <View style={styles.dogContainer}>
           <Image
             source={require('../assets/images/DOG (1).png')}
@@ -70,10 +70,10 @@ export default function HomeScreen() {
           />
         </View>
 
-        {/* Title */}
+       
         <Text style={styles.title}>Welcome Kids!</Text>
 
-        {/* Buttons Layout */}
+        
         <View style={styles.buttonRow}>
           <TouchableOpacity
             style={[styles.circleButton, { backgroundColor: '#FF69B4' }]}

@@ -36,7 +36,7 @@ export default function ShapesScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        {/* Back Button */}
+       
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push('/learnandfun')}
@@ -47,7 +47,7 @@ export default function ShapesScreen() {
         <Text style={styles.title}>Shapes</Text>
 
         <View style={styles.cardContainer}>
-          {/* Learn Button */}
+          
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}
             onPress={() => router.push('/learnShapes')}
@@ -62,7 +62,7 @@ export default function ShapesScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Play Button */}
+          
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push('/GuessShape')}

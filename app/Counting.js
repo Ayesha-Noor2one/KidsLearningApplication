@@ -33,7 +33,7 @@ export default function CountingScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        {/* Back Button */}
+      
         <TouchableOpacity style={styles.backButton} onPress={() => router.push('/learnandfun')}>
           <FontAwesome name="arrow-left" size={24} color="white" />
         </TouchableOpacity>
@@ -41,7 +41,7 @@ export default function CountingScreen() {
         <Text style={styles.title}>Counting</Text>
 
         <View style={styles.cardContainer}>
-          {/* Learn Button */}
+         
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}
             onPress={() => router.push('/CLearn')}
@@ -56,7 +56,7 @@ export default function CountingScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Play Button */}
+          
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push('/GuessNumber')}

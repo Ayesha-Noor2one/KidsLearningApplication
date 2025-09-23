@@ -26,8 +26,6 @@ const CreateProfile = () => {
       return;
     }
 
-    // Save the data to storage if needed
-
     Alert.alert('Yay! 🎉', 'Profile created successfully. Redirecting to Login...');
     setTimeout(() => {
       navigation.navigate('LoginScreen');
@@ -36,7 +34,7 @@ const CreateProfile = () => {
 
   return (
     <View style={styles.container}>
-      {/* Home Icon */}
+      
       <TouchableOpacity style={styles.homeButton} onPress={() => navigation.navigate('Settings')}>
         <AntDesign name="home" size={28} color="#333" />
       </TouchableOpacity>

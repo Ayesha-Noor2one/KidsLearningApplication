@@ -125,7 +125,7 @@ export default function BodyPartsGuessGame() {
 
   return (
     <View style={styles.container}>
-      {/* Back button */}
+     
       <Pressable style={styles.backButton} onPress={handleBackPress}>
         <Ionicons name="arrow-back" size={28} color="#333" />
       </Pressable>

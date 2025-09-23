@@ -1,4 +1,3 @@
-// app/learnandfun.js
 import React from 'react';
 import {
   View,
@@ -27,7 +26,7 @@ export default function LearnAndFun() {
       style={styles.background}
     >
       <View style={styles.container}>
-        {/* Back Button */}
+       
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push('/StartScreen')}

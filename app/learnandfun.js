@@ -1,4 +1,4 @@
-// app/learnandfun.js
+
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -63,7 +63,6 @@ const [countPlayDone, setCountPlayDone] = useState(0);
       source={require('../assets/images/background.jpg')}
       style={styles.background}
     >
-      {/* Back button navigates to StartScreen */}
       <TouchableOpacity style={styles.backButton} onPress={() => router.push('/StartScreen')}>
         <Ionicons name="arrow-back" size={30} color="#8B0000" />
       </TouchableOpacity>

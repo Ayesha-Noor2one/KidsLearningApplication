@@ -9,7 +9,7 @@ export default function FruitVegeScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        {/* Back Button */}
+        
         <TouchableOpacity style={styles.backButton} onPress={() => router.push('/playTime')}>
           <FontAwesome name="arrow-left" size={24} color="white" />
         </TouchableOpacity>

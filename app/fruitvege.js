@@ -9,7 +9,7 @@ export default function FruitVegeScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        {/* Back Icon */}
+       
         <TouchableOpacity
           style={styles.backIcon}
           onPress={() => router.push('/learnandfun')}
@@ -34,7 +34,7 @@ export default function FruitVegeScreen() {
             <Text style={styles.cardTitle}>Vegetables</Text>
           </TouchableOpacity>
 
-          {/* Play Button */}
+         
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push('/Guessfv')}

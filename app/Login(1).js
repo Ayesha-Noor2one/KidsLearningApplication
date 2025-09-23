@@ -3,7 +3,7 @@ import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from "reac
 import { useRouter, Link } from "expo-router";
 
 export default function Login() {
-  const router = useRouter(); // useRouter hook for manual navigation
+  const router = useRouter(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,23 +22,20 @@ export default function Login() {
   const handleLogin = () => {
     if (validateForm()) {
       Alert.alert("Login Successful", "Welcome back!");
-      router.push("/Welcome"); // Navigate only if validation passes
+      router.push("/Welcome");
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        {/* Header Image */}
         <Image
           source={require("../assets/images/DOG (1).png")}
           style={styles.image}
         />
-
-        {/* Title */}
         <Text style={styles.title}>Log In</Text>
 
-        {/* Username Input */}
+       
         <TextInput
           style={styles.input}
           placeholder="Name"
@@ -47,7 +44,7 @@ export default function Login() {
           onChangeText={setUsername}
         />
 
-        {/* Password Input */}
+        
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -57,19 +54,19 @@ export default function Login() {
           secureTextEntry
         />
 
-        {/* Forgot Password */}
+    
         <Link href="/Forgotpassword" asChild>
           <Pressable>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </Pressable>
         </Link>
 
-        {/* Log In Button (Fixed) */}
+        
         <Pressable style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Log in</Text>
         </Pressable>
 
-        {/* Footer Text */}
+        
         <Text style={styles.footerText}>
           Don't have an account? {" "}
           <Link href="/SignUp" asChild>

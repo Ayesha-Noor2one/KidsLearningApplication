@@ -8,7 +8,6 @@ import { useFonts } from 'expo-font';
 
 const { width, height } = Dimensions.get('window');
 
-// Vegetables list with image, sound, and description
 const vegetables = [
   {
     name: 'Carrot',

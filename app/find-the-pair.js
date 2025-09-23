@@ -61,7 +61,7 @@ export default function MissingPairGame({ navigation }) {
   const handleChoice = (item) => {
     if (item.id === missingItem.id) {
       setMessage('🎉 Correct!');
-      setShowConfetti(true); // 
+      setShowConfetti(true); 
     } else {
       setMessage('❌ Try again!');
     }

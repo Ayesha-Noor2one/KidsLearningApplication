@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 
-// Colors
+
 const colors = [
   { name: 'red', code: '#e74c3c' },
   { name: 'yellow', code: '#f1c40f' },
@@ -60,15 +60,15 @@ export default function GuessColor() {
   const handleAnswer = (option) => {
     if (option.name === currentColor.name) {
       if (questionIndex + 1 === TOTAL_QUESTIONS) {
-        // All questions done → show final congratulatory
+     
         setShowCongrats(true);
       } else {
-        // Next question
+       
         setQuestionIndex(questionIndex + 1);
         generateQuestion();
       }
     } else {
-      // Shake animation on wrong answer
+     
       Animated.sequence([
         Animated.timing(shakeAnim, { toValue: 10, duration: 100, useNativeDriver: true }),
         Animated.timing(shakeAnim, { toValue: -10, duration: 100, useNativeDriver: true }),

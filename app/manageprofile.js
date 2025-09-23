@@ -111,7 +111,7 @@ const EditProfileScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
-        {/* Header with back button */}
+       
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.push("/Settings")}>
             <Ionicons name="arrow-back" size={24} color="#8B0000" />

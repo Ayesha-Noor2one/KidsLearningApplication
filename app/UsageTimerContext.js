@@ -6,13 +6,12 @@ import { getKidUsageTime, updateKidUsageTime } from "./database";
 export const UsageTimerContext = createContext();
 
 export const UsageTimerProvider = ({ children }) => {
-  const [timeLeft, setTimeLeft] = useState(null); // time in seconds
+  const [timeLeft, setTimeLeft] = useState(null); 
   const [kidId, setKidId] = useState(null);
   const router = useRouter();
   const intervalRef = useRef(null);
   const secondsCounterRef = useRef(0);
 
-  // 🔹 Watch for kidId in storage
   useEffect(() => {
     const checkKidId = setInterval(async () => {
       const stored = JSON.parse(await AsyncStorage.getItem("kidId"));
@@ -24,7 +23,7 @@ export const UsageTimerProvider = ({ children }) => {
     return () => clearInterval(checkKidId);
   }, [kidId]);
 
-  // 🔹 Initialize timer from DB
+
   useEffect(() => {
     if (!kidId) return;
 
@@ -33,7 +32,7 @@ export const UsageTimerProvider = ({ children }) => {
       console.log("limit is", limitObj);
 
       if (limitObj && limitObj.allowedHours > 0) {
-        setTimeLeft(limitObj.allowedHours * 60); // minutes → seconds
+        setTimeLeft(limitObj.allowedHours * 60);
       } else {
         setTimeLeft(null);
       }
@@ -42,7 +41,7 @@ export const UsageTimerProvider = ({ children }) => {
     initTimer();
   }, [kidId]);
 
-  // 🔹 Countdown timer
+
   useEffect(() => {
     if (timeLeft === null || !kidId) return;
 
@@ -56,18 +55,18 @@ export const UsageTimerProvider = ({ children }) => {
     return () => clearInterval(intervalRef.current);
   }, [timeLeft, kidId]);
 
-  // 🔹 React to timer changes (logout & DB update here safely)
+ 
   useEffect(() => {
     if (!kidId || timeLeft === null) return;
 
-    // Time is up → update DB + logout
+   
     if (timeLeft <= 0) {
       (async () => {
         try {
           await updateKidUsageTime(kidId);
-          console.log("✅ Final update before logout for child", kidId);
+          console.log(" Final update before logout for child", kidId);
         } catch (err) {
-          console.error("❌ Failed to update before logout", err);
+          console.error(" Failed to update before logout", err);
         }
 
         await AsyncStorage.removeItem("kidId");
@@ -78,16 +77,15 @@ export const UsageTimerProvider = ({ children }) => {
       return;
     }
 
-    // Update DB every 60 seconds
     secondsCounterRef.current += 1;
     if (secondsCounterRef.current >= 60) {
       secondsCounterRef.current = 0;
       (async () => {
         try {
           await updateKidUsageTime(kidId);
-          console.log("✅ Updated 1 minute usage for child", kidId);
+          console.log(" Updated 1 minute usage for child", kidId);
         } catch (err) {
-          console.error("❌ Failed to update DB", err);
+          console.error(" Failed to update DB", err);
         }
       })();
     }

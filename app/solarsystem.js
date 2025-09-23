@@ -1,4 +1,3 @@
-// SolarSystemScreen.js
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -43,7 +42,7 @@ export default function SolarSystemScreen() {
       style={styles.background}
     >
       <SafeAreaView style={styles.container}>
-        {/* Back Button */}
+       
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push("/learnandfun")}
@@ -54,7 +53,7 @@ export default function SolarSystemScreen() {
         <Text style={styles.title}>Solar System</Text>
 
         <View style={styles.cardContainer}>
-          {/* Learn Button */}
+         
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}
             onPress={() => router.push("/learnsolarsystem")}
@@ -79,7 +78,7 @@ export default function SolarSystemScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Play Button */}
+         
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push("/GuessSolarSystem")}

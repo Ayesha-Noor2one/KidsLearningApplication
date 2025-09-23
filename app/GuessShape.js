@@ -11,7 +11,7 @@ import {
 import LottieView from 'lottie-react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-// Define shapes with image assets
+
 const ALL_SHAPES = [
   { name: 'Circle', image: require('../assets/images/circle.png') },
   { name: 'Square', image: require('../assets/images/sq.png') },

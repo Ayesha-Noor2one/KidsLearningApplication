@@ -40,7 +40,7 @@ const GameScreen = () => {
 
   const playSnapSound = async () => {
     const { sound } = await Audio.Sound.createAsync(
-      require('../assets/sounds/snap.mp3') // Add snap sound to assets
+      require('../assets/sounds/snap.mp3') 
     );
     setSound(sound);
     await sound.playAsync();
@@ -64,7 +64,7 @@ const GameScreen = () => {
         >
           {isDog && (
             <Image
-              source={require('../assets/images/DOG (1).png')} // Your uploaded dog image
+              source={require('../assets/images/DOG (1).png')} 
               style={styles.dog}
               resizeMode="contain"
             />
@@ -79,45 +79,45 @@ const GameScreen = () => {
     setTimer(30);
     setGameOver(false);
     setIsPlayingConfetti(false);
-    setDogIndex(Math.floor(Math.random() * TOTAL_CIRCLES)); // Reset the dog position
-    setSound(null); // Reset sound state
+    setDogIndex(Math.floor(Math.random() * TOTAL_CIRCLES)); 
+    setSound(null); 
   };
 
   return (
     <View style={styles.container}>
-      {/* Home Icon */}
+     
       <TouchableOpacity 
       onPress={() => router.push('/memorygames')} style={styles.homeIcon}>
         <Ionicons name="arrow-back" size={32} color="#333" />
       </TouchableOpacity>
 
-      {/* Heading */}
+     
       <Text style={styles.heading}>Whack-a-Mole</Text>
 
-      {/* Score */}
+      
       <Text style={styles.score}>Score: {score}</Text>
 
-      {/* Grid */}
+      
       <View style={styles.grid}>{renderCircles()}</View>
 
-      {/* Timer */}
+      
       {!gameOver ? (
         <Text style={styles.timer}>Time: {timer}s</Text>
       ) : (
         <Text style={styles.gameOver}>Game Over! Final Score: {score}</Text>
       )}
 
-      {/* Restart Button */}
+     
       {gameOver && (
         <TouchableOpacity onPress={restartGame} style={styles.restartButton}>
           <Text style={styles.restartButtonText}>Restart Game</Text>
         </TouchableOpacity>
       )}
 
-      {/* Confetti Animation */}
+     
       {isPlayingConfetti && (
         <LottieView
-          source={require('../assets/confetti.json')} // Your confetti animation
+          source={require('../assets/confetti.json')} 
           autoPlay
           loop={false}
           style={styles.confetti}

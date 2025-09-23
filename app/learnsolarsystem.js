@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#001f3f', // space vibes
+    backgroundColor: '#001f3f', 
   },
   card: {
     justifyContent: 'center',

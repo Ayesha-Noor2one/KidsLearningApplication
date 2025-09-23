@@ -68,7 +68,7 @@ export default function Login() {
     login(username, password, kidName);
   };
 
-  // Back button alert
+  
   const handleExit = () => {
     Alert.alert("Exit", "Do you want to exit?", [
       { text: "No", style: "cancel" },
@@ -78,7 +78,6 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      {/* Back Button (top-left corner) */}
       <TouchableOpacity style={styles.backButton} onPress={handleExit}>
         <Ionicons name="arrow-back" size={28} color="#8B0000" />
       </TouchableOpacity>

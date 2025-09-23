@@ -8,11 +8,11 @@ export default function RootLayout() {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       () => {
-        return true; // 🔒 block karega har jagah
+        return true; 
       }
     );
 
-    return () => backHandler.remove(); // cleanup
+    return () => backHandler.remove(); 
   }, []);
   return (
     <UsageTimerProvider>

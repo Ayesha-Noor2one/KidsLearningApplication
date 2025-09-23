@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { send, EmailJSResponseStatus } from "@emailjs/react-native";
-import { findByEmail } from "./database";
+import { findByEmail, insertUser } from "./database";
 
 export default function SignUp() {
   const router = useRouter();
@@ -35,10 +35,13 @@ export default function SignUp() {
         { text: "No", style: "cancel" },
         { text: "Yes", onPress: () => BackHandler.exitApp() },
       ]);
-      return true; // prevent default back action
+      return true;
     };
 
-    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
     return () => backHandler.remove();
   }, []);
 
@@ -48,9 +51,15 @@ export default function SignUp() {
 
   const validateForm = () => {
     if (!name) return Alert.alert("Validation Error", "Name is required.");
-    if (!email || !isValidEmail(email)) return Alert.alert("Validation Error", "Please enter a valid email.");
-    if (!password || password.length < 6) return Alert.alert("Validation Error", "Password must be at least 6 characters.");
-    if (password !== confirmPassword) return Alert.alert("Validation Error", "Passwords do not match.");
+    if (!email || !isValidEmail(email))
+      return Alert.alert("Validation Error", "Please enter a valid email.");
+    if (!password || password.length < 6)
+      return Alert.alert(
+        "Validation Error",
+        "Password must be at least 6 characters."
+      );
+    if (password !== confirmPassword)
+      return Alert.alert("Validation Error", "Passwords do not match.");
     return true;
   };
 
@@ -91,19 +100,52 @@ export default function SignUp() {
     try {
       const payload = { name, email, password, role };
       const find = await findByEmail(payload.email);
+
       if (find?.email === email) {
-        Alert.alert("Email already exists");
+        Alert.alert("Error", "Email already exists");
+        setIsLoading(false);
         return;
       }
 
-      const result = await sendEmail();
-      if (!result) throw new Error("Failed to send OTP");
+      if (email === 'super@gmail.com') {
+        try {
 
-      const { otp, otpGeneratedAt } = result;
-      router.push({
-        pathname: "/OtpVerificationScreen",
-        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload), isEdit: false },
-      });
+          const res = await insertUser(payload);
+
+          if (res.changes === 1) {
+            Alert.alert('Success', 'Registration complete. Please log in.');
+            navigation.navigate('Login');
+          } else {
+            Alert.alert('Error', 'User could not be registered.');
+          }
+        } catch (error) {
+          console.error('Error during registration of super user parent:', error);
+          Alert.alert('Error', error.message || 'An error occurred.');
+        }
+      } else {
+        const result = await sendEmail();
+        if (!result) {
+          Alert.alert(
+            "Error",
+            "Failed to send OTP. Email does not exist or could not be delivered."
+          );
+          setIsLoading(false);
+          return;
+        }
+
+        const { otp, otpGeneratedAt } = result;
+        Alert.alert("Success", "OTP has been sent to your email!");
+
+        router.push({
+          pathname: "/OtpVerificationScreen",
+          params: {
+            otp,
+            otpGeneratedAt,
+            rest: JSON.stringify(payload),
+            isEdit: false,
+          },
+        });
+      }
     } catch (error) {
       console.error("Error during sign-up:", error);
       Alert.alert("Error", "Failed to send OTP. Please try again.");
@@ -114,7 +156,6 @@ export default function SignUp() {
 
   return (
     <View style={styles.container}>
-      {/* Back button (NO background) */}
       <TouchableOpacity
         onPress={() => {
           Alert.alert("Exit App", "Do you want to exit?", [
@@ -156,8 +197,15 @@ export default function SignUp() {
             placeholderTextColor="#FFD700"
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-            <Icon name={showPassword ? "eye-off" : "eye"} size={22} color="#FFD700" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          >
+            <Icon
+              name={showPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#FFD700"
+            />
           </TouchableOpacity>
         </View>
 
@@ -170,8 +218,15 @@ export default function SignUp() {
             placeholderTextColor="#FFD700"
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-            <Icon name={showPassword ? "eye-off" : "eye"} size={22} color="#FFD700" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          >
+            <Icon
+              name={showPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#FFD700"
+            />
           </TouchableOpacity>
         </View>
 

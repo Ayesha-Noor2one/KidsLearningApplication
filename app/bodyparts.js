@@ -37,7 +37,7 @@ export default function BodyPartsScreen() {
   return (
     <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
       <SafeAreaView style={styles.container}>
-        {/* Back Button */}
+       
                 <TouchableOpacity
                   style={styles.backButton}
                   onPress={() => router.push("/learnandfun")}
@@ -48,7 +48,7 @@ export default function BodyPartsScreen() {
         <Text style={styles.title}>Body Parts</Text>
 
         <View style={styles.cardContainer}>
-          {/* Learn Button */}
+          
           <TouchableOpacity
             style={[styles.card, styles.blueCard]}
             onPress={() => router.push('/learnbodyparts')}
@@ -63,7 +63,7 @@ export default function BodyPartsScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Play Button */}
+          
           <TouchableOpacity
             style={[styles.card, styles.pinkCard]}
             onPress={() => router.push('/Guessbodyparts')}

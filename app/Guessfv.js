@@ -12,7 +12,7 @@ import LottieView from "lottie-react-native";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 
-// Fruits
+
 const fruits = [
   { name: "Apple", relatedImage: require("../assets/images/apple (2).png") },
   { name: "Banana", relatedImage: require("../assets/images/banana.png") },
@@ -34,7 +34,7 @@ const fruits = [
   { name: "Grapefruit", relatedImage: require("../assets/images/grapefruit.png") },
 ];
 
-// Vegetables
+
 const vegetables = [
   { name: "Carrot", relatedImage: require("../assets/images/carrot.png") },
   { name: "Tomato", relatedImage: require("../assets/images/tomato.png") },
@@ -93,7 +93,7 @@ export default function GuessFV() {
         }
       }, 1000);
     } else {
-      // Shake animation for wrong answer
+      
       Animated.sequence([
         Animated.timing(shakeAnim, { toValue: 10, duration: 100, useNativeDriver: true }),
         Animated.timing(shakeAnim, { toValue: -10, duration: 100, useNativeDriver: true }),
@@ -131,7 +131,7 @@ export default function GuessFV() {
 
   return (
     <View style={styles.container}>
-      {/* Back button */}
+      
       <TouchableOpacity
         style={styles.backButton}
         onPress={() =>

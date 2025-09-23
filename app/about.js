@@ -8,7 +8,6 @@ const AboutScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header with Back Button */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.push("/Settings")}>
           <Ionicons name="arrow-back" size={24} color="#8B0000" />
