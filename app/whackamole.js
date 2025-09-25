@@ -38,13 +38,13 @@ const GameScreen = () => {
     }
   }, [score]);
 
-  const playSnapSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require('../assets/sounds/snap.mp3') 
-    );
-    setSound(sound);
-    await sound.playAsync();
-  };
+ const playSnapSound = async () => {
+  const { sound } = await Audio.Sound.createAsync(
+    { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/snap.mp3' }
+  );
+  setSound(sound);
+  await sound.playAsync();
+};
 
   const handlePress = (index) => {
     if (index === dogIndex && !gameOver) {

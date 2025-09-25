@@ -13,22 +13,23 @@ import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 
 const colors = [
-  { name: 'red', code: '#e74c3c', sound: require('../assets/sounds/red.wav') },
-  { name: 'yellow', code: '#f1c40f', sound: require('../assets/sounds/yellow.wav') },
-  { name: 'blue', code: '#2980b9', sound: require('../assets/sounds/blue.wav') },
-  { name: 'green', code: '#27ae60', sound: require('../assets/sounds/green.wav') },
-  { name: 'pink', code: '#d35db3', sound: require('../assets/sounds/pink.wav') },
-  { name: 'purple', code: '#8e44ad', sound: require('../assets/sounds/purple.wav') },
-  { name: 'white', code: '#ecf0f1', sound: require('../assets/sounds/white.wav') },
-  { name: 'orange', code: '#e67e22', sound: require('../assets/sounds/oran.wav') },
-  { name: 'gray', code: '#95a5a6', sound: require('../assets/sounds/grey.wav') },
-  { name: 'brown', code: '#8e6e53', sound: require('../assets/sounds/brown.wav') },
-  { name: 'black', code: '#000000', sound: require('../assets/sounds/black.wav') },
-  { name: 'cyan', code: '#00FFFF', sound: require('../assets/sounds/cyan.wav') },
-  { name: 'lime', code: '#00FF00', sound: require('../assets/sounds/lime.wav') },
-  { name: 'indigo', code: '#4B0082', sound: require('../assets/sounds/indigo.wav') },
-  { name: 'gold', code: '#FFD700', sound: require('../assets/sounds/gold.wav') },
+  { name: 'red', code: '#e74c3c', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/red.wav' } },
+  { name: 'yellow', code: '#f1c40f', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/yellow.wav' } },
+  { name: 'blue', code: '#2980b9', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/blue.wav' } },
+  { name: 'green', code: '#27ae60', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/green.wav' } },
+  { name: 'pink', code: '#d35db3', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/pink.wav' } },
+  { name: 'purple', code: '#8e44ad', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/purple.wav' } },
+  { name: 'white', code: '#ecf0f1', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/white.wav' } },
+  { name: 'orange', code: '#e67e22', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/oran.wav' } },
+  { name: 'gray', code: '#95a5a6', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/grey.wav' } },
+  { name: 'brown', code: '#8e6e53', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/brown.wav' } },
+  { name: 'black', code: '#000000', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/black.wav' } },
+  { name: 'cyan', code: '#00FFFF', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/cyan.wav' } },
+  { name: 'lime', code: '#00FF00', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/lime.wav' } },
+  { name: 'indigo', code: '#4B0082', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/indigo.wav' } },
+  { name: 'gold', code: '#FFD700', sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/gold.wav' } },
 ];
+
 
 export default function ColorsScreen() {
   const navigation = useNavigation();

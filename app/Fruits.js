@@ -11,112 +11,113 @@ const fruits = [
   { 
     name: 'Apple',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/apple%20(2).png' }, 
-    sound: require('../assets/sounds/apple.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/apple.wav' },
     description: 'An apple is sweet and crunchy. It’s red, green, or yellow!'
   },
   { 
     name: 'Banana',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/banana.png' }, 
-    sound: require('../assets/sounds/banana.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/banana.wav' },
     description: 'A banana is long and yellow. It’s sweet and soft inside!'
   },
   { 
     name: 'Orange',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/orange%20(2).png' }, 
-    sound: require('../assets/sounds/orange.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/orange.wav' },
     description: 'An orange is round and orange. It’s juicy and full of vitamin C!'
   },
   { 
     name: 'Strawberry',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/strawberry.png' }, 
-    sound: require('../assets/sounds/strawberry.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/strawberry.wav' },
     description: 'Strawberries are red, juicy, and sweet. They have tiny seeds on the outside!'
   },
   { 
     name: 'Avocado',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/avocado.png' }, 
-    sound: require('../assets/sounds/avocado.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/avocado.wav' },
     description: 'A green fruit that’s soft inside and super creamy!'
   },
   { 
     name: 'Pineapple',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/Pineapple.png' }, 
-    sound: require('../assets/sounds/pineapple.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/pineapple.wav' },
     description: 'A spiky fruit with juicy yellow inside and a crown on top!'
   },
   { 
     name: 'Watermelon',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/watermelon.png' }, 
-    sound: require('../assets/sounds/watermelon.wav'),
-    description: ' A big green fruit with red juicy inside and black seeds!'
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/watermelon.wav' },
+    description: 'A big green fruit with red juicy inside and black seeds!'
   },
   { 
     name: 'Mango',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mango%20(2).png' }, 
-    sound: require('../assets/sounds/mango.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/mango.wav' },
     description: 'A soft, sweet fruit that’s orange-yellow inside!'
   },
   { 
     name: 'Kiwi',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/kiwi.png' }, 
-    sound: require('../assets/sounds/kiwi.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/kiwi.wav' },
     description: 'A fuzzy brown fruit with bright green and tiny black seeds inside!'
   },
   { 
     name: 'Blueberry',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/Blueberry.png' }, 
-    sound: require('../assets/sounds/blueberry.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/blueberry.wav' },
     description: 'A small round blue fruit that’s sweet and fun to pop!'
   },
   { 
     name: 'Cherry',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/cherry.png' }, 
-    sound: require('../assets/sounds/cherry.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/cherry.wav' },
     description: 'A little red fruit with a long stem and a juicy bite!'
   },
   { 
     name: 'Peach',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/peach.png' }, 
-    sound: require('../assets/sounds/peach.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/peach.wav' },
     description: 'A soft and fuzzy fruit that’s sweet and juicy inside!'
   },
   { 
     name: 'Apricot',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/apricot.png' }, 
-    sound: require('../assets/sounds/apricot.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/apricot.wav' },
     description: 'A small orange fruit that’s soft, sweet, and smooth!'
   },
   { 
     name: 'Figs',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/figs.png' }, 
-    sound: require('../assets/sounds/figs.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/figs.wav' },
     description: 'A soft fruit with lots of tiny seeds and a sweet center!'
   },
   { 
     name: 'Plum',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/plum.png' }, 
-    sound: require('../assets/sounds/plum.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/plum.wav' },
     description: 'A purple fruit that’s juicy and a little tart inside!'
   },
   { 
     name: 'Grapes',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/grapes.png' }, 
-    sound: require('../assets/sounds/grapes.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/grapes.wav' },
     description: 'Tiny round fruits that grow in bunches and taste super sweet or tangy!'
   },
   { 
     name: 'Papaya',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/papaya.png' }, 
-    sound: require('../assets/sounds/papaya.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/papaya.wav' },
     description: 'A big fruit with orange flesh and lots of black seeds!'
   },
   { 
     name: 'Grapefruit',
     relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/grapefruit.png' }, 
-    sound: require('../assets/sounds/grapefruit.wav'),
+    sound: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/grapefruit.wav' },
     description: 'A big round fruit that’s juicy and a little bit sour!'
   },
 ];
+
 
 
 export default function FruitsFlashcards() {

@@ -34,17 +34,20 @@ export default function SettingsScreen() {
     loadUsageLimitTime();
 
     const prepareSound = async () => {
-      try {
-        const { sound } = await Audio.Sound.createAsync(bgMusic, {
-          shouldPlay: false,
-          isLooping: true,
-          volume: 0.1,
-        });
-        soundRef.current = sound;
-      } catch (e) {
-        console.error('Error loading sound:', e);
+  try {
+    const { sound } = await Audio.Sound.createAsync(
+      { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/bro.mpeg' },
+      {
+        shouldPlay: false,
+        isLooping: true,
+        volume: 0.1,
       }
-    };
+    );
+    soundRef.current = sound;
+  } catch (e) {
+    console.error('Error loading sound:', e);
+  }
+};
     prepareSound();
 
     return () => {

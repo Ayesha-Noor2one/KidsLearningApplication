@@ -67,10 +67,12 @@ export default function ColorShapeMatchScreen() {
   }, [sound]);
 
   const playCorrectSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(require('../assets/sounds/amazing.wav'));
-    setSound(sound);
-    await sound.playAsync();
-  };
+  const { sound } = await Audio.Sound.createAsync(
+    { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/amazing.wav' }
+  );
+  setSound(sound);
+  await sound.playAsync();
+};
 
   useEffect(() => {
     if (matchedPairs.length === colors.length && colors.length > 0) {
