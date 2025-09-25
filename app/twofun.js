@@ -73,12 +73,12 @@ const [countPlayDone, setCountPlayDone] = useState(0);
 
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#FF6F61' }]}
-          onPress={() => navigateTo('/Alphabets')}
+          onPress={() => navigateTo('/twocolor')}
         >
           
 
           <Text style={styles.cardTitle}>
-                        🅰️  Alphabets
+                        Counting
                         {(flashDone === 1 && findLetterDone ===1) ? (
                           <Ionicons name="checkmark-circle" size={30} color="green" style={styles.tickIcon} />
                         ) : (
@@ -89,11 +89,11 @@ const [countPlayDone, setCountPlayDone] = useState(0);
 
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#6A5ACD' }]}
-          onPress={() => navigateTo('/Counting')}
+          onPress={() => navigateTo('/twoanimal')}
         >
 
           <Text style={styles.cardTitle}>
-                        🎲 Counting
+                        Animals 
                         {(countPlayDone === 1 && countLearnDone ===1) ? (
                           <Ionicons name="checkmark-circle" size={30} color="green" style={styles.tickIcon} />
                         ) : (
@@ -101,21 +101,7 @@ const [countPlayDone, setCountPlayDone] = useState(0);
                         )}
                       </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#20B2AA' }]}
-          onPress={() => navigateTo('/shapes')}
-        >
-          <Text style={styles.buttonText}>🔺 Shapes</Text>
-        </TouchableOpacity>
-
        
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#FF4500' }]}
-          onPress={() => navigateTo('/color')}
-        >
-          <Text style={styles.buttonText}>🎨 Colors</Text>
-        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
