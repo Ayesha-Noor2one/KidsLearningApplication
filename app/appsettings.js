@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Dimensions, TextInput, Switch } from 'react-nat
 import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
-import bgMusic from '../assets/sounds/bro.mpeg';
 import { getUsageTime, updateParentUsageTime } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

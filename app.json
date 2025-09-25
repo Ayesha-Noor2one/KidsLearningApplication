@@ -4,7 +4,7 @@
     "slug": "KidsLearningApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.jpeg",
+    "icon": "./assets/logo.jpeg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -16,26 +16,29 @@
       }
     },
     "android": {
-      "permissions": ["INTERNET"],
+      "permissions": [
+        "INTERNET"
+      ],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.jpeg",
+        "foregroundImage": "./assets/logo.jpeg",
         "backgroundColor": "#ffffff"
       },
       "splash": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ayeshanoor2one.KidsLearningApp"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/logo.jpeg"
+      "favicon": "./assets/logo.jpeg"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo.jpeg",
+          "image": "./assets/logo.jpeg",
           "imageWidth": 600,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -53,6 +56,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "973a143f-1552-44fa-a3e7-435e4ae053b9"
+      }
     }
   }
 }
