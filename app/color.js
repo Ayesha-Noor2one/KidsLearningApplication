@@ -14,7 +14,7 @@ export default function ColorsScreen() {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.bg}>
+    <ImageBackground source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }} style={styles.bg}>
       <SafeAreaView style={styles.container}>
        
         <TouchableOpacity

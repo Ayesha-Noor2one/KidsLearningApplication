@@ -72,14 +72,14 @@ export default function HomeScreen() {
           />
         </View>
 
-       
-        <Text style={styles.title}>Welcome Kids!</Text>
+       <Text style={styles.title}>For 3 years old kids!</Text>
+        <Text style={styles.title}>Welcome!</Text>
 
         
         <View style={styles.buttonRow}>
           <TouchableOpacity
             style={[styles.circleButton, { backgroundColor: '#FF69B4' }]}
-            onPress={() => router.push('/learnandfun')}
+            onPress={() => router.push('/threefun')}
           >
             <FontAwesome name="smile-o" size={30} color="#FFFFFF" />
             <Text style={styles.circleButtonText}>Learn & Fun</Text>
@@ -87,7 +87,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={[styles.circleButton, { backgroundColor: '#20B2AA' }]}
-            onPress={() => router.push('/playTime')}
+            onPress={() => router.push('/threeplay')}
           >
             <FontAwesome name="gamepad" size={30} color="#FFFFFF" />
             <Text style={styles.circleButtonText}>Play Time</Text>

@@ -36,20 +36,37 @@ export default function Login() {
   const login = async (username, password, kidName) => {
     try {
       const res = await loginUser(username, password, kidName);
-      if (res?.email === username && res?.role === "kid") {
-        const limit = await getKidUsage(res.id);
 
+   
+      if (res?.email === username && res?.role === "kid") {
+        
+        if (res.age == 2) {
+          router.push("/two");
+          return;
+        } else if (res.age == 3) {
+          router.push("/three");
+          return;
+        } else if (res.age == 4) {
+          router.push("/four");
+          return;
+        }
+
+       
+        const limit = await getKidUsage(res.id);
         if (limit.usedMinutes >= limit.allowedHours) {
           Alert.alert("Time is up for today!.");
           return;
         }
+
         await AsyncStorage.setItem("userEmail", username);
         await AsyncStorage.setItem("kidName", kidName);
         await AsyncStorage.setItem("kidId", JSON.stringify(res.id));
+
         router.push("/StartScreen");
         return;
       }
 
+      
       if (res?.email === username && res?.role === "PARENT") {
         await AsyncStorage.setItem("userEmail", username);
         await AsyncStorage.setItem("parentId", JSON.stringify(res.id));
@@ -68,7 +85,6 @@ export default function Login() {
     login(username, password, kidName);
   };
 
-  
   const handleExit = () => {
     Alert.alert("Exit", "Do you want to exit?", [
       { text: "No", style: "cancel" },
@@ -84,7 +100,7 @@ export default function Login() {
 
       <View style={styles.card}>
         <Image
-          source={require("../assets/images/DOG (1).png")}
+          source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/DOG (1).png" }}
           style={styles.image}
         />
 

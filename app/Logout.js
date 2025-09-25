@@ -49,7 +49,8 @@ export default function Logout() {
       <View style={styles.card}>
         
         <Image
-          source={require("../assets/images/DOG (1).png")}
+          source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+    
           style={styles.image}
         />
 

@@ -14,29 +14,29 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-
 const BODY_PARTS = [
-  { name: "Head", image: require("../assets/images/head.jpg") },
-  { name: "Eyes", image: require("../assets/images/eyes.jpg") },
-  { name: "Ears", image: require("../assets/images/ear.jpg") },
-  { name: "Nose", image: require("../assets/images/nose.jpg") },
-  { name: "Mouth", image: require("../assets/images/mouth.jpg") },
-  { name: "Hands", image: require("../assets/images/hands.jpg") },
-  { name: "Feet", image: require("../assets/images/feet.jpg") },
-  { name: "Arms", image: require("../assets/images/arm.jpg") },
-  { name: "Legs", image: require("../assets/images/legs.jpg") },
-  { name: "Fingers", image: require("../assets/images/fingers.jpg") },
-  { name: "Toes", image: require("../assets/images/toes.jpg") },
-  { name: "Knees", image: require("../assets/images/knee.jpg") },
-  { name: "Elbows", image: require("../assets/images/elbow.jpg") },
-  { name: "Teeth", image: require("../assets/images/teeth.jpg") },
-  { name: "Tongue", image: require("../assets/images/tongue.jpg") },
-  { name: "Chest", image: require("../assets/images/chest.webp") },
-  { name: "Shoulders", image: require("../assets/images/shoulder.jpg") },
-  { name: "Neck", image: require("../assets/images/neck.jpg") },
-  { name: "Hair", image: require("../assets/images/hair.jpg") },
-  { name: "Nails", image: require("../assets/images/nail.jpg") },
+  { name: "Head", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/head.jpg" } },
+  { name: "Eyes", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/eyes.jpg" } },
+  { name: "Ears", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/ear.jpg" } },
+  { name: "Nose", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/nose.jpg" } },
+  { name: "Mouth", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mouth.jpg" } },
+  { name: "Hands", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/hands.jpg" } },
+  { name: "Feet", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/feet.jpg" } },
+  { name: "Arms", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/arm.jpg" } },
+  { name: "Legs", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/legs.jpg" } },
+  { name: "Fingers", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/fingers.jpg" } },
+  { name: "Toes", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/toes.jpg" } },
+  { name: "Knees", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/knee.jpg" } },
+  { name: "Elbows", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/elbow.jpg" } },
+  { name: "Teeth", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/teeth.jpg" } },
+  { name: "Tongue", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/tongue.jpg" } },
+  { name: "Chest", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/chest.webp" } },
+  { name: "Shoulders", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/shoulder.jpg" } },
+  { name: "Neck", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/neck.jpg" } },
+  { name: "Hair", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/hair.jpg" } },
+  { name: "Nails", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/nail.jpg" } },
 ];
+
 
 export default function BodyPartsGuessGame() {
   const navigation = useNavigation();

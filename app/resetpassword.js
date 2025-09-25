@@ -17,8 +17,6 @@ import { useRoute } from "@react-navigation/native";
 import { updatePassword } from "./database";
 import { Ionicons } from "@expo/vector-icons";
 
-import resetImage from "../assets/images/6321602 (4).png";
-
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -77,7 +75,8 @@ export default function ResetPassword() {
           </TouchableOpacity>
 
           <View style={styles.box}>
-            <Image source={resetImage} style={styles.image} />
+            <Image source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+     style={styles.image} />
 
             <Text style={styles.title}>Reset Password</Text>
 

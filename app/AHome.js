@@ -38,7 +38,12 @@ export default function Home() {
     <View style={styles.container}>
       
       <View style={styles.card}>
-        <Image source={require("../assets/images/4100_4_06.png")} style={styles.image} />
+        <Image 
+        source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/4100_4_06.png" }}
+    
+         style={styles.image} />
+        
+
         <Text style={styles.text}>Learn anything, anytime, anywhere you want.</Text>
         <Link href="/Login" asChild>
           <Pressable style={styles.button}>

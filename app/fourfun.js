@@ -61,10 +61,9 @@ const [countPlayDone, setCountPlayDone] = useState(0);
   return (
     <ImageBackground
       source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
-    
       style={styles.background}
     >
-      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/StartScreen')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/four')}>
         <Ionicons name="arrow-back" size={30} color="#8B0000" />
       </TouchableOpacity>
 

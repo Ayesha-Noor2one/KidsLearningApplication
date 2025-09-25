@@ -49,7 +49,8 @@ const Settings = () => {
 
   return (
     <ImageBackground
-      source={require('../assets/images/background.jpg')}
+      source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+    
       style={styles.background}
     >
       <View style={styles.overlay}>
@@ -61,7 +62,7 @@ const Settings = () => {
 
         <View style={styles.card}>
           <Text style={styles.username}>
-            🎉 Welcome{name ? `, ${name}` : ''}
+            🎉 Welcome
           </Text>
 
           <Text style={styles.title}>Dashboard</Text>

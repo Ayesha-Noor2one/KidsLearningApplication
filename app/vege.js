@@ -10,132 +10,133 @@ const { width, height } = Dimensions.get('window');
 
 const vegetables = [
   {
-    name: 'Carrot',
-    relatedImage: require('../assets/images/carrot.png'),
-    sound: require('../assets/sounds/carrot.wav'),
-    description: 'A carrot is orange and crunchy. Rabbits love them!'
+    name: "Carrot",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/carrot.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/carrot.wav" },
+    description: "A carrot is orange and crunchy. Rabbits love them!"
   },
   {
-    name: 'Tomato',
-    relatedImage: require('../assets/images/tomato.png'),
-    sound: require('../assets/sounds/tomato.wav'),
-    description: 'A tomato is red and juicy. It’s used in salads and sauces!'
+    name: "Tomato",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/tomato.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/tomato.wav" },
+    description: "A tomato is red and juicy. It’s used in salads and sauces!"
   },
   {
-    name: 'Broccoli',
-    relatedImage: require('../assets/images/broccoli.png'),
-    sound: require('../assets/sounds/broccoli.wav'),
-    description: 'Broccoli looks like a little tree. It’s green and healthy!'
+    name: "Broccoli",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/broccoli.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/broccoli.wav" },
+    description: "Broccoli looks like a little tree. It’s green and healthy!"
   },
   {
-    name: 'Cucumber',
-    relatedImage: require('../assets/images/cucumber.png'),
-    sound: require('../assets/sounds/cucumber.wav'),
-    description: 'A cucumber is long and green. It’s cool and crunchy!'
+    name: "Cucumber",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/cucumber.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/cucumber.wav" },
+    description: "A cucumber is long and green. It’s cool and crunchy!"
   },
   {
-    name: 'Spinach',
-    relatedImage: require('../assets/images/spinach.png'),
-    sound: require('../assets/sounds/spinach.wav'),
-    description: 'Spinach is soft and green. It helps you grow strong!'
+    name: "Spinach",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/spinach.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/spinach.wav" },
+    description: "Spinach is soft and green. It helps you grow strong!"
   },
   {
-    name: 'Potato',
-    relatedImage: require('../assets/images/potato.png'),
-    sound: require('../assets/sounds/potato.wav'),
-    description: 'A potato is brown outside and soft inside. Yum when mashed!'
+    name: "Potato",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/potato.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/potato.wav" },
+    description: "A potato is brown outside and soft inside. Yum when mashed!"
   },
   {
-    name: 'Onion',
-    relatedImage: require('../assets/images/onion.png'),
-    sound: require('../assets/sounds/onion.wav'),
-    description: 'Onions can make you cry, but they add great taste!'
+    name: "Onion",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/onion.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/onion.wav" },
+    description: "Onions can make you cry, but they add great taste!"
   },
   {
-    name: 'Peas',
-    relatedImage: require('../assets/images/peas.png'),
-    sound: require('../assets/sounds/peas.wav'),
-    description: 'Peas are tiny green balls. They’re sweet and fun to eat!'
+    name: "Peas",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/peas.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/peas.wav" },
+    description: "Peas are tiny green balls. They’re sweet and fun to eat!"
   },
   {
-    name: 'Cauliflower',
-    relatedImage: require('../assets/images/cauliflower.png'),
-    sound: require('../assets/sounds/cauliflower.wav'),
-    description: 'Cauliflower is white and fluffy like a veggie cloud!'
+    name: "Cauliflower",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/cauliflower.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/cauliflower.wav" },
+    description: "Cauliflower is white and fluffy like a veggie cloud!"
   },
   {
-    name: 'Bell Pepper',
-    relatedImage: require('../assets/images/bell pepper.png'),
-    sound: require('../assets/sounds/bell pepper.wav'),
-    description: 'Bell peppers come in red, yellow, and green. They’re super crunchy!'
+    name: "Bell Pepper",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/bell%20pepper.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/bell%20pepper.wav" },
+    description: "Bell peppers come in red, yellow, and green. They’re super crunchy!"
   },
   {
-    name: 'Corn',
-    relatedImage: require('../assets/images/corn.png'),
-    sound: require('../assets/sounds/corn.wav'),
-    description: 'Corn has tiny yellow kernels. It’s sweet and yummy!'
+    name: "Corn",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/corn.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/corn.wav" },
+    description: "Corn has tiny yellow kernels. It’s sweet and yummy!"
   },
   {
-    name: 'Eggplant',
-    relatedImage: require('../assets/images/eggplant.png'),
-    sound: require('../assets/sounds/eggplant.wav'),
-    description: 'Eggplants are purple and shiny. They’re soft inside!'
+    name: "Eggplant",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/eggplant.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/eggplant.wav" },
+    description: "Eggplants are purple and shiny. They’re soft inside!"
   },
   {
-    name: 'Pumpkin',
-    relatedImage: require('../assets/images/pumpkin.png'),
-    sound: require('../assets/sounds/pumpkin.wav'),
-    description: 'Pumpkins are big, round, and orange. Great for pies and Halloween!'
+    name: "Pumpkin",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/pumpkin.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/pumpkin.wav" },
+    description: "Pumpkins are big, round, and orange. Great for pies and Halloween!"
   },
   {
-    name: 'Lettuce',
-    relatedImage: require('../assets/images/lettuce.png'),
-    sound: require('../assets/sounds/lettuce.wav'),
-    description: 'Lettuce is leafy and green. It’s crunchy in sandwiches!'
+    name: "Lettuce",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/lettuce.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/lettuce.wav" },
+    description: "Lettuce is leafy and green. It’s crunchy in sandwiches!"
   },
   {
-    name: 'Zucchini',
-    relatedImage: require('../assets/images/zucchini.png'),
-    sound: require('../assets/sounds/zucchini.wav'),
-    description: 'Zucchini is green and soft. It’s great in stir-fry!'
+    name: "Zucchini",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/zucchini.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/zucchini.wav" },
+    description: "Zucchini is green and soft. It’s great in stir-fry!"
   },
   {
-    name: 'Beetroot',
-    relatedImage: require('../assets/images/beetroot.png'),
-    sound: require('../assets/sounds/beetroot.wav'),
-    description: 'Beetroots are dark red and sweet. They make everything pink!'
+    name: "Beetroot",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/beetroot.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/beetroot.wav" },
+    description: "Beetroots are dark red and sweet. They make everything pink!"
   },
   {
-    name: 'Mushroom',
-    relatedImage: require('../assets/images/mushrooms.png'),
-    sound: require('../assets/sounds/mushroom.wav'),
-    description: 'Mushrooms are soft and round. They grow like tiny umbrellas!'
+    name: "Mushroom",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mushrooms.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/mushroom.wav" },
+    description: "Mushrooms are soft and round. They grow like tiny umbrellas!"
   },
   {
-    name: 'Radish',
-    relatedImage: require('../assets/images/radish.png'),
-    sound: require('../assets/sounds/radish.wav'),
-    description: 'Radishes are spicy little roots that come in red and white!'
+    name: "Radish",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/radish.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/radish.wav" },
+    description: "Radishes are spicy little roots that come in red and white!"
   },
   {
-    name: 'GreenBeans',
-    relatedImage: require('../assets/images/green beans.png'),
-    sound: require('../assets/sounds/greenbeans.wav'),
-    description: 'Green beans are long and crunchy. Snap snap!'
+    name: "GreenBeans",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/green%20beans.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/greenbeans.wav" },
+    description: "Green beans are long and crunchy. Snap snap!"
   },
   {
-    name: 'Turnip',
-    relatedImage: require('../assets/images/turnip.png'),
-    sound: require('../assets/sounds/turnip.wav'),
-    description: 'Turnips are round and white with purple tops. They grow underground!'
+    name: "Turnip",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/turnip.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/turnip.wav" },
+    description: "Turnips are round and white with purple tops. They grow underground!"
   },
   {
-    name: 'Cabbage',
-    relatedImage: require('../assets/images/cabbage.png'),
-    sound: require('../assets/sounds/cabbage.wav'),
-    description: 'Cabbage is like a green ball of leaves. It’s super crunchy!'
+    name: "Cabbage",
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/cabbage.png" },
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/cabbage.wav" },
+    description: "Cabbage is like a green ball of leaves. It’s super crunchy!"
   },
 ];
+
 
 export default function VegetablesFlashcards() {
   const [currentIndex, setCurrentIndex] = useState(0);

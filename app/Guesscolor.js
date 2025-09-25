@@ -85,7 +85,8 @@ export default function GuessColor() {
 
   if (showCongrats) {
     return (
-      <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.bg}>
+      <ImageBackground source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+   style={styles.bg}>
         <SafeAreaView style={styles.container}>
           <LottieView
             source={require('../assets/animations/burst.json')}
@@ -113,7 +114,8 @@ export default function GuessColor() {
   }
 
   return (
-    <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.bg}>
+    <ImageBackground source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+   style={styles.bg}>
       <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.backIcon} onPress={handleBackPress}>
           <Ionicons name="arrow-back" size={28} color="white" />

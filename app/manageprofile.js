@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from "expo-router";
 import { send, EmailJSResponseStatus } from "@emailjs/react-native";
-import { findByEmail } from "./database";
+import { findByEmail, updateParent } from "./database";
 
 const EditProfileScreen = () => {
   const router = useRouter();
@@ -21,6 +21,7 @@ const EditProfileScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [id, setId] = useState('');
+  const [originalEmail, setOriginalEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -38,6 +39,7 @@ const EditProfileScreen = () => {
         setEmail(res.email || '');
         setPassword(res.password || '');
         setId(res.id || '');
+        setOriginalEmail(res.email || '');
       }
     } catch (error) {
       console.error('Failed to fetch profile data', error);
@@ -51,6 +53,35 @@ const EditProfileScreen = () => {
   };
 
   const handleInputChange = (setter) => (value) => setter(value);
+
+  const isValidEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const validateForm = () => {
+    if (!name.trim()) {
+      Alert.alert("Validation Error", "Name cannot be empty");
+      return false;
+    }
+    if (!email.trim()) {
+      Alert.alert("Validation Error", "Email cannot be empty");
+      return false;
+    }
+    if (!isValidEmail(email)) {
+      Alert.alert("Validation Error", "Enter a valid email address");
+      return false;
+    }
+    if (!password) {
+      Alert.alert("Validation Error", "Password cannot be empty");
+      return false;
+    }
+    if (password.length < 6) {
+      Alert.alert("Validation Error", "Password must be at least 6 characters");
+      return false;
+    }
+    return true;
+  };
 
   const sendEmail = async () => {
     const otp = generateOTP();
@@ -81,23 +112,38 @@ const EditProfileScreen = () => {
   };
 
   const handleSave = async () => {
+    if (!validateForm()) return;
+
     try {
       const payload = { id, name, email, password };
 
-      const find = await findByEmail(payload.email);
-      if (find?.id !== payload.id) {
-        Alert.alert("Email already exists");
-        return;
+      // If email is changed
+      if (email !== originalEmail) {
+        const existing = await findByEmail(email);
+        if (existing && existing.id !== id) {
+          Alert.alert("Email already exists");
+          return;
+        }
+
+        const result = await sendEmail();
+        if (!result) throw new Error("Failed to send OTP");
+
+        const { otp, otpGeneratedAt } = result;
+        router.push({
+          pathname: "/updateVerification",
+          params: {
+            otp,
+            otpGeneratedAt,
+            rest: JSON.stringify(payload),
+            isEdit: true
+          },
+        });
+      } else {
+        // Email is unchanged, update directly
+        await updateParent(payload);
+        Alert.alert("Success", "Profile updated successfully.");
+        router.back();
       }
-
-      const result = await sendEmail();
-      if (!result) throw new Error("Failed to send OTP");
-
-      const { otp, otpGeneratedAt } = result;
-      router.push({
-        pathname: "/updateVerification",
-        params: { otp, otpGeneratedAt, rest: JSON.stringify(payload), isEdit: true },
-      });
     } catch (error) {
       console.error('Error updating profile:', error);
       Alert.alert("Error", "Failed to update profile.");
@@ -111,13 +157,12 @@ const EditProfileScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
-       
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.push("/Settings")}>
             <Ionicons name="arrow-back" size={24} color="#8B0000" />
           </TouchableOpacity>
           <Text style={styles.title}>Manage Profile</Text>
-          <View style={{ width: 24 }} /> 
+          <View style={{ width: 24 }} />
         </View>
 
         <View style={styles.inputContainer}>
@@ -138,6 +183,7 @@ const EditProfileScreen = () => {
             placeholder="Email"
             placeholderTextColor="#FFD700"
             keyboardType="email-address"
+            autoCapitalize="none"
           />
 
           <Text style={styles.label}>PASSWORD</Text>
@@ -149,6 +195,7 @@ const EditProfileScreen = () => {
               placeholder="Password"
               placeholderTextColor="#FFD700"
               secureTextEntry={!showPassword}
+              autoCapitalize="none"
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Ionicons

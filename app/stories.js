@@ -5,11 +5,32 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 const stories = [
-  { id: '1', title: 'The Light Princess', image: require('../assets/images/lightpri.jpg'), audio: require('../assets/sounds/lightprincess.mp3') },
-  { id: '2', title: 'The Little Mermaid', image: require('../assets/images/mermaid.jpg'), audio: require('../assets/sounds/mermaid.mp3') },
-  { id: '3', title: 'Little Louie', image: require('../assets/images/louie.jpg'), audio: require('../assets/sounds/LittleLouie.mp3') },
-  { id: '4', title: 'How the Leopard’s got his Spots', image: require('../assets/images/leopard.jpg'), audio: require('../assets/sounds/leopardspots.mp3') },
+  { 
+    id: "1", 
+    title: "The Light Princess", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/lightpri.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/lightprincess.mp3" } 
+  },
+  { 
+    id: "2", 
+    title: "The Little Mermaid", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mermaid.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/mermaid.mp3" } 
+  },
+  { 
+    id: "3", 
+    title: "Little Louie", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/louie.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/LittleLouie.mp3" } 
+  },
+  { 
+    id: "4", 
+    title: "How the Leopard’s got his Spots", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/leopard.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/leopardspots.mp3" } 
+  },
 ];
+
 
 export default function StoriesListScreen() {
   const [selectedStory, setSelectedStory] = useState(null);

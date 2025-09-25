@@ -64,7 +64,8 @@ const GameScreen = () => {
         >
           {isDog && (
             <Image
-              source={require('../assets/images/DOG (1).png')} 
+              source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+    
               style={styles.dog}
               resizeMode="contain"
             />

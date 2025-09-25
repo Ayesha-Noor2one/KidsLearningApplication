@@ -5,21 +5,92 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 const poems = [
-  { id: '1', title: 'Twinkle Twinkle Little Star', image: require('../assets/images/twinkle.jpg'), audio: require('../assets/sounds/twinkle.mp3') },
-  { id: '2', title: 'Baa Baa Black Sheep', image: require('../assets/images/blacksheep.jpg'), audio: require('../assets/sounds/baa baa.mp3') },
-  { id: '3', title: 'Humpty Dumpty', image: require('../assets/images/humpty.jpg'), audio: require('../assets/sounds/humpty dumpty.mp3') },
-  { id: '4', title: 'Jack and Jill', image: require('../assets/images/jackjill.jpg'), audio: require('../assets/sounds/jack and jill.mp3') },
-  { id: '5', title: 'Hickory Dickory Dock', image: require('../assets/images/hickory.jpg'), audio: require('../assets/sounds/hickory.mp3') },
-  { id: '6', title: 'Row Row Row Your Boat', image: require('../assets/images/row row.jpg'), audio: require('../assets/sounds/row row.mp3') },
-  { id: '7', title: 'Mary Had a Little Lamb', image: require('../assets/images/mary.jpg'), audio: require('../assets/sounds/mary had.mp3') },
-  { id: '8', title: 'London Bridge is Falling Down', image: require('../assets/images/london.jpg'), audio: require('../assets/sounds/london.mp3') },
-  { id: '9', title: 'Old MacDonald Had a Farm', image: require('../assets/images/oldmac.jpg'), audio: require('../assets/sounds/old mac.mp3') },
-  { id: '10', title: 'Rain Rain Go Away', image: require('../assets/images/rain.jpg'), audio: require('../assets/sounds/rain rain.mp3') },
-  { id: '11', title: 'Five Little Monkeys', image: require('../assets/images/little.jpg'), audio: require('../assets/sounds/five little.mp3') },
-  { id: '12', title: 'One Two Buckle My Shoe', image: require('../assets/images/buckle.jpg'), audio: require('../assets/sounds/buckle.mp3') },
-  { id: '13', title: 'Wheel on the bus', image: require('../assets/images/wheel.jpg'), audio: require('../assets/sounds/wheel on the bus.mp3') },
-  { id: '14', title: 'Ring a Ring o’ Roses', image: require('../assets/images/ringa.jpg'), audio: require('../assets/sounds/ringa.mp3') },
+  { 
+    id: "1", 
+    title: "Twinkle Twinkle Little Star", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/twinkle.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/twinkle.mp3" } 
+  },
+  { 
+    id: "2", 
+    title: "Baa Baa Black Sheep", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/blacksheep.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/baa%20baa.mp3" } 
+  },
+  { 
+    id: "3", 
+    title: "Humpty Dumpty", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/humpty.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/humpty%20dumpty.mp3" } 
+  },
+  { 
+    id: "4", 
+    title: "Jack and Jill", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/jackjill.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/jack%20and%20jill.mp3" } 
+  },
+  { 
+    id: "5", 
+    title: "Hickory Dickory Dock", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/hickory.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/hickory.mp3" } 
+  },
+  { 
+    id: "6", 
+    title: "Row Row Row Your Boat", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/row%20row.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/row%20row.mp3" } 
+  },
+  { 
+    id: "7", 
+    title: "Mary Had a Little Lamb", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mary.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/mary%20had.mp3" } 
+  },
+  { 
+    id: "8", 
+    title: "London Bridge is Falling Down", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/london.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/london.mp3" } 
+  },
+  { 
+    id: "9", 
+    title: "Old MacDonald Had a Farm", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/oldmac.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/old%20mac.mp3" } 
+  },
+  { 
+    id: "10", 
+    title: "Rain Rain Go Away", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/rain.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/rain%20rain.mp3" } 
+  },
+  { 
+    id: "11", 
+    title: "Five Little Monkeys", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/little.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/five%20little.mp3" } 
+  },
+  { 
+    id: "12", 
+    title: "One Two Buckle My Shoe", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/buckle.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/buckle.mp3" } 
+  },
+  { 
+    id: "13", 
+    title: "Wheel on the bus", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/wheel.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/wheel%20on%20the%20bus.mp3" } 
+  },
+  { 
+    id: "14", 
+    title: "Ring a Ring o’ Roses", 
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/ringa.jpg" }, 
+    audio: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/ringa.mp3" } 
+  },
 ];
+
 
 export default function PoemsListScreen() {
   const [selectedPoem, setSelectedPoem] = useState(null);

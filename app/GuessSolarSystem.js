@@ -14,15 +14,16 @@ import LottieView from "lottie-react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
 const planetsData = [
-  { name: "Mercury", image: require("../assets/images/mercury.jpg") },
-  { name: "Venus", image: require("../assets/images/venus.jpg") },
-  { name: "Earth", image: require("../assets/images/earth.jpg") },
-  { name: "Mars", image: require("../assets/images/mars.webp") },
-  { name: "Jupiter", image: require("../assets/images/jupitor.jpg") },
-  { name: "Saturn", image: require("../assets/images/saturn.jpg") },
-  { name: "Uranus", image: require("../assets/images/uranus.jpg") },
-  { name: "Neptune", image: require("../assets/images/neptune.jpg") },
+  { name: "Mercury", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mercury.jpg" } },
+  { name: "Venus", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/venus.jpg" } },
+  { name: "Earth", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/earth.jpg" } },
+  { name: "Mars", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mars.webp" } },
+  { name: "Jupiter", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/jupitor.jpg" } },
+  { name: "Saturn", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/saturn.jpg" } },
+  { name: "Uranus", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/uranus.jpg" } },
+  { name: "Neptune", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/neptune.jpg" } },
 ];
+
 
 function shuffleArray(array) {
   return [...array].sort(() => Math.random() - 0.5);

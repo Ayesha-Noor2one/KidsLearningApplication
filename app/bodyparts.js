@@ -35,7 +35,10 @@ export default function BodyPartsScreen() {
   }, []);
 
   return (
-    <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.background}>
+    <ImageBackground 
+    source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+    
+    style={styles.background}>
       <SafeAreaView style={styles.container}>
        
                 <TouchableOpacity

@@ -11,60 +11,61 @@ const { width, height } = Dimensions.get('window');
 
 const shapes = [
   { 
-    shape: 'Circle', 
-    relatedImage: require('../assets/images/circle.png'), 
-    sound: require('../assets/sounds/circle.wav'),
-    description: 'I am a circle. I am rounded with no corners. ' 
+    shape: "Circle", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/circle.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/circle.wav" },
+    description: "I am a circle. I am rounded with no corners." 
   },
   { 
-    shape: 'Square', 
-    relatedImage: require('../assets/images/sq.png'), 
-    sound: require('../assets/sounds/square.wav'),
-    description: 'I am a square. I have four equal sides and four corners.' 
+    shape: "Square", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/sq.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/square.wav" },
+    description: "I am a square. I have four equal sides and four corners." 
   },
   { 
-    shape: 'Triangle', 
-    relatedImage: require('../assets/images/tr.png'), 
-    sound: require('../assets/sounds/triangle.wav'),
-    description: 'I am a triangle. I have three sides and three angles.' 
+    shape: "Triangle", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/tr.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/triangle.wav" },
+    description: "I am a triangle. I have three sides and three angles." 
   },
   { 
-    shape: 'Rectangle', 
-    relatedImage: require('../assets/images/rec.png'), 
-    sound: require('../assets/sounds/rectangle.wav'),
-    description: 'I am a rectangle. I have four corners and four sides(2 long and 2 short).' 
+    shape: "Rectangle", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/rec.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/rectangle.wav" },
+    description: "I am a rectangle. I have four corners and four sides(2 long and 2 short)." 
   },
   { 
-    shape: 'Oval', 
-    relatedImage: require('../assets/images/Ova.png'), 
-    sound: require('../assets/sounds/oval.wav'),
-    description: 'I am an oval. I am shaped like an egg and have no corners.' 
+    shape: "Oval", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/Ova.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/oval.wav" },
+    description: "I am an oval. I am shaped like an egg and have no corners." 
   },
   { 
-    shape: 'Pentagon', 
-    relatedImage: require('../assets/images/pen.png'), 
-    sound: require('../assets/sounds/Pentagon.wav'),
-    description: 'I am a pentagon. I have five sides and five points.' 
+    shape: "Pentagon", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/pen.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/Pentagon.wav" },
+    description: "I am a pentagon. I have five sides and five points." 
   },
   { 
-    shape: 'Hexagon', 
-    relatedImage: require('../assets/images/hexa.png'), 
-    sound: require('../assets/sounds/hexagon.wav'),
-    description: 'I am a hexagon. I have six equal sides and six angles.' 
+    shape: "Hexagon", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/hexa.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/hexagon.wav" },
+    description: "I am a hexagon. I have six equal sides and six angles." 
   },
   { 
-    shape: 'Star', 
-    relatedImage: require('../assets/images/str.png'), 
-    sound: require('../assets/sounds/star.wav'),
-    description: 'I am a star. I have ten sides and ten points.' 
+    shape: "Star", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/str.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/star.wav" },
+    description: "I am a star. I have ten sides and ten points." 
   },
   { 
-    shape: 'Heart', 
-    relatedImage: require('../assets/images/heart.png'), 
-    sound: require('../assets/sounds/heart.wav'),
-    description: 'I am a heart. I have two rounded tops and one pointed bottom.' 
+    shape: "Heart", 
+    relatedImage: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/heart.png" }, 
+    sound: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/heart.wav" },
+    description: "I am a heart. I have two rounded tops and one pointed bottom." 
   },
 ];
+
 
 export default function ShapesFlashcards() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -116,7 +117,8 @@ export default function ShapesFlashcards() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.backgroundImage}>
+      <ImageBackground source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+     style={styles.backgroundImage}>
         <GestureRecognizer onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
           <Pressable onPress={onCardPress}>
             <View style={styles.card}>

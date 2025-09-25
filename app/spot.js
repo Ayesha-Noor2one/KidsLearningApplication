@@ -13,17 +13,18 @@ import LottieView from 'lottie-react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const IMAGE_OPTIONS = [
-  require('../assets/images/apple.png'),
-  require('../assets/images/banana.png'),
-  require('../assets/images/grapes.png'),
-  require('../assets/images/orange (1).png'),
-  require('../assets/images/watermelon.png'),
-  require('../assets/images/strawberry.png'),
-  require('../assets/images/Pineapple.png'),
-  require('../assets/images/kiwi.png'),
-  require('../assets/images/mango.png'),
-  require('../assets/images/Blueberry.png'),
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/apple.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/banana.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/grapes.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/orange%20(1).png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/watermelon.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/strawberry.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/Pineapple.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/kiwi.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mango.png" },
+  { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/Blueberry.png" },
 ];
+
 
 const getRandomImage = () =>
   IMAGE_OPTIONS[Math.floor(Math.random() * IMAGE_OPTIONS.length)];

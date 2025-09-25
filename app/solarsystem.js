@@ -38,7 +38,8 @@ export default function SolarSystemScreen() {
 
   return (
     <ImageBackground
-      source={require("../assets/images/mou.jpg")}
+      source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+    
       style={styles.background}
     >
       <SafeAreaView style={styles.container}>

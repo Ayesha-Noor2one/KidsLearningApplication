@@ -7,11 +7,12 @@ import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 const cardImages = [
-  require('../assets/images/card1.jpg'),
-  require('../assets/images/card2.jpg'),
-  require('../assets/images/card3.jpg'),
-  require('../assets/images/card4.jpg'),
+  { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/card1.jpg' },
+  { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/card2.jpg' },
+  { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/card3.jpg' },
+  { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/card4.jpg' },
 ];
+
 
 function shuffleCards() {
   const paired = [...cardImages, ...cardImages];
@@ -89,7 +90,8 @@ export default function FlipMatchScreen() {
 
   return (
     <ImageBackground
-      source={require('../assets/images/ga.jpg')}
+      source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+  
       style={styles.background}
       resizeMode="cover"
     >

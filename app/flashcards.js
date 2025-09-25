@@ -27,33 +27,34 @@ const { width, height } = Dimensions.get('window');
 const router = useRouter();
 
 const letters = [
-  { letter: 'Aa', relatedImage: require('../assets/images/apple.png'), sound: require('../assets/sounds/a.wav') },
-  { letter: 'Bb', relatedImage: require('../assets/images/ball.png'), sound: require('../assets/sounds/b.wav') },
-  { letter: 'Cc', relatedImage: require('../assets/images/caty.png'), sound: require('../assets/sounds/c.wav') },
-  { letter: 'Dd', relatedImage: require('../assets/images/dogy.png'), sound: require('../assets/sounds/d.wav') },
-  { letter: 'Ee', relatedImage: require('../assets/images/egg.png'), sound: require('../assets/sounds/e.wav') },
-  { letter: 'Ff', relatedImage: require('../assets/images/fish (1).png'), sound: require('../assets/sounds/f.wav') },
-  { letter: 'Gg', relatedImage: require('../assets/images/goat.png'), sound: require('../assets/sounds/g.wav') },
-  { letter: 'Hh', relatedImage: require('../assets/images/house.png'), sound: require('../assets/sounds/h.wav') },
-  { letter: 'Ii', relatedImage: require('../assets/images/igloo.png'), sound: require('../assets/sounds/i.wav') },
-  { letter: 'Jj', relatedImage: require('../assets/images/jelly.png'), sound: require('../assets/sounds/j.wav') },
-  { letter: 'Kk', relatedImage: require('../assets/images/kangaroo.png'), sound: require('../assets/sounds/k.wav') },
-  { letter: 'Ll', relatedImage: require('../assets/images/lemon.png'), sound: require('../assets/sounds/l.wav') },
-  { letter: 'Mm', relatedImage: require('../assets/images/mango.png'), sound: require('../assets/sounds/m.wav') },
-  { letter: 'Nn', relatedImage: require('../assets/images/net (1).png'), sound: require('../assets/sounds/n.wav') },
-  { letter: 'Oo', relatedImage: require('../assets/images/orange (1).png'), sound: require('../assets/sounds/o.wav') },
-  { letter: 'Pp', relatedImage: require('../assets/images/parrot.png'), sound: require('../assets/sounds/p.wav') },
-  { letter: 'Qq', relatedImage: require('../assets/images/queen.png'), sound: require('../assets/sounds/q.wav') },
-  { letter: 'Rr', relatedImage: require('../assets/images/rabbit.png'), sound: require('../assets/sounds/r.wav') },
-  { letter: 'Ss', relatedImage: require('../assets/images/sun.png'), sound: require('../assets/sounds/s.wav') },
-  { letter: 'Tt', relatedImage: require('../assets/images/train.png'), sound: require('../assets/sounds/t.wav') },
-  { letter: 'Uu', relatedImage: require('../assets/images/umbrella.png'), sound: require('../assets/sounds/u.wav') },
-  { letter: 'Vv', relatedImage: require('../assets/images/voilin.png'), sound: require('../assets/sounds/v.wav') },
-  { letter: 'Ww', relatedImage: require('../assets/images/window.png'), sound: require('../assets/sounds/w.wav') },
-  { letter: 'Xx', relatedImage: require('../assets/images/xylo.png'), sound: require('../assets/sounds/x.wav') },
-  { letter: 'Yy', relatedImage: require('../assets/images/yoyo.png'), sound: require('../assets/sounds/y.wav') },
-  { letter: 'Zz', relatedImage: require('../assets/images/zoo.png'), sound: require('../assets/sounds/z.wav') },
+  { letter: 'Aa', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/apple.png' }, sound: require('../assets/sounds/a.wav') },
+  { letter: 'Bb', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/ball.png' }, sound: require('../assets/sounds/b.wav') },
+  { letter: 'Cc', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/caty.png' }, sound: require('../assets/sounds/c.wav') },
+  { letter: 'Dd', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/dogy.png' }, sound: require('../assets/sounds/d.wav') },
+  { letter: 'Ee', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/egg.png' }, sound: require('../assets/sounds/e.wav') },
+  { letter: 'Ff', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/fish%20(1).png' }, sound: require('../assets/sounds/f.wav') },
+  { letter: 'Gg', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/goat.png' }, sound: require('../assets/sounds/g.wav') },
+  { letter: 'Hh', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/house.png' }, sound: require('../assets/sounds/h.wav') },
+  { letter: 'Ii', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/igloo.png' }, sound: require('../assets/sounds/i.wav') },
+  { letter: 'Jj', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/jelly.png' }, sound: require('../assets/sounds/j.wav') },
+  { letter: 'Kk', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/kangaroo.png' }, sound: require('../assets/sounds/k.wav') },
+  { letter: 'Ll', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/lemon.png' }, sound: require('../assets/sounds/l.wav') },
+  { letter: 'Mm', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mango.png' }, sound: require('../assets/sounds/m.wav') },
+  { letter: 'Nn', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/net%20(1).png' }, sound: require('../assets/sounds/n.wav') },
+  { letter: 'Oo', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/orange%20(1).png' }, sound: require('../assets/sounds/o.wav') },
+  { letter: 'Pp', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/parrot.png' }, sound: require('../assets/sounds/p.wav') },
+  { letter: 'Qq', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/queen.png' }, sound: require('../assets/sounds/q.wav') },
+  { letter: 'Rr', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/rabbit.png' }, sound: require('../assets/sounds/r.wav') },
+  { letter: 'Ss', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/sun.png' }, sound: require('../assets/sounds/s.wav') },
+  { letter: 'Tt', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/train.png' }, sound: require('../assets/sounds/t.wav') },
+  { letter: 'Uu', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/umbrella.png' }, sound: require('../assets/sounds/u.wav') },
+  { letter: 'Vv', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/voilin.png' }, sound: require('../assets/sounds/v.wav') },
+  { letter: 'Ww', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/window.png' }, sound: require('../assets/sounds/w.wav') },
+  { letter: 'Xx', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/xylo.png' }, sound: require('../assets/sounds/x.wav') },
+  { letter: 'Yy', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/yoyo.png' }, sound: require('../assets/sounds/y.wav') },
+  { letter: 'Zz', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/zoo.png' }, sound: require('../assets/sounds/z.wav') },
 ];
+
 
 const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const screenName = 'Flashcards';
@@ -170,7 +171,8 @@ export default function Flashcards() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.backgroundImage}>
+      <ImageBackground source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+  style={styles.backgroundImage}>
         <GestureRecognizer onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
           <Pressable onPress={onCardPress}>
             <View style={styles.card}>

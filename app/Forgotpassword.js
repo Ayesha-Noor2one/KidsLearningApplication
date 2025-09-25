@@ -59,7 +59,8 @@ export default function ForgotPassword() {
       </TouchableOpacity>
 
       <View style={styles.card}>
-        <Image source={require("../assets/images/cat.png")} style={styles.image} />
+        <Image source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+   style={styles.image} />
 
         <Text style={styles.title}>Forgot Password?</Text>
         <Text style={styles.subtitle}>

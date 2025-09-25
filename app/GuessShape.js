@@ -13,19 +13,17 @@ import LottieView from 'lottie-react-native';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const ALL_SHAPES = [
-  { name: 'Circle', image: require('../assets/images/circle.png') },
-  { name: 'Square', image: require('../assets/images/sq.png') },
-  { name: 'Rectangle', image: require('../assets/images/rec.png') },
-  { name: 'Triangle', image: require('../assets/images/tr.png') },
-  { name: 'Star', image: require('../assets/images/str.png') },
-  { name: 'Oval', image: require('../assets/images/Ova.png') },
-  { name: 'Pentagon', image: require('../assets/images/pen.png') },
-  { name: 'Hexagon', image: require('../assets/images/hexa.png') },
-  { 
-    name: 'Heart', 
-    image: require('../assets/images/heart.png'), 
-  },
+  { name: "Circle", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/circle.png" } },
+  { name: "Square", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/sq.png" } },
+  { name: "Rectangle", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/rec.png" } },
+  { name: "Triangle", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/tr.png" } },
+  { name: "Star", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/str.png" } },
+  { name: "Oval", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/Ova.png" } },
+  { name: "Pentagon", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/pen.png" } },
+  { name: "Hexagon", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/hexa.png" } },
+  { name: "Heart", image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/heart.png" } },
 ];
+
 const TOTAL_OPTIONS = 3;
 
 export default function ShapeMatchGame() {

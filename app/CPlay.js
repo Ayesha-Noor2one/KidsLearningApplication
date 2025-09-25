@@ -32,7 +32,7 @@ const PlayScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/images/mou.jpg")} style={styles.backgroundImage} />
+      <Image source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }} style={styles.backgroundImage} />
 
       <Link href="/Counting" asChild>
         <TouchableOpacity style={styles.backButton}>

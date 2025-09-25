@@ -4,24 +4,25 @@ import { Ionicons } from '@expo/vector-icons';
 
 const memoryGames = [
   {
-    id: '1',
-    name: 'Flip Match',
-    image: require('../assets/images/flip.jpeg'),
-    href: '/flip-match',
+    id: "1",
+    name: "Flip Match",
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/flip.jpeg" },
+    href: "/flip-match",
   },
   {
-    id: '2',
-    name: 'Shape & Color Match',
-    image: require('../assets/images/shcol.jpeg'),
-    href: '/shape-color-match',
+    id: "2",
+    name: "Shape & Color Match",
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/shcol.jpeg" },
+    href: "/shape-color-match",
   },
   {
-    id: '3',
-    name: 'Whack a Mole',
-    image: require('../assets/images/DOG (1).png'),
-    href: '/whackamole',
+    id: "3",
+    name: "Whack a Mole",
+    image: { uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/DOG%20(1).png" },
+    href: "/whackamole",
   },
 ];
+
 
 export default function MemoryGamesMainScreen() {
   const router = useRouter();

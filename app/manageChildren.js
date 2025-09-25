@@ -63,8 +63,7 @@ const ChildrenForm = () => {
     const userEmail = await AsyncStorage.getItem('userEmail');
     const parentId = await AsyncStorage.getItem('parentId');
 
-    if (editingIndex === null && children.length >= 5) {
-      showToast('You can only add up to 5 children.');
+    if (editingIndex === null && children.length >= 10) {
       return;
     }
 
@@ -77,8 +76,8 @@ const ChildrenForm = () => {
       return;
     }
 
-    if (!age || parseInt(age) < 1 || parseInt(age) > 9) {
-      showToast('Age must be between 1 and 9.');
+    if (!age || parseInt(age) < 2 || parseInt(age) > 4) {
+      showToast('Age must be between 2 and 4.');
       return;
     }
 
@@ -166,7 +165,7 @@ const ChildrenForm = () => {
               <TouchableOpacity onPress={() => router.push('/Settings')}>
                 <Ionicons name="arrow-back" size={24} color="#8B0000" />
               </TouchableOpacity>
-              <Text style={styles.title}>Children List ({children.length}/5)</Text>
+              <Text style={styles.title}>Children List ({children.length})</Text>
               <View style={{ width: 24 }} />
             </View>
 
@@ -197,10 +196,10 @@ const ChildrenForm = () => {
                 />
 
                 <TextInput
-                  placeholder="Age (1-9)"
+                  placeholder="Age (2-4)"
                   value={age}
                   onChangeText={(text) => {
-                    if (text.length <= 1 && /^[1-9]?$/.test(text)) {
+                    if (text.length <= 1 && /^[2-4]?$/.test(text)) {
                       setAge(text);
                     }
                   }}
@@ -259,7 +258,7 @@ const ChildrenForm = () => {
               </View>
             )}
 
-            {!showForm && children.length < 5 && (
+            {!showForm && children.length < 10 && (
               <View style={styles.bottomButton}>
                 <Button
                   mode="contained"
@@ -276,7 +275,7 @@ const ChildrenForm = () => {
             )}
 
             {children.length >= 5 && (
-              <Text style={styles.limitText}>Maximum 5 child profiles allowed.</Text>
+              <Text style={styles.limitText}>Maximum 10 child profiles allowed.</Text>
             )}
           </View>
         </ScrollView>

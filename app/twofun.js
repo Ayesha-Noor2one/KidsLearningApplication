@@ -64,7 +64,7 @@ const [countPlayDone, setCountPlayDone] = useState(0);
     
       style={styles.background}
     >
-      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/StartScreen')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/two')}>
         <Ionicons name="arrow-back" size={30} color="#8B0000" />
       </TouchableOpacity>
 
@@ -109,27 +109,7 @@ const [countPlayDone, setCountPlayDone] = useState(0);
           <Text style={styles.buttonText}>🔺 Shapes</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#FFA500' }]}
-          onPress={() => navigateTo('/bodyparts')}
-        >
-          <Text style={styles.buttonText}>🧍‍♂️ Body Parts</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#FF69B4' }]}
-          onPress={() => navigateTo('/solarsystem')}
-        >
-          <Text style={styles.buttonText}>🌞 Solar System</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#32CD32' }]}
-          onPress={() => navigateTo('/fruitvege')}
-        >
-          <Text style={styles.buttonText}>🍎🍆 Fruits & Veggies</Text>
-        </TouchableOpacity>
-
+       
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#FF4500' }]}
           onPress={() => navigateTo('/color')}

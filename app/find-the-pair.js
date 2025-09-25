@@ -6,17 +6,17 @@ import { Link } from 'expo-router';
 
 
 const pairs = [
-  { id: 'apple', image: require('../assets/images/apple.png') },
-  { id: 'banana', image: require('../assets/images/banana.png') },
-  { id: 'car', image: require('../assets/images/cat.png') },
-  { id: 'dog', image: require('../assets/images/DOG (1).png') },
-  { id: 'house', image: require('../assets/images/house.png') },
-  { id: 'avocado', image: require('../assets/images/avocado.png') },
-  { id: 'ball', image: require('../assets/images/ball.png') },
-  { id: 'bunny', image: require('../assets/images/bunny.png') },
-  { id: 'earth', image: require('../assets/images/earth.jpg') },
-  { id: 'fish', image: require('../assets/images/fish (1).png') },
-  { id: 'igloo', image: require('../assets/images/igloo.png') },
+  { id: 'apple', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/apple.png' }},
+  { id: 'banana', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/banana.png' }},
+  { id: 'car', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/car.png' }},
+  { id: 'dog', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/DOG (1).png' }},
+  { id: 'house', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/house.png' }},
+  { id: 'avocado', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/avocado.png' }},
+  { id: 'ball', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/ball.png' }},
+  { id: 'bunny', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/bunny.png' }},
+  { id: 'earth', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/earth.png' }},
+  { id: 'fish', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/fish.png' }},
+  { id: 'igloo', image: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/igloo.png' }},
 ];
 
 export default function MissingPairGame({ navigation }) {

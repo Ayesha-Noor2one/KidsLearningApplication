@@ -11,16 +11,16 @@ import { markDone } from './database';
 const { width } = Dimensions.get('window');
 
 const numbers = [
-  { number: '1', relatedImage: require('../assets/images/1.jpg'), sound: require('../assets/sounds/one.wav') },
-  { number: '2', relatedImage: require('../assets/images/2.jpg'), sound: require('../assets/sounds/two.wav') },
-  { number: '3', relatedImage: require('../assets/images/3.jpg'), sound: require('../assets/sounds/three.wav') },
-  { number: '4', relatedImage: require('../assets/images/4.jpg'), sound: require('../assets/sounds/four.wav') },
-  { number: '5', relatedImage: require('../assets/images/5.jpg'), sound: require('../assets/sounds/five.wav') },
-  { number: '6', relatedImage: require('../assets/images/6.jpg'), sound: require('../assets/sounds/six.wav') },
-  { number: '7', relatedImage: require('../assets/images/7.jpg'), sound: require('../assets/sounds/seven.wav') },
-  { number: '8', relatedImage: require('../assets/images/8.jpg'), sound: require('../assets/sounds/eight.wav') },
-  { number: '9', relatedImage: require('../assets/images/9.jpg'), sound: require('../assets/sounds/nine.wav') },
-  { number: '10', relatedImage: require('../assets/images/10.jpg'), sound: require('../assets/sounds/ten.wav') },
+  { number: '1', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/1.jpg' }, sound: require('../assets/sounds/one.wav') },
+  { number: '2', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/2.jpg' }, sound: require('../assets/sounds/two.wav') },
+  { number: '3', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/3.jpg' }, sound: require('../assets/sounds/three.wav') },
+  { number: '4', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/4.jpg' }, sound: require('../assets/sounds/four.wav') },
+  { number: '5', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/5.jpg' }, sound: require('../assets/sounds/five.wav') },
+  { number: '6', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/6.jpg' }, sound: require('../assets/sounds/six.wav') },
+  { number: '7', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/7.jpg' }, sound: require('../assets/sounds/seven.wav') },
+  { number: '8', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/8.jpg' }, sound: require('../assets/sounds/eight.wav') },
+  { number: '9', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/9.jpg' }, sound: require('../assets/sounds/nine.wav') },
+  { number: '10', relatedImage: { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/10.jpg' }, sound: require('../assets/sounds/ten.wav') },
 ];
 
 export default function CountingFlashcards() {
@@ -90,7 +90,8 @@ export default function CountingFlashcards() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/images/mou.jpg')} style={styles.backgroundImage}>
+      <ImageBackground source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
+  style={styles.backgroundImage}>
         <GestureRecognizer onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
           <View style={styles.card}>
             <Text style={styles.numberText}>{numbers[currentIndex].number}</Text>
