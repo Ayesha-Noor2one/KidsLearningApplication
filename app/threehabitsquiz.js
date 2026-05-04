@@ -238,7 +238,7 @@ const saveProgress = async () => {
       
       const kidId = await AsyncStorage.getItem('kidId');
       
-      await addQuizResult(kidId, quiz, right,wrong);
+      await addQuizResult(kidId, quiz, correct,wrong);
       console.log('completed');
       
       showCompletedMessage();

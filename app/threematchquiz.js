@@ -85,6 +85,7 @@ export default function KidsGame() {
   const [selected, setSelected] = useState([]);
   const [matched, setMatched] = useState([]);
   const [wrong, setWrong] = useState(0);
+const [right, setRight] = useState(0);
   const [completed, setCompleted] = useState(0);
   const [showReward, setShowReward] = useState(false);
   const [showExit, setShowExit] = useState(false);
@@ -164,7 +165,7 @@ export default function KidsGame() {
         if (a.match === b.match) {
           const newMatched = [...matched, a.id, b.id];
           setMatched(newMatched);
-
+setRight((r) => r + 1);
           if (newMatched.length === level.length) {
             setCompleted((c) => c + 1);
             playStar();
@@ -236,6 +237,10 @@ export default function KidsGame() {
           Wrong Attempts: {wrong}
         </Text>
 
+        <Text style={{ marginTop: 20, fontSize: 18 }}>
+  Right Attempts: {right} {/* ✅ ADD */}
+</Text>
+
         {/* REPLAY */}
         <TouchableOpacity style={styles.replayBtn} onPress={() => {
           setLevelIndex(0);
@@ -243,6 +248,7 @@ export default function KidsGame() {
           setSelected([]);
           setCompleted(0);
           setWrong(0);
+          setRight(0); // ✅ ADD
           setShowReward(false);
         }}>
           <Text style={{ color: "#fff", fontSize: 18 }}>
@@ -337,6 +343,7 @@ const saveProgress = async () => {
       {/* HUD */}
       <View style={styles.hud}>
         <Text style={{ color: "#6C5CE7" }}>Level {levelIndex + 1}</Text>
+        <Text style={{ color: "green" }}>Right {right}</Text>
         <Text style={{ color: "red" }}>Wrong {wrong}</Text>
         <Text style={{ color: "green" }}>Done {completed}</Text>
       </View>
