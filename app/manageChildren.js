@@ -63,7 +63,7 @@ const ChildrenForm = () => {
     const userEmail = await AsyncStorage.getItem('userEmail');
     const parentId = await AsyncStorage.getItem('parentId');
 
-    if (editingIndex === null && children.length >= 10) {
+    if (editingIndex === null && children.length >= 50) {
       return;
     }
 
@@ -76,8 +76,8 @@ const ChildrenForm = () => {
       return;
     }
 
-    if (!age || parseInt(age) < 2 || parseInt(age) > 4) {
-      showToast('Age must be between 2 and 4.');
+    if (!age || parseInt(age) < 3 || parseInt(age) > 5) {
+      showToast('Age must be between 3 and 5.');
       return;
     }
 
@@ -196,10 +196,10 @@ const ChildrenForm = () => {
                 />
 
                 <TextInput
-                  placeholder="Age (2-4)"
+                  placeholder="Age (3-5)"
                   value={age}
                   onChangeText={(text) => {
-                    if (text.length <= 1 && /^[2-4]?$/.test(text)) {
+                    if (text.length <= 1 && /^[3-5]?$/.test(text)) {
                       setAge(text);
                     }
                   }}
@@ -274,8 +274,8 @@ const ChildrenForm = () => {
               </View>
             )}
 
-            {children.length >= 5 && (
-              <Text style={styles.limitText}>Maximum 10 child profiles allowed.</Text>
+            {children.length >= 50 && (
+              <Text style={styles.limitText}>Maximum 50 child profiles allowed.</Text>
             )}
           </View>
         </ScrollView>

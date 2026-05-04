@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   Pressable,
-  Image,
   StyleSheet,
   Alert,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,9 +17,35 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const router = useRouter();
 
-  const isValidEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
+  const pop1 = useRef(new Animated.Value(0)).current;
+  const pop2 = useRef(new Animated.Value(0)).current;
+  const pop3 = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animate = (anim, delay) => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(anim, {
+            toValue: 1,
+            duration: 700,
+            delay,
+            useNativeDriver: true,
+          }),
+          Animated.timing(anim, {
+            toValue: 0,
+            duration: 700,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    };
+
+    animate(pop1, 0);
+    animate(pop2, 200);
+    animate(pop3, 400);
+  }, []);
+
+  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
   const verifyEmail = async (email) => {
     try {
@@ -33,7 +59,6 @@ export default function ForgotPassword() {
         Alert.alert("Email Not Found", "No account found with that email address.");
       }
     } catch (error) {
-      console.error("Error posting data:", error);
       Alert.alert("Error", "Something went wrong. Please try again later.");
     }
   };
@@ -50,27 +75,50 @@ export default function ForgotPassword() {
 
   return (
     <View style={styles.container}>
-     
+
+      {/* 🌈 BACKGROUND CIRCLES (RESTORED) */}
+      <View style={styles.circle1} />
+      <View style={styles.circle2} />
+      <View style={styles.circle3} />
+
+      {/* BACK BUTTON */}
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => router.push("/Login")}
       >
-        <Ionicons name="arrow-back" size={28} color="#8B0000" />
+        <Ionicons name="arrow-back" size={26} color="#fff" />
       </TouchableOpacity>
 
       <View style={styles.card}>
-        <Image source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
-   style={styles.image} />
 
-        <Text style={styles.title}>Forgot Password?</Text>
+        {/* ANIMATED ICONS */}
+        <View style={styles.iconRow}>
+          <Animated.View style={[styles.bubble, {
+            transform: [{ scale: pop1 }],
+            backgroundColor: "#FFD93D",
+          }]} />
+
+          <Animated.View style={[styles.bubbleBig, {
+            transform: [{ scale: pop2 }],
+            backgroundColor: "#6C5CE7",
+          }]} />
+
+          <Animated.View style={[styles.bubble, {
+            transform: [{ scale: pop3 }],
+            backgroundColor: "#FF7675",
+          }]} />
+        </View>
+
+        <Text style={styles.title}>Forgot Password ?🔐</Text>
+
         <Text style={styles.subtitle}>
-          Enter your email address to reset your password.
+          Enter your email to reset password
         </Text>
 
         <TextInput
           style={styles.input}
           placeholder="youremail@example.com"
-          placeholderTextColor="#FFD700"
+          placeholderTextColor="#aaa"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -78,91 +126,131 @@ export default function ForgotPassword() {
         />
 
         <Pressable style={styles.button} onPress={handleContinue}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>Next </Text>
         </Pressable>
       </View>
     </View>
   );
 }
 
+/* THEME STYLES (UNCHANGED + CIRCLES ADDED) */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f7f9ff",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
   },
+
+  /* 🌈 BACKGROUND CIRCLES */
+  circle1: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: "#FFD93D",
+    top: -50,
+    left: -60,
+    opacity: 0.35,
+  },
+
+  circle2: {
+    position: "absolute",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "#6C5CE7",
+    bottom: 80,
+    right: -50,
+    opacity: 0.2,
+  },
+
+  circle3: {
+    position: "absolute",
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: "#FF7675",
+    top: 200,
+    right: -20,
+    opacity: 0.25,
+  },
+
   backButton: {
     position: "absolute",
-    top: 50,
+    top: 60,
     left: 20,
-    zIndex: 10,
-    backgroundColor: "#FFD700",
-    borderRadius: 50,
-    padding: 6,
-    borderWidth: 2,
-    borderColor: "#8B0000",
+    backgroundColor: "#6C5CE7",
+    padding: 12,
+    borderRadius: 30,
   },
+
   card: {
     width: "90%",
-    minHeight: 520,
-    backgroundColor: "#FFD700",
-    borderRadius: 20,
-    padding: 24,
+    backgroundColor: "#fff",
+    borderRadius: 30,
+    padding: 25,
     alignItems: "center",
-    borderWidth: 3,
-    borderColor: "#8B0000",
-    shadowColor: "#8B0000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.35,
-    shadowRadius: 15,
+    borderWidth: 4,
+    borderColor: "#9183fa",
     elevation: 12,
   },
-  image: {
-    width: 225,
-    height: 225,
-    marginBottom: 10,
+
+  iconRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 15,
   },
+
+  bubble: {
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    marginHorizontal: 6,
+  },
+
+  bubbleBig: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginHorizontal: 6,
+  },
+
   title: {
-    fontSize: 24,
-    fontFamily: "Consolas",
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#8B0000",
+    color: "#FF7675",
     marginBottom: 10,
-    textAlign: "center",
   },
+
   subtitle: {
-    fontSize: 16,
-    fontFamily: "Consolas",
-    color: "#8B0000",
-    marginBottom: 20,
+    fontSize: 15,
+    color: "#555",
     textAlign: "center",
-  },
-  input: {
-    backgroundColor: "#8B0E0E",
-    color: "#FFD700",
-    fontSize: 16,
-    fontFamily: "Consolas",
-    borderRadius: 10,
-    width: "100%",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#FFD700",
   },
-  button: {
-    backgroundColor: "#8B0000",
-    paddingVertical: 14,
-    borderRadius: 10,
+
+  input: {
     width: "100%",
+    backgroundColor: "#f4f6ff",
+    padding: 14,
+    borderRadius: 18,
+    marginBottom: 15,
+    borderWidth: 2,
+    borderColor: "#d9dcff",
+  },
+
+  button: {
+    backgroundColor: "#FFD93D",
+    paddingVertical: 14,
+    width: "100%",
+    borderRadius: 25,
     alignItems: "center",
   },
+
   buttonText: {
-    color: "#FFD700",
-    fontSize: 16,
-    fontFamily: "Consolas",
+    color: "#FF7675",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

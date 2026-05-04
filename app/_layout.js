@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BackHandler } from "react-native";
 import { Stack } from "expo-router";
 import { UsageTimerProvider } from "./UsageTimerContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler"; // 👈 ADD THIS
 
 export default function RootLayout() {
   useEffect(() => {
@@ -14,9 +15,13 @@ export default function RootLayout() {
 
     return () => backHandler.remove(); 
   }, []);
+
   return (
-    <UsageTimerProvider>
-      <Stack screenOptions={{ headerShown: false }} />
-    </UsageTimerProvider>
+    // 👇 WRAP EVERYTHING INSIDE THIS
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <UsageTimerProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </UsageTimerProvider>
+    </GestureHandlerRootView>
   );
 }

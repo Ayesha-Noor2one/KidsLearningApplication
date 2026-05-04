@@ -42,6 +42,7 @@ export default function SignUp() {
       "hardwareBackPress",
       backAction
     );
+
     return () => backHandler.remove();
   }, []);
 
@@ -85,6 +86,7 @@ export default function SignUp() {
         },
         { publicKey: "ucV02B72O55XZL_uf" }
       );
+
       return { otp, otpGeneratedAt };
     } catch (err) {
       if (err instanceof EmailJSResponseStatus) {
@@ -97,6 +99,7 @@ export default function SignUp() {
   const handleSignUp = async () => {
     if (!validateForm()) return;
     setIsLoading(true);
+
     try {
       const payload = { name, email, password, role };
       const find = await findByEmail(payload.email);
@@ -107,34 +110,29 @@ export default function SignUp() {
         return;
       }
 
-      if (email === 'super@gmail.com') {
-        try {
+      if (email === "super@gmail.com") {
+        const res = await insertUser(payload);
 
-          const res = await insertUser(payload);
+        if (res.changes === 1) {
+          Alert.alert("Success", "Registration complete. Please log in.");
 
-          if (res.changes === 1) {
-            Alert.alert('Success', 'Registration complete. Please log in.');
-            navigation.navigate('Login');
-          } else {
-            Alert.alert('Error', 'User could not be registered.');
-          }
-        } catch (error) {
-          console.error('Error during registration of super user parent:', error);
-          Alert.alert('Error', error.message || 'An error occurred.');
+          // ✅ FIXED NAVIGATION
+          router.replace("/Login");
+        } else {
+          Alert.alert("Error", "User could not be registered.");
         }
       } else {
         const result = await sendEmail();
+
         if (!result) {
-          Alert.alert(
-            "Error",
-            "Failed to send OTP. Email does not exist or could not be delivered."
-          );
+          Alert.alert("Error", "Failed to send OTP.");
           setIsLoading(false);
           return;
         }
 
         const { otp, otpGeneratedAt } = result;
-        Alert.alert("Success", "OTP has been sent to your email!");
+
+        Alert.alert("Success", "OTP sent!");
 
         router.push({
           pathname: "/OtpVerificationScreen",
@@ -147,8 +145,7 @@ export default function SignUp() {
         });
       }
     } catch (error) {
-      console.error("Error during sign-up:", error);
-      Alert.alert("Error", "Failed to send OTP. Please try again.");
+      Alert.alert("Error", "Failed to sign up.");
     } finally {
       setIsLoading(false);
     }
@@ -157,15 +154,15 @@ export default function SignUp() {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => {
+        onPress={() =>
           Alert.alert("Exit App", "Do you want to exit?", [
             { text: "No", style: "cancel" },
             { text: "Yes", onPress: () => BackHandler.exitApp() },
-          ]);
-        }}
+          ])
+        }
         style={styles.backButton}
       >
-        <Ionicons name="arrow-back" size={28} color="#8B0000" />
+        <Ionicons name="arrow-back" size={28} color="#ffffffff" />
       </TouchableOpacity>
 
       <View style={styles.card}>
@@ -176,7 +173,7 @@ export default function SignUp() {
           value={name}
           onChangeText={handleInputChange(setName)}
           placeholder="Name"
-          placeholderTextColor="#FFD700"
+          placeholderTextColor="#999"
         />
 
         <TextInput
@@ -184,8 +181,7 @@ export default function SignUp() {
           value={email}
           onChangeText={handleInputChange(setEmail)}
           placeholder="Email"
-          placeholderTextColor="#FFD700"
-          keyboardType="email-address"
+          placeholderTextColor="#999"
         />
 
         <View style={styles.inputContainer}>
@@ -194,9 +190,10 @@ export default function SignUp() {
             value={password}
             onChangeText={handleInputChange(setPassword)}
             placeholder="Password"
-            placeholderTextColor="#FFD700"
+            placeholderTextColor="#999"
             secureTextEntry={!showPassword}
           />
+
           <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
             style={styles.eyeIcon}
@@ -204,7 +201,7 @@ export default function SignUp() {
             <Icon
               name={showPassword ? "eye-off" : "eye"}
               size={22}
-              color="#FFD700"
+              color="#6C5CE7"
             />
           </TouchableOpacity>
         </View>
@@ -215,26 +212,16 @@ export default function SignUp() {
             value={confirmPassword}
             onChangeText={handleInputChange(setConfirmPassword)}
             placeholder="Confirm Password"
-            placeholderTextColor="#FFD700"
+            placeholderTextColor="#999"
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.eyeIcon}
-          >
-            <Icon
-              name={showPassword ? "eye-off" : "eye"}
-              size={22}
-              color="#FFD700"
-            />
-          </TouchableOpacity>
         </View>
 
         {isLoading ? (
-          <ActivityIndicator size="large" color="#8B0000" />
+          <ActivityIndicator size="large" color="#6C5CE7" />
         ) : (
           <Pressable style={styles.signUpButton} onPress={handleSignUp}>
-            <Text style={styles.signUpButtonText}>Sign Up</Text>
+            <Text style={styles.signUpButtonText}>Sign Up </Text>
           </Pressable>
         )}
 
@@ -251,84 +238,85 @@ export default function SignUp() {
   );
 }
 
+/* SAME STYLES */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f7f9ff",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
   },
+
   backButton: {
     position: "absolute",
-    top: 50,
+    top: 60,
     left: 20,
     zIndex: 10,
+    backgroundColor: "#6C5CE7",
+    padding: 12,
+    borderRadius: 30,
   },
+
   card: {
-    width: "100%",
-    backgroundColor: "#FFD700",
-    borderRadius: 20,
-    padding: 24,
-    borderWidth: 3,
-    borderColor: "#8B0000",
-    shadowColor: "#8B0000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.35,
-    shadowRadius: 15,
-    elevation: 12,
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 35,
+    padding: 25,
+    alignItems: "center",
+    borderWidth: 4,
+    borderColor: "#9183fa",
+    elevation: 14,
   },
+
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#8B0000",
-    marginBottom: 24,
-    textAlign: "center",
+    color: "#FF7675",
+    marginBottom: 20,
   },
+
   input: {
     width: "100%",
-    backgroundColor: "#8B0E0E",
+    backgroundColor: "#f4f6ff",
     padding: 14,
-    borderRadius: 10,
+    borderRadius: 18,
     marginBottom: 14,
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-    borderWidth: 1,
-    borderColor: "#FFD700",
+    borderWidth: 2,
+    borderColor: "#d9dcff",
   },
+
   inputContainer: {
-    position: "relative",
     width: "100%",
+    position: "relative",
   },
+
   eyeIcon: {
     position: "absolute",
     right: 15,
-    top: 20,
+    top: 18,
   },
+
   signUpButton: {
-    backgroundColor: "#8B0000",
-    paddingVertical: 14,
+    backgroundColor: "#FFD93D",
+    paddingVertical: 15,
     width: "100%",
-    borderRadius: 10,
+    borderRadius: 25,
     alignItems: "center",
     marginBottom: 20,
-    marginTop: 4,
   },
+
   signUpButtonText: {
+    color: "#FF7675",
     fontSize: 18,
     fontWeight: "bold",
-    color: "#FFD700",
   },
+
   footerText: {
-    textAlign: "center",
-    fontSize: 16,
-    color: "#000",
+    color: "#555",
   },
+
   loginLink: {
-    fontSize: 16,
+    color: "#6C5CE7",
     fontWeight: "bold",
-    color: "#8B0000",
-    textDecorationLine: "underline",
   },
 });

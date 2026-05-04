@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -11,6 +11,7 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRoute } from "@react-navigation/native";
@@ -26,6 +27,35 @@ export default function ResetPassword() {
   const router = useRouter();
   const route = useRoute();
   const { email } = useLocalSearchParams();
+
+  /* 🎈 small animation (same vibe as other screens) */
+  const pop1 = useRef(new Animated.Value(0)).current;
+  const pop2 = useRef(new Animated.Value(0)).current;
+  const pop3 = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animate = (anim, delay) => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(anim, {
+            toValue: 1,
+            duration: 700,
+            delay,
+            useNativeDriver: true,
+          }),
+          Animated.timing(anim, {
+            toValue: 0,
+            duration: 700,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    };
+
+    animate(pop1, 0);
+    animate(pop2, 200);
+    animate(pop3, 400);
+  }, []);
 
   const updatePasswords = async (payload) => {
     try {
@@ -66,26 +96,38 @@ export default function ResetPassword() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
-         
+
+          {/* BACK BUTTON */}
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => router.push("/ForgotPassword")}
+            onPress={() => router.push("/Forgotpassword")}
           >
-            <Ionicons name="arrow-back" size={28} color="#8B0000" />
+            <Ionicons name="arrow-back" size={26} color="#fff" />
           </TouchableOpacity>
 
+          {/* BACKGROUND CIRCLES */}
+          <View style={styles.circle1} />
+          <View style={styles.circle2} />
+          <View style={styles.circle3} />
+
           <View style={styles.box}>
-            <Image source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/mou.jpg" }}
-     style={styles.image} />
 
-            <Text style={styles.title}>Reset Password</Text>
+            {/* animated bubbles header */}
+            <View style={styles.iconRow}>
+              <Animated.View style={[styles.bubble, { transform: [{ scale: pop1 }] }]} />
+              <Animated.View style={[styles.bubbleBig, { transform: [{ scale: pop2 }] }]} />
+              <Animated.View style={[styles.bubble, { transform: [{ scale: pop3 }] }]} />
+            </View>
 
-           
+
+            <Text style={styles.title}>Reset Password 🔐</Text>
+
+            {/* NEW PASSWORD */}
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
                 placeholder="Create new password"
-                placeholderTextColor="#FFD700"
+                placeholderTextColor="#999"
                 secureTextEntry={!showNewPassword}
                 value={newPassword}
                 onChangeText={setNewPassword}
@@ -96,18 +138,18 @@ export default function ResetPassword() {
               >
                 <Ionicons
                   name={showNewPassword ? "eye-off" : "eye"}
-                  size={24}
-                  color="#FFD700"
+                  size={22}
+                  color="#6C5CE7"
                 />
               </TouchableOpacity>
             </View>
 
-            
+            {/* CONFIRM PASSWORD */}
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
                 placeholder="Confirm password"
-                placeholderTextColor="#FFD700"
+                placeholderTextColor="#999"
                 secureTextEntry={!showConfirmPassword}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
@@ -118,14 +160,14 @@ export default function ResetPassword() {
               >
                 <Ionicons
                   name={showConfirmPassword ? "eye-off" : "eye"}
-                  size={24}
-                  color="#FFD700"
+                  size={22}
+                  color="#6C5CE7"
                 />
               </TouchableOpacity>
             </View>
 
             <Pressable style={styles.button} onPress={handleResetPassword}>
-              <Text style={styles.buttonText}>Update</Text>
+              <Text style={styles.buttonText}>Update </Text>
             </Pressable>
           </View>
         </View>
@@ -134,83 +176,138 @@ export default function ResetPassword() {
   );
 }
 
+/* THEME MATCHED STYLES */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f7f9ff",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 40,
   },
+
   backButton: {
     position: "absolute",
-    top: 40,
+    top: 60,
     left: 20,
+    backgroundColor: "#6C5CE7",
+    padding: 12,
+    borderRadius: 30,
     zIndex: 10,
-    backgroundColor: "#FFD700",
-    borderRadius: 20,
-    padding: 6,
-    elevation: 5,
   },
+
+  circle1: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: "#FFD93D",
+    top: -50,
+    left: -60,
+    opacity: 0.3,
+  },
+
+  circle2: {
+    position: "absolute",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "#6C5CE7",
+    bottom: 80,
+    right: -50,
+    opacity: 0.2,
+  },
+
+  circle3: {
+    position: "absolute",
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: "#FF7675",
+    top: 200,
+    right: -20,
+    opacity: 0.25,
+  },
+
   box: {
-    backgroundColor: "#FFD700",
-    borderRadius: 20,
-    padding: 30,
-    elevation: 10,
     width: "90%",
-    minHeight: 600,
+    backgroundColor: "#fff",
+    borderRadius: 35,
+    padding: 25,
     alignItems: "center",
-    borderWidth: 3,
-    borderColor: "#8B0000",
-    shadowColor: "#8B0000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
+    borderWidth: 4,
+    borderColor: "#9183fa",
+    elevation: 14,
   },
-  image: {
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
+
+  iconRow: {
+    flexDirection: "row",
     marginBottom: 10,
   },
+
+  bubble: {
+    width: 18,
+    height: 18,
+    borderRadius: 10,
+    backgroundColor: "#FFD93D",
+    marginHorizontal: 4,
+  },
+
+  bubbleBig: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "#6C5CE7",
+    marginHorizontal: 4,
+  },
+
+  image: {
+    width: 170,
+    height: 170,
+    marginBottom: 10,
+    resizeMode: "contain",
+  },
+
   title: {
-    fontSize: 24,
-    textDecorationLine: "underline",
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#8B0000",
+    color: "#FF7675",
     marginBottom: 20,
   },
+
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#8B0000",
-    borderRadius: 25,
-    paddingHorizontal: 20,
+    backgroundColor: "#f4f6ff",
+    borderRadius: 18,
+    paddingHorizontal: 15,
     marginBottom: 15,
     width: "100%",
+    borderWidth: 2,
+    borderColor: "#d9dcff",
   },
+
   input: {
     flex: 1,
-    color: "#FFD700",
-    fontSize: 16,
     paddingVertical: 12,
+    color: "#333",
   },
+
   icon: {
     paddingLeft: 10,
   },
+
   button: {
-    backgroundColor: "#8B0000",
-    paddingVertical: 14,
-    borderRadius: 25,
+    backgroundColor: "#FFD93D",
+    paddingVertical: 15,
     width: "100%",
+    borderRadius: 25,
     alignItems: "center",
     marginTop: 10,
   },
+
   buttonText: {
-    color: "#FFD700",
-    fontSize: 16,
+    color: "#FF7675",
+    fontSize: 18,
     fontWeight: "bold",
-    textTransform: "uppercase",
   },
 });

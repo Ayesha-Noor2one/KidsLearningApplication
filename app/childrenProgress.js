@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
-import { kidDoneScreens, findAllByEmail, findById } from './database';
+import { findAllByKidId, findAllByEmail, findById } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -9,11 +9,9 @@ const ProgressList = () => {
   const [progressData, setProgressData] = useState([]);
   const router = useRouter();
 
-  const modules = ['Alphabets', 'Counting', 'Shapes', 'Body Parts', 'Solar System'];
-  const flashScreen = 'Flashcards';
-  const guessAlphabet = 'GuessAlphabet';
-  const countingPlay = 'GuessNumber';
-  const countingLearn = 'CountingLearn';
+  const alphabetsQuiz = "Alphabets Quiz";
+  const colorQuiz = 'Colors Quiz';
+  const modules = [alphabetsQuiz, colorQuiz];
 
   useEffect(() => {
     fetchProgress();
@@ -24,24 +22,43 @@ const ProgressList = () => {
       const userEmail = await AsyncStorage.getItem('userEmail');
       const res = await findAllByEmail(userEmail);
       const kidIds = res?.map(child => child.id) || [];
-
+      console.log(kidIds);
+      
       const allProgress = [];
 
       for (const kidId of kidIds) {
         const user = await findById(kidId);
-        const kidScreens = await kidDoneScreens(kidId, 1);
-        const screenNames = kidScreens.map(item => item.screen);
-        const isAlphabetsDone = screenNames.includes(flashScreen) && screenNames.includes(guessAlphabet);
-        const isCountingDone = screenNames.includes(countingPlay) && screenNames.includes(countingLearn);
-
+        const kidQuizesDone = await findAllByKidId(kidId);
+        const quizMap = {};
+        kidQuizesDone.forEach(q => {
+          quizMap[q.quiz_name] = q;
+        });
+        console.log(quizMap);
+        
         const moduleStatuses = modules.map(module => {
-          if (module === 'Alphabets') {
-            return { module, status: isAlphabetsDone ? 'Done' : 'In Progress' };
-          } else if (module === 'Counting') {
-            return { module, status: isCountingDone ? 'Done' : 'In Progress' };
-          } else {
-            return { module, status: 'In Progress' };
+          const quiz = quizMap[module];
+
+          if (!quiz) {
+            return { module, status: 'Not Started', right: 0, wrong: 0 };
           }
+
+          const total = quiz.right_answers + quiz.wrong_answers;
+
+          // Example logic
+          let status = 'In Progress';
+
+          if (total >= 26) { // full alphabet
+            status = 'Done';
+          }
+
+          
+
+          return {
+            module,
+            status,
+            right: quiz.right_answers,
+            wrong: quiz.wrong_answers,
+          };
         });
 
         allProgress.push({ childName: user.name, modules: moduleStatuses });
@@ -54,19 +71,40 @@ const ProgressList = () => {
     }
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.childHeader}>{item.childName}</Text>
-      {item.modules.map((mod, index) => (
+const renderItem = ({ item }) => (
+  <View style={styles.item}>
+    <Text style={styles.childHeader}>{item.childName}</Text>
+
+    {item.modules.map((mod, index) => {
+      let message = '';
+
+      if (mod.wrong === 0 && mod.right==0) {
+        message = 'Pending... ';
+      }
+      else if (mod.wrong === 0 && mod.right>0) {
+        message = ' Excellent Job';
+      } else if (mod.wrong < 5 && mod.right>0) {
+        message = ' Good Job';
+      } else if (mod.wrong > 5 && mod.right>0) {
+        message = ' Bad Job';
+      }
+
+      return (
         <View key={index} style={styles.moduleRow}>
           <Text style={styles.text}>• {mod.module}</Text>
-          <Text style={[styles.text, { marginLeft: 10 }]}>
-            {mod.status === 'Done' ? '✅' : '⏳'}
+
+          <Text style={{ marginLeft: 10 }}>
+            ({mod.right} ✔ / {mod.wrong} ❌)
+          </Text>
+
+          <Text style={{ marginLeft: 10 }}>
+            {message}
           </Text>
         </View>
-      ))}
-    </View>
-  );
+      );
+    })}
+  </View>
+);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -75,7 +113,7 @@ const ProgressList = () => {
           <Ionicons name="arrow-back" size={24} color="#8B0000" />
         </TouchableOpacity>
         <Text style={styles.header}>Children Progress</Text>
-        <View style={{ width: 24 }} /> 
+        <View style={{ width: 24 }} />
       </View>
 
       <FlatList

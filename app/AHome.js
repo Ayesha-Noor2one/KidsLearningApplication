@@ -1,56 +1,115 @@
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import React, { useState, useEffect } from 'react';
-import { initDatabase,truncateTest } from './database';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter, Link } from "expo-router";
-import { UsageTimerProvider } from "./UsageTimerContext";
+import { View, Text, Image, StyleSheet, Pressable, Animated } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { initDatabase, truncateTest } from "./database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 export default function Home() {
   const [items, setItems] = useState([]);
   const router = useRouter();
 
- useEffect(() => {
-  const initialize = async () => {
-    await initDatabase();
-    await truncateTest();
+  const floatAnim = useRef(new Animated.Value(0)).current;
+  const buttonScale = useRef(new Animated.Value(1)).current;
+  const starAnim = useRef(new Animated.Value(0)).current;
 
-    const storedUser = await AsyncStorage.getItem('userEmail');
+  useEffect(() => {
+    const initialize = async () => {
+      await initDatabase();
+      await truncateTest();
 
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
+      const storedUser = await AsyncStorage.getItem("userEmail");
 
-      if (user.role === 'kid') {
-        router.push("/StartScreen");
-        return;
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+
+        if (user.role === "kid") {
+          router.push("/StartScreen");
+          return;
+        }
+
+        if (user.role === "PARENT") {
+          router.push("/Settings");
+          return;
+        }
       }
-      if (user.role === 'PARENT') {
-        router.push("/Settings");
-        return;
-      }
-    }
-  };
+    };
 
-  initialize();
-}, []);
+    initialize();
 
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(floatAnim, {
+          toValue: -15,
+          duration: 1800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(floatAnim, {
+          toValue: 0,
+          duration: 1800,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(buttonScale, {
+          toValue: 1.08,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: 1,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.timing(starAnim, {
+        toValue: 1,
+        duration: 3000,
+        useNativeDriver: true,
+      })
+    ).start();
+  }, []);
 
   return (
     <View style={styles.container}>
-      
-      <View style={styles.card}>
-        <Image 
-        source={{ uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/4100_4_06.png" }}
-    
-         style={styles.image} />
-        
+      <View style={styles.circle1} />
+      <View style={styles.circle2} />
+      <View style={styles.circle3} />
 
-        <Text style={styles.text}>Learn anything, anytime, anywhere you want.</Text>
-        <Link href="/Login" asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Start Now!</Text>
+      <Animated.View
+        style={[
+          styles.card,
+          { transform: [{ translateY: floatAnim }] }
+        ]}
+      >
+        <Image
+          source={{
+            uri: "https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/images/4100_4_06.png",
+          }}
+          style={styles.image}
+        />
+
+        <Text style={styles.title}>Welcome 🎈</Text>
+
+        <Text style={styles.text}>
+          Learn anything , anytime , anywhere you want.
+        </Text>
+
+        <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+          <Pressable
+            style={styles.button}
+            onPress={() => router.push("/Login")}
+          >
+            <Text style={styles.buttonText}>Lets Go🚀</Text>
           </Pressable>
-        </Link>
-      </View>
+        </Animated.View>
+
+      </Animated.View>
     </View>
   );
 }
@@ -58,50 +117,94 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#e9ecf3ff",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f2f2f2", 
-    padding: 0,
+    overflow: "hidden",
   },
-  card: {
-    backgroundColor: "#FFD700", 
-    borderRadius: 12,
-    padding: 50, 
-    width: '90%', 
-    maxWidth: 380, 
-    height: 600, 
-    shadowColor: "#8B0000", 
-    shadowOffset: { width: 0, height: 10 }, 
-    shadowOpacity: 0.2, 
-    shadowRadius: 12, 
-    elevation: 10, 
-    borderColor: "#8B0000", 
-    borderWidth: 3, 
-    marginVertical: 10, 
-  },
-  image: {
-    width: 220, 
+
+  circle1: {
+    position: "absolute",
+    width: 220,
     height: 220,
-    resizeMode: "contain",
-    marginBottom: 20, 
+    borderRadius: 110,
+    backgroundColor: "#FFD93D",
+    top: -50,
+    left: -60,
+    opacity: 0.35,
   },
-  text: {
-    fontWeight: "bold",
-    fontSize: 24, 
-    color: "#8B0000",
-    textAlign: "center",
-    marginBottom: 25,
+
+  circle2: {
+    position: "absolute",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "#6C5CE7",
+    bottom: 80,
+    right: -50,
+    opacity: 0.2,
   },
-  button: {
-    backgroundColor: "#8B0000",
-    paddingVertical: 15,
-    paddingHorizontal: 35, 
-    borderRadius: 40,
+
+  circle3: {
+    position: "absolute",
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: "#FF7675",
+    top: 200,
+    right: -20,
+    opacity: 0.25,
+  },
+
+  card: {
+    backgroundColor: "#fff",
+    width: "90%",
+    borderRadius: 35,
+    padding: 30,
     alignItems: "center",
+    borderWidth: 4,
+    borderColor: "#9183faff",
+    elevation: 14,
+    shadowColor: "#6C5CE7",
+    shadowOpacity: 0.22,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 8 },
   },
+
+  image: {
+    width: 230,
+    height: 230,
+    resizeMode: "contain",
+    marginBottom: 18,
+  },
+
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#FF7675",
+    marginBottom: 15,
+  },
+
+  text: {
+    fontSize: 19,
+    color: "#555",
+    textAlign: "center",
+    lineHeight: 30,
+    marginBottom: 35,
+    fontWeight: "600",
+  },
+
+  button: {
+    backgroundColor: "#eefa63ff",
+    paddingVertical: 18,
+    paddingHorizontal: 42,
+    borderRadius: 50,
+    elevation: 8,
+  },
+
   buttonText: {
-    color: "#FFD700",
-    fontSize: 24, 
+    color: "#FF7675",
+    fontSize: 22,
     fontWeight: "bold",
   },
 });

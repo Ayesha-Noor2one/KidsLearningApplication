@@ -115,28 +115,23 @@ export default function ThreeYearsGames() {
   };
 
   const buttons = [
-    { title: "Alphabets", route: "/fouralphabets", color: "#FF6B6B", icon: "APPLE" },
-    { title: "Parts of Body", route: "/fourpartsbody", color: "#4ECDC4", icon: "sort-numeric-asc" },
-    { title: "Animals", route: "/fouranimals", color: "#FFD93D", icon: "clone" },
-    { title: "Birds", route: "/fourbirds", color: "#6C5CE7", icon: "question" },
-    { title: "Fruits", route: "/fourfruits", color: "#00B894", icon: "square" },
-    { title: "Vegetables", route: "/fourvegetables", color: "#FF8C42", icon: "fruit" },
+    { title: "Scrambled words", route: "/fivescramblewords", color: "#FF6B6B", icon: "APPLE" },
+    { title: "COLORS", route: "/fivecolors", color: "#4ECDC4", icon: "sort-numeric-asc" },
+    { title: "Words Opposites", route: "/fiveopposites", color: "#FFD93D", icon: "clone" },
+    { title: "Counting", route: "/fivecounting", color: "#6C5CE7", icon: "question" },
+    { title: "Daily Objects", route: "/fivedailyobjects", color: "#00B894", icon: "square" },
+    { title: "Awareness", route: "/fiveawareness", color: "#FF8C42", icon: "fruit" },
   ];
 
   // ✅ FIXED QUIZ ROUTES
   const quizButtons = 
     [
-  { title: "Alphabet Quiz", route: "/fouralphabetsquiz", color: "#FF6B6B", icon: "font" },
-
-  { title: "Words Quiz", route: "/fourwordquiz", color: "#4ECDC4", icon: "book" },
-
-  { title: "Counting Quiz", route: "/fourcount", color: "#FFD93D", icon: "sort-numeric-asc" },
-
-  { title: "Fruits & Veg Quiz", route: "/fourfruitsquiz", color: "#6C5CE7", icon: "apple" },
-
-  { title: "Pattern Recog", route: "/fourpattern", color: "#00B894", icon: "th" },
-
-  { title: "Feed the Animals", route: "/fourfeedanimals", color: "#FF8C42", icon: "cutlery" }
+  { title: "Coloring Quiz", route: "/fivecolorquiz", color: "#FF6B6B", icon: "font" },
+  { title: "DICE", route: "/fivedice", color: "#4ECDC4", icon: "book" },
+  { title: "ODD ONE OUT", route: "/fiveoddquiz", color: "#FFD93D", icon: "sort-numeric-asc" },
+  { title: "OPPOSITES", route: "/fiveoppositequiz", color: "#6C5CE7", icon: "apple" },
+  { title: "Pattern Recog", route: "/fivepattern", color: "#00B894", icon: "th" },
+  { title: "PICK THINGS", route: "/fivepickthings", color: "#FF8C42", icon: "cutlery" }
 ];
 
   const slide = (dir) => {
@@ -198,7 +193,7 @@ export default function ThreeYearsGames() {
         <FontAwesome name="arrow-left" size={14} color="#fff" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>Welcome Little Star! (4 yrs)</Text>
+      <Text style={styles.title}>Welcome Little Star!(5 years)</Text>
 
       {/* ARROWS */}
       <TouchableOpacity style={styles.leftArrow} onPress={() => slide(-1)}>
@@ -363,7 +358,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: "#00000066",
+    backgroundColor: "#615d5d66",
     justifyContent: "center",
     alignItems: "center",
   },

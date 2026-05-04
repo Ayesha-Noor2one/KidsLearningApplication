@@ -57,6 +57,15 @@ CREATE TABLE IF NOT EXISTS screenDone (
   isDone INTEGER NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS quiz_results (
+  id SERIAL PRIMARY KEY,
+  user_id VARCHAR(50) NOT NULL,
+  quiz_name VARCHAR(100) NOT NULL,
+  right_answers INT DEFAULT 0,
+  wrong_answers INT DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
     `);
 
   } catch (error) {
@@ -105,6 +114,21 @@ export const markDone = async (userId, screen, isDone) => {
 
   } catch (error) {
     console.error("Error inserting user picture:", error);
+  }
+};
+
+export const addQuizResult = async (userId, quiz_name, rights,wrongs) => {
+  try {
+    console.log("save kr rahy?");
+    
+    const result = await db.runAsync(
+      `INSERT INTO quiz_results (user_id, quiz_name, right_answers, wrong_answers)
+VALUES (?,?,?,?)`,
+      [userId, quiz_name, rights,wrongs],
+    );
+
+  } catch (error) {
+    console.error("Error inserting quiz-result:", error);
   }
 };
 
@@ -349,6 +373,29 @@ export const findAllByEmail = async (email) => {
     }
   } catch (error) {
     console.error('Error during find:', error);
+    return null;
+  }
+};
+
+export const findAllByKidId = async (kidId) => {
+
+  try {
+    
+    const result = await db.getAllAsync(
+      `SELECT * FROM quiz_results  WHERE user_id = ? `,
+      [kidId]
+    );
+    console.log('result');
+    console.log(result);
+    
+    
+    if (result) {
+      return result; 
+    } else {
+      return null; 
+    }
+  } catch (error) {
+    console.error('Error during finding kid quizes results:', error);
     return null;
   }
 };
