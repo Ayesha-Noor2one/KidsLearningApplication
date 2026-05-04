@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
 import * as Speech from "expo-speech";
 import { FontAwesome } from "@expo/vector-icons";
-
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Object Quiz";
 /* 🍎 WORD BANK */
 const WORDS = [
   { word: "APPLE", emoji: "🍎" },
@@ -74,7 +76,20 @@ export default function WordBuildGame() {
     copy.splice(i, 1);
     setSelected(copy);
   };
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   return (
     <View style={styles.container}>
 

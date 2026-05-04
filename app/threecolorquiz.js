@@ -11,6 +11,9 @@ import Svg, { Path } from "react-native-svg";
 import { FontAwesome } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import * as Speech from "expo-speech";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Color Quiz";
 
 /* 🎨 COLORS */
 const COLORS = [
@@ -125,6 +128,7 @@ export default function PaintGame() {
 
       setTimeout(() => {
         if (level === SHAPES.length - 1) {
+          saveProgress();
           setReward(true);
         } else {
           setLevel(l => l + 1);
@@ -199,7 +203,20 @@ export default function PaintGame() {
       </Animated.View>
     );
   }
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   return (
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
 

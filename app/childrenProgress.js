@@ -10,8 +10,12 @@ const ProgressList = () => {
   const router = useRouter();
 
   const alphabetsQuiz = "Alphabets Quiz";
-  const colorQuiz = 'Colors Quiz';
-  const modules = [alphabetsQuiz, colorQuiz];
+  const colorQuiz = 'Color Quiz';
+  const objectQuiz = 'Object Quiz';
+  const countQuiz = 'Count Quiz';
+  const habitQuiz = 'Habit Quiz';
+  const matchQuiz = 'Match Quiz';
+  const modules = [alphabetsQuiz, colorQuiz,objectQuiz,countQuiz,habitQuiz,matchQuiz];
 
   useEffect(() => {
     fetchProgress();

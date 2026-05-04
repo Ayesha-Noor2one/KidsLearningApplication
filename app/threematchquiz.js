@@ -10,7 +10,9 @@ import {
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
-
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Match Quiz";
 // ---------------- LEVEL BUILDER ----------------
 const buildLevel = (emojis) => {
   let items = [];
@@ -180,6 +182,7 @@ export default function KidsGame() {
   // ---------------- NEXT LEVEL ----------------
   const nextLevel = () => {
     if (levelIndex === 9) {
+      saveProgress();
       setShowReward(true);
       return;
     }
@@ -267,7 +270,20 @@ export default function KidsGame() {
       </View>
     );
   }
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   return (
     <View style={styles.container}>
 

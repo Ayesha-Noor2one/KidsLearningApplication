@@ -10,7 +10,9 @@ import {
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Habit Quiz";
 export default function TalkingMagicFriendFinal() {
   const router = useRouter();
 
@@ -138,6 +140,7 @@ export default function TalkingMagicFriendFinal() {
       if (index < data.length - 1) {
         setIndex(index + 1);
       } else {
+        saveProgress();
         setShowReward(true);
 
         Animated.loop(
@@ -230,7 +233,20 @@ export default function TalkingMagicFriendFinal() {
       </Animated.View>
     );
   }
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   return (
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
       <StatusBar hidden />

@@ -12,10 +12,10 @@ import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { addQuizResult } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const LETTERS = "ABC".split("");
 const quiz="Alphabets Quiz";
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+// const LETTERS = "ABC".split("");
+
 
 export default function AlphabetTapGame() {
   const router = useRouter();
@@ -201,7 +201,6 @@ console.log("ONEssdf");
       console.log('saveprogress ..............');
       
       const kidId = await AsyncStorage.getItem('kidId');
-      console.log(kidId + quiz+right+wrong);
       
       await addQuizResult(kidId, quiz, right,wrong);
       console.log('completed');

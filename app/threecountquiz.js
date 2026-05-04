@@ -10,6 +10,9 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Count Quiz";
 
 const ALL_ITEMS = ["🍎","🍌","🚗","🐱","⭐","🍇","🥕","🍊","🚀","⚽","🎈"];
 
@@ -133,6 +136,7 @@ export default function Game() {
 
       if (done === targetCount) {
         if (level >= MAX_LEVEL) {
+          saveProgress();
           setTimeout(() => setReward(true), 500);
         } else {
           setTimeout(() => setLevel(l => l + 1), 500);
@@ -194,7 +198,20 @@ export default function Game() {
       </Animated.View>
     );
   }
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   return (
     <Animated.View style={[styles.container,{ backgroundColor: bgColor }]}>
 
