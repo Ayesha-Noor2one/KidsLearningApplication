@@ -9,6 +9,9 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Alphabets Quiz";
 
 export default function ABCObjectQuiz() {
   const navigation = useNavigation();
@@ -127,7 +130,10 @@ export default function ABCObjectQuiz() {
 
       setTimeout(() => {
         if (index < data.length - 1) setIndex(i => i + 1);
-        else setShowReward(true);
+        
+        else {
+          saveProgress();
+          setShowReward(true);}
         lock.current = false;
       }, 500);
     } else {
@@ -135,6 +141,20 @@ export default function ABCObjectQuiz() {
       shake();
       setTimeout(() => (lock.current = false), 300);
     }
+  };
+  const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
   };
 
   if (showReward)

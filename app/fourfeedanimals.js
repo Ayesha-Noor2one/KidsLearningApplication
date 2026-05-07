@@ -10,7 +10,9 @@ import {
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Animal Quiz";
 
 const DATA = [
   { animal: "🐇", name: "Rabbit", food: "🥕", foodName: "Carrot" },
@@ -201,8 +203,22 @@ export default function Game() {
     }
   };
 
- 
+ const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   if (!isValid) {
+    saveProgress();
     return (
       <View style={styles.reward}>
 

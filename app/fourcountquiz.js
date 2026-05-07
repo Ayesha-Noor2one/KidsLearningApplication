@@ -11,6 +11,9 @@ import {
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Count Quiz";
 
 const ITEMS = ["🍎", "🐶", "🚗", "⚽", "🌸", "⭐", "🦋", "🎈"];
 
@@ -127,6 +130,7 @@ export default function CountingCollectGame() {
 
   const generateLevel = () => {
     if (level > 10) {
+      saveProgress();
       setShowResult(true);
       return;
     }
@@ -143,6 +147,20 @@ export default function CountingCollectGame() {
     setCollected([]);
   };
 
+  const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   const selectItem = (item) => {
     setCollected((prev) => [...prev, item]);
   };

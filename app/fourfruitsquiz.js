@@ -10,6 +10,9 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Fruit Quiz";
 
 
 const DATA = [
@@ -156,7 +159,9 @@ export default function KidsCreativeQuiz() {
       star();
 
       setTimeout(() => {
-        if (level >= 10) setFinished(true);
+        if (level >= 10) {
+          saveProgress()
+          setFinished(true);}
         else setLevel((l) => l + 1);
         setLocked(false);
       }, 800);
@@ -167,7 +172,20 @@ export default function KidsCreativeQuiz() {
       setTimeout(() => setLocked(false), 400);
     }
   };
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   
   if (finished) {
     return (

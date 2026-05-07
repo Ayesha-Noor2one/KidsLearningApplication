@@ -114,7 +114,7 @@ export default function ThreeYearsGames() {
     { title: "Word Build", route: "/fourwordquiz", color: "#16d510ff", emoji: "🧩" },
     { title: "Feed Animals", route: "/fourfeedanimals", color:  "#d7da0dff", emoji: "🍽️🐄" },
     { title: "Pattern Recognition", route: "/fourpattern", color:"#f57272ff", emoji: "🔺🔵" },
-    { title: "Counting Quiz", route: "/fourcount", color: "#8847f9ff", emoji: "🎲" },
+    { title: "Counting Quiz", route: "/fourcountquiz", color: "#8847f9ff", emoji: "🎲" },
   ];
 
   const slide = (dir) => {

@@ -9,7 +9,9 @@ import {
 import * as Speech from "expo-speech";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Word Quiz";
 
 const WORDS = [
   { word: "APPLE", emoji: "🍎" },
@@ -104,9 +106,26 @@ export default function WordBuildGame() {
 
       setTimeout(() => {
         if (index < WORDS.length - 1) setIndex(index + 1);
-        else setShowReward(true);
+        else {
+          saveProgress();
+          setShowReward(true);}
       }, 800);
     }
+  };
+
+  const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
   };
 
   const wrong = () => {

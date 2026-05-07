@@ -11,6 +11,9 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Pattern Quiz";
 
 export default function PatternGame() {
   const router = useRouter();
@@ -126,13 +129,27 @@ export default function PatternGame() {
     ]).start();
   };
 
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   const onPress = (num) => {
     if (num === correct) {
       Speech.speak("Good job");
       setRight((r) => r + 1);
 
       if (level >= 10) {
+        saveProgress();
         setFinished(true); 
       } else {
         setTimeout(() => setLevel((l) => l + 1), 200);

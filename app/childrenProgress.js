@@ -9,13 +9,25 @@ const ProgressList = () => {
   const [progressData, setProgressData] = useState([]);
   const router = useRouter();
 
-  const alphabetsQuiz = "Alphabets Quiz";
-  const colorQuiz = 'Color Quiz';
-  const objectQuiz = 'Object Quiz';
-  const countQuiz = 'Count Quiz';
-  const habitQuiz = 'Habit Quiz';
-  const matchQuiz = 'Match Quiz';
-  const modules = [alphabetsQuiz, colorQuiz, objectQuiz, countQuiz, habitQuiz, matchQuiz];
+  // AGE 3 MODULES
+  const modules3 = [
+    "Alphabets Quiz",
+    "Color Quiz",
+    "Object Quiz",
+    "Count Quiz",
+    "Habit Quiz",
+    "Match Quiz"
+  ];
+
+  //  AGE 4 MODULES
+  const modules4 = [
+    "Alphabets Quiz",
+    "Count Quiz",
+    "Fruit Quiz",
+    "Word Quiz",
+    "Animal Quiz",
+    "Pattern Quiz"
+  ];
 
   useEffect(() => {
     fetchProgress();
@@ -37,6 +49,10 @@ const ProgressList = () => {
         kidQuizesDone.forEach(q => {
           quizMap[q.quiz_name] = q;
         });
+
+        // 👇 AGE BASED MODULE SELECTION
+        const kidAge = user.age || 3; // default 3
+        const modules = kidAge >= 4 ? modules4 : modules3;
 
         const moduleStatuses = modules.map(module => {
           const quiz = quizMap[module];

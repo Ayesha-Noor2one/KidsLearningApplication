@@ -63,16 +63,16 @@ export const UsageTimerProvider = ({ children }) => {
     if (timeLeft <= 0) {
       (async () => {
         try {
-          await updateKidUsageTime(kidId);
-          console.log(" Final update before logout for child", kidId);
+          // await updateKidUsageTime(kidId);
+          // console.log(" Final update before logout for child", kidId);
         } catch (err) {
-          console.error(" Failed to update before logout", err);
+          // console.error(" Failed to update before logout", err);
         }
 
-        await AsyncStorage.removeItem("kidId");
-        setKidId(null);
-        clearInterval(intervalRef.current);
-        router.replace("/Login");
+        // await AsyncStorage.removeItem("kidId");
+        // setKidId(null);
+        // clearInterval(intervalRef.current);
+        // router.replace("/Login");
       })();
       return;
     }
