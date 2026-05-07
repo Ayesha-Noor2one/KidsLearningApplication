@@ -53,7 +53,7 @@ export default function AnimalLearningGame() {
       ])
     ).start();
 
-    // ✅ IMPORTANT: CLEANUP (SCREEN LEAVE PE VOICE BAND)
+    
     return () => {
       Speech.stop();
     };
@@ -107,7 +107,7 @@ export default function AnimalLearningGame() {
     setShowReward(false);
   };
 
-  // ✅ EXIT FIX (DOUBLE SAFETY)
+  
   const exitToMenu = () => {
     Speech.stop();
     setSpeaking(false);
@@ -115,7 +115,7 @@ export default function AnimalLearningGame() {
 
     setTimeout(() => {
       router.push("/four");
-    }, 100); // slight delay to ensure stop
+    }, 100);
   };
 
   const Popup = () => (

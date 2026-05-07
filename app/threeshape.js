@@ -35,7 +35,7 @@ export default function ShapeLearningScreen() {
 
   const shape = shapes[index];
 
-  // BG animation
+  
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -51,7 +51,7 @@ export default function ShapeLearningScreen() {
     outputRange: ["#BEE9FF", "#D7FFD9", "#FFF4C7"],
   });
 
-  // float animation
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -69,7 +69,7 @@ export default function ShapeLearningScreen() {
     ).start();
   }, []);
 
-  // speech
+ 
   const speakShape = () => {
     if (lock.current) return;
 
@@ -119,23 +119,23 @@ export default function ShapeLearningScreen() {
     if (index > 0) setIndex(index - 1);
   };
 
-  // ✅ FIX: stop voice BEFORE navigation
+ 
   const handleExit = () => {
     Speech.stop();
     setShowPopup(false);
     router.push("/three");
   };
 
-  // 🎉 REWARD SCREEN
+ 
   if (finished) {
     return (
       <View style={styles.rewardContainer}>
-        {/* ✅ FIX: now opens popup instead */}
+       
         <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
 
-        {/* SAME POPUP HERE */}
+       
         {showPopup && (
           <View style={styles.popupOverlay}>
             <View style={styles.popupBox}>
@@ -187,7 +187,7 @@ export default function ShapeLearningScreen() {
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* POPUP */}
+     
       {showPopup && (
         <View style={styles.popupOverlay}>
           <View style={styles.popupBox}>

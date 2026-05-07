@@ -26,7 +26,7 @@ export default function EmotionsLearningGame() {
 
   const cardAnims = useRef([...Array(10)].map(() => new Animated.Value(0))).current;
 
-  // ✅ EMOTIONS DATA FIXED
+  
   const emotions = [
     { name: "Happy", emoji: "😊", line: "I feel happy" },
     { name: "Sad", emoji: "😢", line: "I feel sad" },
@@ -42,7 +42,7 @@ export default function EmotionsLearningGame() {
 
   const current = emotions[index];
 
-  // ✅ BG LOOP
+ 
   useEffect(() => {
     const loopBg = () => {
       bgAnim.setValue(0);
@@ -55,7 +55,7 @@ export default function EmotionsLearningGame() {
     };
     loopBg();
 
-    // FLOAT + ROTATE
+    
     Animated.loop(
       Animated.sequence([
         Animated.parallel([
@@ -98,7 +98,7 @@ export default function EmotionsLearningGame() {
     outputRange: ["-6deg", "6deg"],
   });
 
-  // ✅ SPEAK
+ 
   const speak = () => {
     Speech.stop();
     Speech.speak(current.line);
@@ -109,7 +109,7 @@ export default function EmotionsLearningGame() {
     ]).start();
   };
 
-  // ✅ CARDS ANIMATION
+ 
   useEffect(() => {
     speak();
 
@@ -180,7 +180,7 @@ export default function EmotionsLearningGame() {
 
       {showPopup && <Popup />}
 
-      {/* ✅ TITLE FIX */}
+      
       <View style={styles.titleRow}>
         {"EMOTIONS".split("").map((c, i) => (
           <Text key={i} style={[styles.titleChar, { color: `hsl(${i * 22},80%,45%)` }]}>
@@ -189,7 +189,7 @@ export default function EmotionsLearningGame() {
         ))}
       </View>
 
-      {/* EMOJI */}
+   
       <Animated.Text
         style={[
           styles.emoji,
@@ -207,7 +207,7 @@ export default function EmotionsLearningGame() {
 
       <Text style={styles.nameBig}>{current.name}</Text>
 
-      {/* LETTER CARDS */}
+      
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         {current.name.split("").map((l, i) => (
           <Animated.View

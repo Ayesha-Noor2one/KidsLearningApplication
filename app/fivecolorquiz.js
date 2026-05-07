@@ -15,7 +15,7 @@ import { useRouter } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
-/* COLORS */
+
 const COLORS = [
   { name: "Yellow", color: "#FFD700", key: "yellow" },
   { name: "Red", color: "#FF4D4D", key: "red" },
@@ -24,7 +24,7 @@ const COLORS = [
   { name: "Orange", color: "#FF8C00", key: "orange" },
 ];
 
-/* EMOJIS */
+
 const EMOJIS = [
   { emoji: "🍌", color: "yellow" },
   { emoji: "⭐", color: "yellow" },
@@ -61,7 +61,7 @@ export default function ColorDragGame() {
   const flowerAnim = useRef(new Animated.Value(1)).current;
   const itemRefs = useRef({});
 
-  /* 🌸 FLOWER ANIMATION */
+
   useEffect(() => {
     if (gameOver) {
       Animated.loop(
@@ -233,12 +233,12 @@ export default function ColorDragGame() {
     </Modal>
   );
 
-  /* GAME OVER */
+ 
   if (gameOver) {
     return (
       <View style={styles.result}>
 
-        {/* BACK */}
+       
         <TouchableOpacity
           style={styles.back}
           onPress={() => setShowPopup(true)}
@@ -246,7 +246,7 @@ export default function ColorDragGame() {
           <FontAwesome5 name="arrow-left" color="#fff" />
         </TouchableOpacity>
 
-        {/* FLOWER ANIM */}
+     
         <Animated.Text
           style={[
             styles.flower,
@@ -321,7 +321,7 @@ export default function ColorDragGame() {
   );
 }
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", backgroundColor: "#f7f9ff" },
   title: { fontSize: 20, marginTop: 50, fontWeight: "bold", color: "#615ce7ff" },

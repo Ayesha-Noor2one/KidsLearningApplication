@@ -36,7 +36,7 @@ export default function ColorLearningGame() {
 
   const current = colors[index];
 
-  /* BG */
+ 
   useEffect(() => {
     bgAnim.setValue(0);
     Animated.timing(bgAnim, {
@@ -51,7 +51,7 @@ export default function ColorLearningGame() {
     outputRange: ["#ffffff", current.hex + "33"],
   });
 
-  /* FLOAT + BOUNCE + SCALE (FIXED EMOJI ANIMATION) */
+  
   useEffect(() => {
     floatAnim.setValue(0);
     emojiAnim.setValue(0);
@@ -137,7 +137,7 @@ export default function ColorLearningGame() {
     router.push("/five");
   };
 
-  /* CLEAN POPUP (FIXED OVERLAY) */
+ 
   const Popup = () => (
     <View style={styles.overlay}>
       <View style={styles.popup}>
@@ -164,7 +164,7 @@ export default function ColorLearningGame() {
     </View>
   );
 
-  /* EMOJI (FIXED ANIMATION) */
+ 
   const AnimatedEmoji = () => (
     <Animated.Text
       style={[
@@ -250,7 +250,7 @@ export default function ColorLearningGame() {
   return showReward ? <RewardUI /> : <GameUI />;
 };
 
-/* STYLES (popup fixed only) */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
 
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  /* FIXED OVERLAY */
+  
   overlay: {
     position: "absolute",
     top: 0,

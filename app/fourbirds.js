@@ -37,9 +37,9 @@ export default function BirdLearningGame() {
 
   const current = birds[index];
 
-  /* ✅ FIXED SMOOTH ANIMATIONS */
+ 
   useEffect(() => {
-    // 🌈 Smooth infinite gradient loop (NO GLITCH)
+    
     Animated.loop(
       Animated.timing(bgAnim, {
         toValue: 1,
@@ -49,7 +49,7 @@ export default function BirdLearningGame() {
       })
     ).start();
 
-    // 🐦 Smooth float (no jerks)
+   
     Animated.loop(
       Animated.sequence([
         Animated.timing(floatAnim, {
@@ -68,7 +68,7 @@ export default function BirdLearningGame() {
     ).start();
   }, []);
 
-  // ✅ TRUE SMOOTH COLOR INTERPOLATION
+  
   const bgColor = bgAnim.interpolate({
     inputRange: [0, 0.5, 1],
     outputRange: ["#e7edf1ff", "#98743aff", "#315133ff"],
@@ -243,7 +243,7 @@ export default function BirdLearningGame() {
   return showReward ? <RewardUI /> : <GameUI />;
 }
 
-/* styles unchanged */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   titleRow: { flexDirection: "row", position: "absolute", top: 60 },

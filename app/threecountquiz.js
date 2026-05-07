@@ -41,7 +41,7 @@ export default function Game() {
   const targetAnim = useRef(new Animated.Value(1)).current;
   const heartAnim = useRef(new Animated.Value(1)).current;
 
-  /* 🌈 BG */
+  
   useEffect(() => {
     Animated.loop(
       Animated.timing(bgAnim, {
@@ -57,7 +57,7 @@ export default function Game() {
     outputRange: ["#AEE6FF","#FFD6F5"],
   });
 
-  /* 🎯 TARGET ICON */
+  
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -67,7 +67,7 @@ export default function Game() {
     ).start();
   }, []);
 
-  /* ❤️ REWARD HEART */
+  
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -77,7 +77,7 @@ export default function Game() {
     ).start();
   }, []);
 
-  /* 🎯 LEVEL */
+  
   const startLevel = () => {
     const tItem = ALL_ITEMS[Math.floor(Math.random() * ALL_ITEMS.length)];
     const tCount = Math.floor(Math.random() * 4) + 3;
@@ -104,7 +104,7 @@ export default function Game() {
     startLevel();
   }, [level]);
 
-  /* ❌ SHAKE */
+ 
   const playShake = () => {
     Animated.sequence([
       Animated.timing(shakeAnim, { toValue: 10, duration: 50, useNativeDriver: true }),
@@ -113,7 +113,7 @@ export default function Game() {
     ]).start();
   };
 
-  /* 🧠 TAP */
+ 
   const placeItem = (index) => {
 
     if (used.includes(index)) return;
@@ -161,12 +161,12 @@ export default function Game() {
     setReward(false);
   };
 
-  /* 🎉 FULL SCREEN REWARD */
+  
   if (reward) {
     return (
       <Animated.View style={[styles.container,{ backgroundColor: bgColor }]}>
 
-        {/* BACK */}
+     
         <TouchableOpacity style={styles.backBtn} onPress={() => setPopup(true)}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
@@ -184,7 +184,7 @@ export default function Game() {
 
         </View>
 
-        {/* BOTTOM */}
+       
         <View style={styles.bottomBar}>
           <Text>✔ {right}</Text>
           <Text>❌ {wrong}</Text>
@@ -215,12 +215,12 @@ const saveProgress = async () => {
   return (
     <Animated.View style={[styles.container,{ backgroundColor: bgColor }]}>
 
-      {/* BACK */}
+    
       <TouchableOpacity style={styles.backBtn} onPress={() => setPopup(true)}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* POPUP */}
+     
       <Modal visible={popup} transparent>
         <View style={styles.overlay}>
           <View style={styles.popup}>
@@ -239,10 +239,10 @@ const saveProgress = async () => {
         </View>
       </Modal>
 
-      {/* TITLE */}
+      
       <Text style={styles.title}>🌈 Fun Counting Game</Text>
 
-      {/* TASK */}
+    
       <View style={styles.taskRow}>
         <Text style={styles.taskText}>Collect {targetCount}</Text>
 
@@ -254,7 +254,7 @@ const saveProgress = async () => {
         </Animated.Text>
       </View>
 
-      {/* BOXES (FIXED WRAP) */}
+     
       <Animated.View style={{ transform:[{ translateX: shakeAnim }] }}>
         <View style={styles.boxRow}>
           {boxes.map((b,i) => (
@@ -265,7 +265,7 @@ const saveProgress = async () => {
         </View>
       </Animated.View>
 
-      {/* ITEMS */}
+      
       <View style={styles.grid}>
         {items.map((item,i) => (
           <TouchableOpacity
@@ -282,7 +282,7 @@ const saveProgress = async () => {
         ))}
       </View>
 
-      {/* SCORE */}
+      
       <View style={styles.score}>
         <Text>✔ {right}</Text>
         <Text>❌ {wrong}</Text>
@@ -292,7 +292,7 @@ const saveProgress = async () => {
   );
 }
 
-/* 🎨 STYLES */
+
 const styles = StyleSheet.create({
 
   container:{ flex:1, alignItems:"center", paddingTop:80 },
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
 
   boxRow:{
     flexDirection:"row",
-    flexWrap:"wrap", // ✅ FIX
+    flexWrap:"wrap", 
     justifyContent:"center",
     width:"90%"
   },

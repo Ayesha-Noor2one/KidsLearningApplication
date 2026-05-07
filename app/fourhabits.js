@@ -23,7 +23,7 @@ export default function GoodHabitsLearningGame() {
   const floatAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  // ✅ ONLY DATA CHANGED
+  
   const habits = [
     { name: "Brush Teeth", emoji: "🪥", spell: "B R U S H  T E E T H" },
     { name: "Wash Hands", emoji: "🧼", spell: "W A S H  H A N D S" },

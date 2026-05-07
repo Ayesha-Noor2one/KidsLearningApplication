@@ -27,10 +27,10 @@ export default function CountingGame() {
   const starScale = useRef(new Animated.Value(1)).current;
   const starFloat = useRef(new Animated.Value(0)).current;
 
-  // 🌈 NEW BACKGROUND ANIMATION VALUE
+ 
   const bgAnim = useRef(new Animated.Value(0)).current;
 
-  // 🌈 BACKGROUND LOOP (ADDED ONLY THIS)
+  
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -58,13 +58,13 @@ export default function CountingGame() {
     ).start();
   }, []);
 
-  // Interpolated BG COLORS
+  
   const bgColor = bgAnim.interpolate({
     inputRange: [0, 1, 2, 3],
     outputRange: ["#D7F9FF", "#FFF3C7", "#E8FFE8", "#FFE4F2"]
   });
 
-  // Floating emojis
+  
   useEffect(() => {
     animations.current = items.map(() => new Animated.Value(0));
 
@@ -86,7 +86,7 @@ export default function CountingGame() {
     });
   }, [items]);
 
-  // Init level
+ 
   useEffect(() => {
     const newItems = [...Array(level)].map((_, i) => ({
       id: i,
@@ -96,7 +96,7 @@ export default function CountingGame() {
     setCollected(0);
   }, [level]);
 
-  // 🎯 Speak
+
   const speakWord = (text, callback) => {
     setIsBusy(true);
 
@@ -139,10 +139,9 @@ export default function CountingGame() {
 
   const handleBack = () => {
     Alert.alert(
-      "🌈 Exit Game?",
-      "Do you want to go back?",
+      "Exit Game?",
       [
-        { text: "No", style: "cancel" },
+        { text: "No", style: "cancel", },
         { text: "Yes", onPress: () => router.push("/three") }
       ]
     );
@@ -172,7 +171,7 @@ export default function CountingGame() {
           <Text style={{color:"#fff", fontSize:20}}>←</Text>
         </TouchableOpacity>
 
-        <Text style={styles.rewardText}>🎉 YAY! You did it!</Text>
+        <Text style={styles.rewardText}>🎉 You did it!</Text>
 
         <Animated.Text
           style={[
@@ -185,7 +184,7 @@ export default function CountingGame() {
             }
           ]}
         >
-          ⭐
+          🏆
         </Animated.Text>
 
         <TouchableOpacity
@@ -195,7 +194,7 @@ export default function CountingGame() {
             setShowReward(false);
           }}
         >
-          <Text style={{color:"#fff"}}>🔁 Play Again</Text>
+          <Text style={{color:"#fff"}}> Play Again</Text>
         </TouchableOpacity>
       </View>
     );
@@ -244,7 +243,7 @@ export default function CountingGame() {
   );
 }
 
-/* styles SAME AS YOUR ORIGINAL (UNCHANGED) */
+
 const styles = StyleSheet.create({
   container:{ flex:1, alignItems:"center", paddingTop:60 },
 

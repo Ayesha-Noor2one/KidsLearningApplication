@@ -11,7 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 
-/* 🌍 REAL WORLD MODULES */
+
 const levels = [
   {
     type: "traffic",
@@ -64,7 +64,7 @@ export default function RealWorldGame() {
 
   const current = levels[index];
 
-  /* 🌈 BACKGROUND */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -80,7 +80,7 @@ export default function RealWorldGame() {
     outputRange: ["#D7F9FF", "#FFF3C7", "#E5FFE5"],
   });
 
-  /* 🎈 FLOAT */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -98,7 +98,7 @@ export default function RealWorldGame() {
     ).start();
   }, []);
 
-  /* 🔊 SPEECH */
+ 
   const speak = (text) => {
     setLocked(true);
 
@@ -110,13 +110,13 @@ export default function RealWorldGame() {
     });
   };
 
-  /* 🧠 HANDLE TAP */
+
   const handleTap = (item) => {
     if (locked) return;
     speak(item.name);
   };
 
-  /* ⏭ NEXT */
+
   const next = () => {
     if (locked) return;
 
@@ -132,7 +132,7 @@ export default function RealWorldGame() {
     if (index > 0) setIndex(index - 1);
   };
 
-  /* 🏆 REWARD */
+ 
   if (showReward) {
     return (
       <View style={styles.rewardContainer}>
@@ -159,7 +159,7 @@ export default function RealWorldGame() {
 
       <Text style={styles.title}>{current.title}</Text>
 
-      {/* BIG ICON */}
+     
       <Animated.Text
         style={[
           styles.bigEmoji,
@@ -170,7 +170,7 @@ export default function RealWorldGame() {
         {current.emoji}
       </Animated.Text>
 
-      {/* ITEMS */}
+    
       <View style={styles.row}>
         {current.items.map((item, i) => (
           <TouchableOpacity
@@ -184,7 +184,7 @@ export default function RealWorldGame() {
         ))}
       </View>
 
-      {/* NAV */}
+     
       <View style={styles.nav}>
         <TouchableOpacity style={styles.navBtn} onPress={prev}>
           <FontAwesome name="chevron-left" size={24} color="#fff" />
@@ -198,7 +198,7 @@ export default function RealWorldGame() {
   );
 }
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
 
-  /* 🏆 REWARD */
+ 
   rewardContainer: {
     flex: 1,
     justifyContent: "center",

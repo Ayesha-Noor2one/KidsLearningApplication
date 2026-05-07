@@ -21,7 +21,7 @@ export default function OtpVerification() {
 
   const [enteredOtp, setEnteredOtp] = useState("");
 
-  /* 🎈 animations (same app style) */
+ 
   const pop1 = useRef(new Animated.Value(0)).current;
   const pop2 = useRef(new Animated.Value(0)).current;
   const pop3 = useRef(new Animated.Value(0)).current;
@@ -86,7 +86,7 @@ export default function OtpVerification() {
   return (
     <View style={styles.container}>
 
-      {/* BACK BUTTON → SIGNUP */}
+     
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("SignUp")}
@@ -94,14 +94,14 @@ export default function OtpVerification() {
         <Ionicons name="arrow-back" size={26} color="#fff" />
       </TouchableOpacity>
 
-      {/* BACKGROUND CIRCLES */}
+    
       <View style={styles.circle1} />
       <View style={styles.circle2} />
       <View style={styles.circle3} />
 
       <View style={styles.card}>
 
-        {/* animated bubbles */}
+       
         <View style={styles.iconRow}>
           <Animated.View style={[styles.bubble, { transform: [{ scale: pop1 }] }]} />
           <Animated.View style={[styles.bubbleBig, { transform: [{ scale: pop2 }] }]} />
@@ -132,7 +132,7 @@ export default function OtpVerification() {
   );
 }
 
-/* THEME MATCHED STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

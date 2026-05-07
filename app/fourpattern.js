@@ -32,7 +32,7 @@ export default function PatternGame() {
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const heartAnim = useRef(new Animated.Value(1)).current;
 
-  /* 🎨 BG + BOTTOM */
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -59,7 +59,7 @@ export default function PatternGame() {
     outputRange: [0, -10],
   });
 
-  /* 🎲 PATTERN */
+  
   useEffect(() => {
     generatePattern();
 
@@ -105,7 +105,7 @@ export default function PatternGame() {
     Speech.speak("Find the missing number");
   };
 
-  /* ❤️ HEART ANIMATION */
+  
   useEffect(() => {
     if (finished) {
       Animated.loop(
@@ -117,7 +117,7 @@ export default function PatternGame() {
     }
   }, [finished]);
 
-  /* ❌ SHAKE */
+
   const shake = () => {
     Animated.sequence([
       Animated.timing(shakeAnim, { toValue: 10, duration: 40, useNativeDriver: true }),
@@ -126,14 +126,14 @@ export default function PatternGame() {
     ]).start();
   };
 
-  /* 🧠 TAP */
+
   const onPress = (num) => {
     if (num === correct) {
       Speech.speak("Good job");
       setRight((r) => r + 1);
 
       if (level >= 10) {
-        setFinished(true); // 🎉 finish trigger
+        setFinished(true); 
       } else {
         setTimeout(() => setLevel((l) => l + 1), 200);
       }
@@ -144,7 +144,7 @@ export default function PatternGame() {
     }
   };
 
-  /* 🎉 REWARD SCREEN */
+  
   if (finished) {
     return (
       <View style={styles.reward}>
@@ -233,10 +233,10 @@ export default function PatternGame() {
   );
 }
 
-/* COLORS */
+
 const COLORS = ["#FF6B6B", "#4D96FF", "#6BCB77", "#FFD93D", "#9D4EDD"];
 
-/* POPUP SAME */
+
 function Popup({ show, close, router }) {
   return (
     <Modal transparent visible={show}>
@@ -262,7 +262,7 @@ function Popup({ show, close, router }) {
   );
 }
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
 

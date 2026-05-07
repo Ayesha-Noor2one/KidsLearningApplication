@@ -11,7 +11,7 @@ import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 
-/* DATA */
+
 const DATA = [
   { animal: "🐇", name: "Rabbit", food: "🥕", foodName: "Carrot" },
   { animal: "🐕", name: "Dog", food: "🍖", foodName: "Meat" },
@@ -39,7 +39,7 @@ const FOODS = [
 
 const COLORS = ["#FFE3E3", "#E3F2FD", "#E8F5E9", "#FFF9C4", "#F3E5F5"];
 
-/* POPUP */
+
 function Popup({ show, close, yes }) {
   if (!show) return null;
 
@@ -87,7 +87,7 @@ export default function Game() {
   const current = DATA[index];
   const isValid = !!current;
 
-  /* BACKGROUND ANIMATION */
+  
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -102,7 +102,7 @@ export default function Game() {
     outputRange: ["#FFF7E6", "#E6F7FF"],
   });
 
-  /* ANIMAL ANIMATION */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -120,7 +120,7 @@ export default function Game() {
     ).start();
   }, []);
 
-  /* HEART ANIMATION */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -152,7 +152,7 @@ export default function Game() {
     ).start();
   }, []);
 
-  /* OPTIONS + SPEECH */
+ 
   useEffect(() => {
     if (!isValid) return;
 
@@ -172,7 +172,7 @@ export default function Game() {
     }, 150);
   }, [index]);
 
-  /* ANIMATIONS */
+
   const bounce = () => {
     Animated.sequence([
       Animated.spring(scale, { toValue: 1.5, useNativeDriver: true }),
@@ -201,7 +201,7 @@ export default function Game() {
     }
   };
 
-  /* REWARD */
+ 
   if (!isValid) {
     return (
       <View style={styles.reward}>
@@ -292,7 +292,7 @@ export default function Game() {
   );
 }
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
 
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
   popupRow: { flexDirection: "row", gap: 20 },
 
  noBtn: {
-  backgroundColor: "#4CAF50", // green
+  backgroundColor: "#4CAF50", 
   padding: 10,
   borderRadius: 10,
   width: 70,

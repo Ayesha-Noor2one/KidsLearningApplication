@@ -13,7 +13,7 @@ import * as Speech from "expo-speech";
 import { addQuizResult } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const quiz="Match Quiz";
-// ---------------- LEVEL BUILDER ----------------
+
 const buildLevel = (emojis) => {
   let items = [];
   emojis.forEach((e, i) => {
@@ -35,7 +35,7 @@ const LEVELS = Array.from({ length: 10 }, (_, i) =>
   )
 );
 
-// ---------------- CARD COMPONENT ----------------
+
 const CardItem = ({ item, isSelected, isMatched, onPress }) => {
   const flip = useRef(new Animated.Value(0)).current;
 
@@ -77,7 +77,7 @@ const CardItem = ({ item, isSelected, isMatched, onPress }) => {
   );
 };
 
-// ---------------- MAIN GAME ----------------
+
 export default function KidsGame() {
   const router = useRouter();
 
@@ -92,7 +92,7 @@ const [right, setRight] = useState(0);
 
   const level = LEVELS[levelIndex];
 
-  // ---------------- SHAKE ----------------
+ 
   const shake = useRef(new Animated.Value(0)).current;
 
   const runShake = () => {
@@ -103,7 +103,7 @@ const [right, setRight] = useState(0);
     ]).start();
   };
 
-  // ---------------- SUN ----------------
+
   const sun = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -121,7 +121,7 @@ const [right, setRight] = useState(0);
     outputRange: ["0deg", "360deg"],
   });
 
-  // ---------------- STAR ----------------
+
   const star = useRef(new Animated.Value(0)).current;
   const [showStar, setShowStar] = useState(false);
 
@@ -151,7 +151,8 @@ const [right, setRight] = useState(0);
     outputRange: ["0deg", "360deg"],
   });
 
-  // ---------------- HANDLE ----------------
+ 
+  
   const handlePress = (item) => {
     if (selected.length === 2) return;
 
@@ -180,7 +181,7 @@ setRight((r) => r + 1);
     }
   };
 
-  // ---------------- NEXT LEVEL ----------------
+ 
   const nextLevel = () => {
     if (levelIndex === 9) {
       saveProgress();
@@ -193,13 +194,13 @@ setRight((r) => r + 1);
     setLevelIndex((l) => l + 1);
   };
 
-  // ---------------- EXIT ----------------
+ 
   const exitNow = () => {
     setShowExit(false);
     router.push("three");
   };
 
-  // ---------------- REWARD ----------------
+ 
   const rewardRotate = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -221,14 +222,15 @@ setRight((r) => r + 1);
     return (
       <View style={[styles.container, { backgroundColor: "#FFF0F6" }]}>
 
-        {/* BACK */}
+       
+       
         <TouchableOpacity style={styles.backBtn} onPress={() => setShowExit(true)}>
           <View style={styles.backCircle}>
             <Ionicons name="arrow-back" size={20} color="#fff" />
           </View>
         </TouchableOpacity>
 
-        {/* STAR */}
+        
         <Animated.Text style={[styles.rewardStar, { transform: [{ rotate: rewardSpin }] }]}>
           ⭐
         </Animated.Text>
@@ -238,25 +240,25 @@ setRight((r) => r + 1);
         </Text>
 
         <Text style={{ marginTop: 20, fontSize: 18 }}>
-  Right Attempts: {right} {/* ✅ ADD */}
+  Right Attempts: {right} 
 </Text>
 
-        {/* REPLAY */}
+       
         <TouchableOpacity style={styles.replayBtn} onPress={() => {
           setLevelIndex(0);
           setMatched([]);
           setSelected([]);
           setCompleted(0);
           setWrong(0);
-          setRight(0); // ✅ ADD
+          setRight(0); 
           setShowReward(false);
         }}>
           <Text style={{ color: "#fff", fontSize: 18 }}>
-            🔁 Play Again
+             Play Again
           </Text>
         </TouchableOpacity>
 
-        {/* EXIT MODAL */}
+       
         <Modal transparent visible={showExit}>
           <View style={styles.modalBg}>
             <View style={styles.modalBox}>
@@ -293,22 +295,22 @@ const saveProgress = async () => {
   return (
     <View style={styles.container}>
 
-      {/* BACK */}
+     
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowExit(true)}>
         <View style={styles.backCircle}>
           <Ionicons name="arrow-back" size={20} color="#fff" />
         </View>
       </TouchableOpacity>
 
-      {/* TITLE */}
+     
       <Text style={styles.title}>Match the Pairs 🎯</Text>
 
-      {/* SUN */}
+     
       <Animated.Text style={[styles.sun, { transform: [{ rotate: sunRotate }] }]}>
         ☀️
       </Animated.Text>
 
-      {/* GRID */}
+     
       <Animated.View style={[styles.grid, { transform: [{ translateX: shake }] }]}>
         {level.map((item) => {
           const isSelected = selected.find((i) => i.id === item.id);
@@ -326,7 +328,7 @@ const saveProgress = async () => {
         })}
       </Animated.View>
 
-      {/* STAR */}
+     
       {showStar && (
         <Animated.Text
           style={[
@@ -340,7 +342,7 @@ const saveProgress = async () => {
         </Animated.Text>
       )}
 
-      {/* HUD */}
+     
       <View style={styles.hud}>
         <Text style={{ color: "#6C5CE7" }}>Level {levelIndex + 1}</Text>
         <Text style={{ color: "green" }}>Right {right}</Text>
@@ -348,7 +350,7 @@ const saveProgress = async () => {
         <Text style={{ color: "green" }}>Done {completed}</Text>
       </View>
 
-      {/* EXIT MODAL */}
+      
       <Modal transparent visible={showExit}>
         <View style={styles.modalBg}>
           <View style={styles.modalBox}>
@@ -369,7 +371,7 @@ const saveProgress = async () => {
   );
 }
 
-// ---------------- STYLES ----------------
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

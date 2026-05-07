@@ -8,9 +8,9 @@ import {
   Dimensions,
   StatusBar,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import * as Speech from "expo-speech";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 const BUTTON_SIZE = width * 0.36;
@@ -47,10 +47,6 @@ export default function ThreeYearsGames() {
     useRef(new Animated.Value(1)).current
   );
 
-  const clouds = Array.from({ length: 10 }).map(() =>
-    useRef(new Animated.Value(Math.random() * width)).current
-  );
-
   const sunRotate = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -68,17 +64,6 @@ export default function ThreeYearsGames() {
             useNativeDriver: true,
           }),
         ])
-      ).start();
-    });
-
-    clouds.forEach((cloud, i) => {
-      cloud.setValue(-100);
-      Animated.loop(
-        Animated.timing(cloud, {
-          toValue: width + 100,
-          duration: 20000 + i * 3000,
-          useNativeDriver: true,
-        })
       ).start();
     });
 
@@ -115,23 +100,21 @@ export default function ThreeYearsGames() {
   };
 
   const buttons = [
-    { title: "Alphabets", route: "/threealphabets", color: "#FF6B6B", icon: "KEYBOARD" },
-    { title: "Daily objects", route: "/threeobjects", color: "#4ECDC4", icon: "sort-numeric-asc" },
-    { title: "Habits", route: "/threehabits", color: "#FFD93D", icon: "clone" },
-    { title: "Counting", route: "/threecount", color: "#6C5CE7", icon: "question" },
-    { title: "Shapes", route: "/threeshape", color: "#00B894", icon: "square" },
-    { title: "Emotions", route: "/threeemotions", color: "#FF8C42", icon: "STAR" },
-    
+    { title: "Alphabets", route: "/threealphabets", color: "#FF6B6B", emoji: "🅰️" },
+    { title: "Daily objects", route: "/threeobjects", color: "#4ECDC4", emoji: "🧸" },
+    { title: "Habits", route: "/threehabits", color: "#FFD93D", emoji: "🪥" },
+    { title: "Counting", route: "/threecount", color: "#6C5CE7", emoji: "1️⃣" },
+    { title: "Shapes", route: "/threeshape", color: "#00B894", emoji: "🔷" },
+    { title: "Emotions", route: "/threeemotions", color: "#FF8C42", emoji: "😊" },
   ];
 
-  // ✅ FIXED QUIZ ROUTES
   const quizButtons = [
-    { title: "Alphabet Quiz", route: "/threealphaquiz", color: "#FF6B6B", icon: "star" },
-    { title: "Color Quiz", route: "/threecolorquiz", color: "#4ECDC4", icon: "star" },
-    { title: "Matching", route: "/threematchquiz", color: "#FFD93D", icon: "star" },
-    { title: "Counting Quiz", route: "/threecountquiz", color: "#6C5CE7", icon: "star" },
-    { title: "Shapes Quiz", route: "/threeshapequiz", color: "#00B894", icon: "star" },
-    { title: "Habits Quiz", route: "/threehabitsquiz", color: "#FF8C42", icon: "star" },
+    { title: "Alphabet Quiz", route: "/threealphaquiz", color: "#FF6B6B", emoji: "📝" },
+    { title: "Color Quiz", route: "/threecolorquiz", color: "#4ECDC4", emoji: "🎨" },
+    { title: "Matching", route: "/threematchquiz", color: "#FFD93D", emoji: "🧩" },
+    { title: "Counting Quiz", route: "/threecountquiz", color: "#6C5CE7", emoji: "➕" },
+    { title: "Shapes Quiz", route: "/threeshapequiz", color: "#00B894", emoji: "⭐" },
+    { title: "Habits Quiz", route: "/threehabitsquiz", color: "#FF8C42", emoji: "🏆" },
   ];
 
   const slide = (dir) => {
@@ -163,7 +146,7 @@ export default function ThreeYearsGames() {
           style={[styles.button, { backgroundColor: btn.color }]}
           onPress={() => handlePress(index, btn.title, btn.route)}
         >
-          <FontAwesome name={btn.icon} size={32} color="#fff" />
+          <Text style={styles.emoji}>{btn.emoji}</Text>
           <Text style={styles.btnText}>{btn.title}</Text>
         </TouchableOpacity>
       </Animated.View>
@@ -173,38 +156,24 @@ export default function ThreeYearsGames() {
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
       <StatusBar barStyle="dark-content" />
 
-      {/* SUN */}
       <Animated.View style={[styles.sun, { transform: [{ rotate }] }]}>
         <Text style={{ fontSize: 60 }}>☀️</Text>
       </Animated.View>
 
-      {/* CLOUDS */}
-      {clouds.map((cloud, i) => (
-        <Animated.View
-          key={i}
-          style={[styles.cloud, { top: 80 + i * 60, transform: [{ translateX: cloud }] }]}
-        >
-          <Text style={styles.cloudText}>☁️</Text>
-        </Animated.View>
-      ))}
-
-      {/* BACK */}
       <TouchableOpacity style={styles.backButton} onPress={() => setShowPopup(true)}>
-        <FontAwesome name="arrow-left" size={14} color="#fff" />
+        <Ionicons name="arrow-back" size={14} color="#fff" />
       </TouchableOpacity>
 
       <Text style={styles.title}>Welcome Little Star!(3 years)</Text>
 
-      {/* ARROWS */}
       <TouchableOpacity style={styles.leftArrow} onPress={() => slide(-1)}>
-        <FontAwesome name="chevron-left" size={30} color="#fff" />
+        <Ionicons name="chevron-back" size={30} color="#fff" />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.rightArrow} onPress={() => slide(1)}>
-        <FontAwesome name="chevron-right" size={30} color="#fff" />
+        <Ionicons name="chevron-forward" size={30} color="#fff" />
       </TouchableOpacity>
 
-      {/* SLIDER */}
       <View style={{ width: "100%", overflow: "hidden" }}>
         <Animated.View
           style={{
@@ -223,7 +192,6 @@ export default function ThreeYearsGames() {
         </Animated.View>
       </View>
 
-      {/* POPUP FIXED */}
       {showPopup && (
         <View style={styles.popupOverlay}>
           <View style={styles.popup}>
@@ -253,6 +221,7 @@ export default function ThreeYearsGames() {
     </Animated.View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -264,14 +233,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     right: 20,
-  },
-
-  cloud: {
-    position: "absolute",
-  },
-
-  cloudText: {
-    fontSize: 50,
   },
 
   backButton: {
@@ -303,13 +264,17 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: BUTTON_SIZE,
-    height: BUTTON_SIZE,
-    borderRadius: 20,
+    width:170 ,
+    height:170,
+    borderRadius: BUTTON_SIZE / 2,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 12,
     elevation: 6,
+  },
+
+  emoji: {
+    fontSize: 38,
   },
 
   btnText: {
@@ -317,6 +282,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",
+    fontSize: 13,
   },
 
   leftArrow: {
@@ -337,21 +303,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 30,
     zIndex: 10,
-  },
-
-  rewardsButton: {
-    position: "absolute",
-    bottom: 25,
-    backgroundColor: "#FF69B4",
-    paddingVertical: 14,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
-
-  rewardsText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
   },
 
   popupOverlay: {

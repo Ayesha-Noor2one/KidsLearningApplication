@@ -11,7 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 
-// 🏠 OBJECTS
+
 const objects = [
   { emoji: "🪑", name: "CHAIR" },
   { emoji: "🛏️", name: "BED" },
@@ -43,7 +43,7 @@ export default function ObjectsLearningScreen() {
   const current = objects[index];
   const letters = current.name.split("");
 
-  // 🌈 BG
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -59,7 +59,7 @@ export default function ObjectsLearningScreen() {
     outputRange: ["#D7F9FF", "#FFF3C7", "#E5FFE5"],
   });
 
-  // 🎈 FLOAT
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -77,7 +77,7 @@ export default function ObjectsLearningScreen() {
     ).start();
   }, []);
 
-  // 🔊 SPEECH (LIKE FRUITS)
+  
   const speakObject = () => {
     if (lock.current) return;
 
@@ -107,14 +107,14 @@ export default function ObjectsLearningScreen() {
     speakObject();
   }, [index]);
 
-  // 🔤 TAP LETTER
+ 
   const speakLetter = (l) => {
     if (!canTapSpell) return;
     Speech.stop();
     Speech.speak(l, { rate: 0.9, pitch: 1.5 });
   };
 
-  // ⏭ NAV
+
   const next = () => {
     if (lock.current) return;
 
@@ -130,14 +130,14 @@ export default function ObjectsLearningScreen() {
     if (index > 0) setIndex(index - 1);
   };
 
-  // ❌ EXIT
+ 
   const exitGame = () => {
     Speech.stop();
     setShowPopup(false);
     router.push("/three");
   };
 
-  // 🎉 REWARD
+ 
   if (finished) {
     return (
       <View style={styles.rewardContainer}>
@@ -220,7 +220,7 @@ export default function ObjectsLearningScreen() {
         </View>
       )}
 
-      {/* OBJECT */}
+      
       <Animated.Text
         style={[styles.emoji, { transform: [{ translateY: floatAnim }] }]}
         onPress={speakObject}
@@ -230,7 +230,7 @@ export default function ObjectsLearningScreen() {
 
       <Text style={styles.name}>{current.name}</Text>
 
-      {/* SPELLING */}
+    
       <View style={styles.letters}>
         {letters.map((l, i) => (
           <TouchableOpacity
@@ -244,7 +244,7 @@ export default function ObjectsLearningScreen() {
         ))}
       </View>
 
-      {/* NAV */}
+      
       <View style={styles.nav}>
         <TouchableOpacity style={styles.navBtn} onPress={prev}>
           <FontAwesome name="chevron-left" size={24} color="#fff" />

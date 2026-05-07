@@ -12,7 +12,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 
-export default function OppositesLearningGame() {
+export default function SingularPluralLearningGame() {
   const router = useRouter();
 
   const [index, setIndex] = useState(0);
@@ -25,76 +25,77 @@ export default function OppositesLearningGame() {
   const scaleLeft = useRef(new Animated.Value(1)).current;
   const scaleRight = useRef(new Animated.Value(1)).current;
 
-  const opposites = [
+  const singularplural = [
     {
-      leftLabel: "BIG",
-      rightLabel: "SMALL",
-      leftEmoji: "🐘",
-      rightEmoji: "🐜",
-      leftName: "Elephant",
-      rightName: "Ant",
+      leftLabel: "APPLE",
+      rightLabel: "APPLES",
+      leftEmoji: "🍎",
+      rightEmoji: "🍎🍎",
+      leftName: "Apple",
+      rightName: "Apples",
       leftColor: "#FF6B6B",
       rightColor: "#4D96FF",
-      speak: "Big Small",
+      speak: "Apple Apples",
     },
     {
-      leftLabel: "HOT",
-      rightLabel: "COLD",
-      leftEmoji: "🔥",
-      rightEmoji: "🧊",
-      leftName: "Fire",
-      rightName: "Ice",
-      leftColor: "#FF4C29",
-      rightColor: "#00B4D8",
-      speak: "Hot Cold",
+      leftLabel: "CAT",
+      rightLabel: "CATS",
+      leftEmoji: "🐱",
+      rightEmoji: "🐱🐱",
+      leftName: "Cat",
+      rightName: "Cats",
+      leftColor: "#FFD166",
+      rightColor: "#6C63FF",
+      speak: "Cat Cats",
     },
     {
-      leftLabel: "FAST",
-      rightLabel: "SLOW",
-      leftEmoji: "🐆",
-      rightEmoji: "🐢",
-      leftName: "Cheetah",
-      rightName: "Turtle",
-      leftColor: "#6C63FF",
-      rightColor: "#FFD166",
-      speak: "Fast Slow",
-    },
-    {
-      leftLabel: "TALL",
-      rightLabel: "SHORT",
-      leftEmoji: "🦒",
-      rightEmoji: "🐈",
-      leftName: "Giraffe",
-      rightName: "Cat",
+      leftLabel: "DOG",
+      rightLabel: "DOGS",
+      leftEmoji: "🐶",
+      rightEmoji: "🐶🐶",
+      leftName: "Dog",
+      rightName: "Dogs",
       leftColor: "#00C9A7",
-      rightColor: "#FF9F1C",
-      speak: "Tall Short",
+      rightColor: "#FF4C29",
+      speak: "Dog Dogs",
     },
     {
-      leftLabel: "FULL",
-      rightLabel: "EMPTY",
-      leftEmoji: "🥛",
-      rightEmoji: "🫙",
-      leftName: "Full Glass",
-      rightName: "Empty Jar",
+      leftLabel: "BOOK",
+      rightLabel: "BOOKS",
+      leftEmoji: "📘",
+      rightEmoji: "📚",
+      leftName: "Book",
+      rightName: "Books",
       leftColor: "#845EC2",
       rightColor: "#F9F871",
-      speak: "Full Empty",
+      speak: "Book Books",
     },
-      {
-    leftLabel: "HAPPY",
-    rightLabel: "SAD",
-    leftEmoji: "😄",
-    rightEmoji: "😢",
-    leftName: "Happy Face",
-    rightName: "Sad Face",
-    leftColor: "#FFD166",
-    rightColor: "#577590",
-    speak: "Happy Sad",
-  },
+    {
+      leftLabel: "CAR",
+      rightLabel: "CARS",
+      leftEmoji: "🚗",
+      rightEmoji: "🚗🚗",
+      leftName: "Car",
+      rightName: "Cars",
+      leftColor: "#6C63FF",
+      rightColor: "#FFD166",
+      speak: "Car Cars",
+    },
+    {
+      leftLabel: "BALL",
+      rightLabel: "BALLS",
+      leftEmoji: "⚽",
+      rightEmoji: "⚽⚽",
+      leftName: "Ball",
+      rightName: "Balls",
+      leftColor: "#FF9F1C",
+      rightColor: "#00B4D8",
+      speak: "Ball Balls",
+    },
   ];
 
-  const current = opposites[index];
+  
+  const current = singularplural[index];
 
   useEffect(() => {
     Animated.loop(
@@ -158,7 +159,7 @@ export default function OppositesLearningGame() {
 
   const next = () => {
     if (speaking) return;
-    if (index < opposites.length - 1) setIndex(index + 1);
+    if (index < singularplural.length - 1) setIndex(index + 1);
     else setShowReward(true);
   };
 
@@ -198,19 +199,16 @@ export default function OppositesLearningGame() {
     </Modal>
   );
 
- 
   if (showReward) {
     return (
       <View style={styles.rewardContainer}>
         <Text style={styles.rewardEmoji}>🏆</Text>
         <Text style={styles.rewardText}>✨Great Job!✨</Text>
 
-       
         <TouchableOpacity style={styles.restartBtn} onPress={restart}>
           <Text style={{ color: "#fff" }}>Play Again</Text>
         </TouchableOpacity>
 
-       
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => setShowPopup(true)}
@@ -236,7 +234,7 @@ export default function OppositesLearningGame() {
 
       <Popup />
 
-      <Text style={styles.title}> ✨OPPOSITES ✨</Text>
+      <Text style={styles.title}> ✨Singular Plural ✨</Text>
 
       <View style={styles.parallelWrap}>
         <View style={styles.side}>
@@ -297,9 +295,12 @@ export default function OppositesLearningGame() {
     </Animated.View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: "center", justifyContent: "center" },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   title: {
     position: "absolute",
@@ -316,7 +317,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  side: { alignItems: "center", width: "45%" },
+  side: {
+    alignItems: "center",
+    width: "45%",
+  },
 
   label: {
     fontSize: 24,
@@ -367,8 +371,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF8E1",
   },
 
-  rewardEmoji: { fontSize: 120 },
-  rewardText: { fontSize: 32, fontWeight: "bold" },
+  rewardEmoji: {
+    fontSize: 120,
+  },
+
+  rewardText: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
 
   restartBtn: {
     marginTop: 25,
@@ -392,9 +402,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  popupTitle: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
+  popupTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
 
-  popupBtns: { flexDirection: "row", gap: 15 },
+  popupBtns: {
+    flexDirection: "row",
+    gap: 15,
+  },
 
   popBtn: {
     paddingVertical: 12,
@@ -402,5 +419,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
 
-  popTxt: { color: "#fff", fontWeight: "bold" },
+  popTxt: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
 });

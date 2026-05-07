@@ -48,9 +48,7 @@ const EditProfileScreen = () => {
     }
   };
 
-  const generateOTP = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  };
+  const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
   const handleInputChange = (setter) => (value) => setter(value);
 
@@ -60,55 +58,12 @@ const EditProfileScreen = () => {
   };
 
   const validateForm = () => {
-    if (!name.trim()) {
-      Alert.alert("Validation Error", "Name cannot be empty");
-      return false;
-    }
-    if (!email.trim()) {
-      Alert.alert("Validation Error", "Email cannot be empty");
-      return false;
-    }
-    if (!isValidEmail(email)) {
-      Alert.alert("Validation Error", "Enter a valid email address");
-      return false;
-    }
-    if (!password) {
-      Alert.alert("Validation Error", "Password cannot be empty");
-      return false;
-    }
-    if (password.length < 6) {
-      Alert.alert("Validation Error", "Password must be at least 6 characters");
-      return false;
-    }
+    if (!name.trim()) return Alert.alert("Validation Error", "Name cannot be empty");
+    if (!email.trim()) return Alert.alert("Validation Error", "Email cannot be empty");
+    if (!isValidEmail(email)) return Alert.alert("Validation Error", "Enter valid email");
+    if (!password) return Alert.alert("Validation Error", "Password cannot be empty");
+    if (password.length < 6) return Alert.alert("Validation Error", "Min 6 characters");
     return true;
-  };
-
-  const sendEmail = async () => {
-    const otp = generateOTP();
-    const otpGeneratedAt = Date.now();
-
-    try {
-      await send(
-        "service_qmep2dp",
-        "template_7haipk9",
-        {
-          name,
-          email,
-          message: "This is static message",
-          otp,
-        },
-        {
-          publicKey: "ucV02B72O55XZL_uf"
-        }
-      );
-
-      return { otp, otpGeneratedAt };
-    } catch (err) {
-      if (err instanceof EmailJSResponseStatus) {
-        console.warn("EmailJS error", err);
-      }
-      return null;
-    }
   };
 
   const handleSave = async () => {
@@ -117,7 +72,6 @@ const EditProfileScreen = () => {
     try {
       const payload = { id, name, email, password };
 
-      // If email is changed
       if (email !== originalEmail) {
         const existing = await findByEmail(email);
         if (existing && existing.id !== id) {
@@ -125,10 +79,9 @@ const EditProfileScreen = () => {
           return;
         }
 
-        const result = await sendEmail();
-        if (!result) throw new Error("Failed to send OTP");
+        const otp = generateOTP();
+        const otpGeneratedAt = Date.now();
 
-        const { otp, otpGeneratedAt } = result;
         router.push({
           pathname: "/updateVerification",
           params: {
@@ -139,180 +92,214 @@ const EditProfileScreen = () => {
           },
         });
       } else {
-        // Email is unchanged, update directly
         await updateParent(payload);
         Alert.alert("Success", "Profile updated successfully.");
         router.back();
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
       Alert.alert("Error", "Failed to update profile.");
     }
   };
 
-  const handleCancel = () => {
-    router.back();
-  };
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
+
+      <View style={styles.circle1} />
+      <View style={styles.circle2} />
+      <View style={styles.circle3} />
+
       <View style={styles.card}>
+
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.push("/Settings")}>
-            <Ionicons name="arrow-back" size={24} color="#8B0000" />
+          <TouchableOpacity onPress={() => router.push("/Settings")} style={styles.backBtn}>
+            <Ionicons name="arrow-back" size={22} color="#fff" />
           </TouchableOpacity>
+
           <Text style={styles.title}>Manage Profile</Text>
-          <View style={{ width: 24 }} />
+          <View style={{ width: 30 }} />
         </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>NAME</Text>
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={handleInputChange(setName)}
+          placeholder="Name"
+          placeholderTextColor="#999"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={handleInputChange(setEmail)}
+          placeholder="Email"
+          placeholderTextColor="#999"
+        />
+
+        {/* ✅ FIXED PASSWORD FIELD */}
+        <View style={styles.passwordBox}>
           <TextInput
             style={styles.input}
-            value={name}
-            onChangeText={handleInputChange(setName)}
-            placeholder="Name"
-            placeholderTextColor="#FFD700"
+            value={password}
+            onChangeText={handleInputChange(setPassword)}
+            placeholder="Password"
+            placeholderTextColor="#999"
+            secureTextEntry={!showPassword}
           />
 
-          <Text style={styles.label}>EMAIL</Text>
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={handleInputChange(setEmail)}
-            placeholder="Email"
-            placeholderTextColor="#FFD700"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          <Text style={styles.label}>PASSWORD</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              style={[styles.input, { flex: 1 }]}
-              value={password}
-              onChangeText={handleInputChange(setPassword)}
-              placeholder="Password"
-              placeholderTextColor="#FFD700"
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          >
+            <Ionicons
+              name={showPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#6C5CE7"
             />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <Ionicons
-                name={showPassword ? 'eye-off' : 'eye'}
-                size={24}
-                color="#FFD700"
-                style={styles.eyeIcon}
-              />
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
 
         {loading ? (
-          <ActivityIndicator size="large" color="#8B0000" />
+          <ActivityIndicator size="large" color="#6C5CE7" />
         ) : (
           <>
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveButtonText}>Update Profile</Text>
+            <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
+              <Text style={styles.saveText}>Update Profile</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+
+            <TouchableOpacity style={styles.cancelBtn} onPress={() => router.back()}>
+              <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
           </>
         )}
+
       </View>
     </ScrollView>
   );
 };
 
+export default EditProfileScreen;
+
 const styles = StyleSheet.create({
+
   container: {
     flexGrow: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f7f9ff",
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
   },
+
+  circle1: {
+    position: "absolute",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "#FFD93D",
+    top: -40,
+    left: -50,
+    opacity: 0.3,
+  },
+
+  circle2: {
+    position: "absolute",
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    backgroundColor: "#6C5CE7",
+    bottom: 80,
+    right: -40,
+    opacity: 0.2,
+  },
+
+  circle3: {
+    position: "absolute",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: "#FF7675",
+    top: 200,
+    right: -20,
+    opacity: 0.2,
+  },
+
   card: {
     width: "100%",
-    backgroundColor: "#FFD700",
-    borderRadius: 20,
-    padding: 24,
-    borderWidth: 2,
-    borderColor: "#8B0000",
-    shadowColor: "#8B0000",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 10,
+    backgroundColor: "#fff",
+    borderRadius: 35,
+    padding: 25,
+    borderWidth: 4,
+    borderColor: "#9183fa",
+    elevation: 12,
   },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
   },
+
+  backBtn: {
+    backgroundColor: "#6C5CE7",
+    padding: 10,
+    borderRadius: 25,
+    left:-20,
+    bottom:200,
+  },
+
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
-    color: "#8B0000",
-    textAlign: "center",
-    flex: 1,
+    color: "#FF7675",
   },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    color: "#8B0000",
-    fontWeight: "bold",
-    fontSize: 14,
-    marginBottom: 4,
-    marginTop: 10,
-  },
+
   input: {
     width: "100%",
-    backgroundColor: "#8B0E0E",
+    backgroundColor: "#f4f6ff",
     padding: 14,
-    borderRadius: 10,
-    marginBottom: 8,
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-    borderWidth: 1,
-    borderColor: "#FFD700",
+    paddingRight: 45,
+    borderRadius: 18,
+    marginBottom: 14,
+    borderWidth: 2,
+    borderColor: "#d9dcff",
   },
-  passwordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+
+  passwordBox: {
+    position: "relative",
+    width: "100%",
   },
+
   eyeIcon: {
-    marginLeft: -35,
+    position: "absolute",
+    right: 15,
+    top: 14,
   },
-  saveButton: {
-    backgroundColor: "#8B0000",
-    paddingVertical: 12,
-    borderRadius: 10,
+
+  saveBtn: {
+    backgroundColor: "#FFD93D",
+    paddingVertical: 14,
+    borderRadius: 25,
     alignItems: "center",
-    marginBottom: 10,
+    marginTop: 10,
   },
-  saveButtonText: {
-    fontSize: 18,
+
+  saveText: {
+    color: "#FF7675",
     fontWeight: "bold",
-    color: "#FFD700",
-  },
-  cancelButton: {
-    backgroundColor: "#fff",
-    paddingVertical: 10,
-    borderRadius: 10,
-    borderWidth: 1.5,
-    borderColor: "#8B0000",
-    alignItems: "center",
-  },
-  cancelButtonText: {
     fontSize: 16,
+  },
+
+  cancelBtn: {
+    marginTop: 10,
+    borderWidth: 2,
+    borderColor: "#6C5CE7",
+    paddingVertical: 12,
+    borderRadius: 25,
+    alignItems: "center",
+  },
+
+  cancelText: {
+    color: "#6C5CE7",
     fontWeight: "bold",
-    color: "#8B0000",
   },
 });
-
-export default EditProfileScreen;

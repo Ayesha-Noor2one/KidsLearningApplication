@@ -15,7 +15,7 @@ const ProgressList = () => {
   const countQuiz = 'Count Quiz';
   const habitQuiz = 'Habit Quiz';
   const matchQuiz = 'Match Quiz';
-  const modules = [alphabetsQuiz, colorQuiz,objectQuiz,countQuiz,habitQuiz,matchQuiz];
+  const modules = [alphabetsQuiz, colorQuiz, objectQuiz, countQuiz, habitQuiz, matchQuiz];
 
   useEffect(() => {
     fetchProgress();
@@ -26,19 +26,18 @@ const ProgressList = () => {
       const userEmail = await AsyncStorage.getItem('userEmail');
       const res = await findAllByEmail(userEmail);
       const kidIds = res?.map(child => child.id) || [];
-      console.log(kidIds);
-      
+
       const allProgress = [];
 
       for (const kidId of kidIds) {
         const user = await findById(kidId);
         const kidQuizesDone = await findAllByKidId(kidId);
+
         const quizMap = {};
         kidQuizesDone.forEach(q => {
           quizMap[q.quiz_name] = q;
         });
-        console.log(quizMap);
-        
+
         const moduleStatuses = modules.map(module => {
           const quiz = quizMap[module];
 
@@ -48,14 +47,11 @@ const ProgressList = () => {
 
           const total = quiz.right_answers + quiz.wrong_answers;
 
-          // Example logic
           let status = 'In Progress';
 
-          if (total >= 26) { // full alphabet
+          if (total >= 26) {
             status = 'Done';
           }
-
-          
 
           return {
             module,
@@ -75,48 +71,50 @@ const ProgressList = () => {
     }
   };
 
-const renderItem = ({ item }) => (
-  <View style={styles.item}>
-    <Text style={styles.childHeader}>{item.childName}</Text>
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.childHeader}>{item.childName}</Text>
 
-    {item.modules.map((mod, index) => {
-      let message = '';
+      {item.modules.map((mod, index) => {
+        let message = '';
 
-      if (mod.wrong === 0 && mod.right==0) {
-        message = 'Pending... ';
-      }
-      else if (mod.wrong === 0 && mod.right>0) {
-        message = ' Excellent Job';
-      } else if (mod.wrong < 5 && mod.right>0) {
-        message = ' Good Job';
-      } else if (mod.wrong > 5 && mod.right>0) {
-        message = ' Bad Job';
-      }
+        if (mod.wrong === 0 && mod.right == 0) {
+          message = 'Pending... ';
+        }
+        else if (mod.wrong === 0 && mod.right > 0) {
+          message = 'Excellent Job';
+        } else if (mod.wrong < 5 && mod.right > 0) {
+          message = 'Good Job';
+        } else if (mod.wrong > 5 && mod.right > 0) {
+          message = 'Keep Practicing';
+        }
 
-      return (
-        <View key={index} style={styles.moduleRow}>
-          <Text style={styles.text}>• {mod.module}</Text>
+        return (
+          <View key={index} style={styles.moduleRow}>
+            <Text style={styles.text}>• {mod.module}</Text>
 
-          <Text style={{ marginLeft: 10 }}>
-            ({mod.right} ✔ / {mod.wrong} ❌)
-          </Text>
+            <Text style={{ marginLeft: 10, color: "#555" }}>
+              ({mod.right} ✔ / {mod.wrong} ❌)
+            </Text>
 
-          <Text style={{ marginLeft: 10 }}>
-            {message}
-          </Text>
-        </View>
-      );
-    })}
-  </View>
-);
+            <Text style={{ marginLeft: 10, color: "#6C5CE7" }}>
+              {message}
+            </Text>
+          </View>
+        );
+      })}
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => router.push('/Settings')}>
-          <Ionicons name="arrow-back" size={24} color="#8B0000" />
+          <Ionicons name="arrow-back" size={24} color="#6C5CE7" />
         </TouchableOpacity>
+
         <Text style={styles.header}>Children Progress</Text>
+
         <View style={{ width: 24 }} />
       </View>
 
@@ -135,59 +133,62 @@ export default ProgressList;
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#fffefa',
+    backgroundColor: '#F4F6FF',
     padding: 20,
   },
+
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
+
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#8B0000',
+    color: '#FF7675',
     textAlign: 'center',
-    fontFamily: 'Consolas',
-    textDecorationLine: 'underline',
-    textTransform: 'uppercase',
     flex: 1,
+    textDecorationLine: 'underline',
   },
+
   list: {
     paddingBottom: 30,
   },
+
   item: {
-    backgroundColor: '#FFD700',
-    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 22,
     padding: 20,
     marginBottom: 20,
-    borderWidth: 3,
-    borderColor: '#8B0000',
+    borderWidth: 2,
+    borderColor: '#6C5CE7',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
   },
+
   childHeader: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#8B0000',
+    color: '#6C5CE7',
     marginBottom: 10,
     textAlign: 'center',
-    fontFamily: 'Consolas',
   },
+
   moduleRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
     paddingLeft: 10,
   },
+
   text: {
     fontSize: 16,
-    color: '#8B0000',
-    fontWeight: 'bold',
-    fontFamily: 'Consolas',
+    color: '#333',
+    fontWeight: '600',
   },
 });

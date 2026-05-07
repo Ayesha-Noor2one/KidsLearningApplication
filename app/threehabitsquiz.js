@@ -42,7 +42,7 @@ export default function TalkingMagicFriendFinal() {
 
   const current = data[index];
 
-  // BG
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -65,7 +65,7 @@ export default function TalkingMagicFriendFinal() {
     outputRange: ["#fff7ed", "#e0f7fa", "#fce7f3"],
   });
 
-  // FACE ROTATION smooth
+ 
   useEffect(() => {
     Animated.loop(
       Animated.timing(faceRotate, {
@@ -271,8 +271,7 @@ const saveProgress = async () => {
 
       <Text style={styles.text}>{current.text}</Text>
 
-      {/* Floating Faces */}
-      <View style={styles.row}>
+            <View style={styles.row}>
         <TouchableOpacity onPress={() => answer(true)}>
           <Animated.Text
             style={[styles.face, { transform: [{ rotate }] }]}

@@ -105,7 +105,7 @@ export default function Home() {
             style={styles.button}
             onPress={() => router.push("/Login")}
           >
-            <Text style={styles.buttonText}>Lets Go🚀</Text>
+            <Text style={styles.buttonText}>Lets Go</Text>
           </Pressable>
         </Animated.View>
 
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#eefa63ff",
+    backgroundColor: "#ecfc3bff",
     paddingVertical: 18,
     paddingHorizontal: 42,
     borderRadius: 50,

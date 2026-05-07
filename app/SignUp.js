@@ -115,8 +115,6 @@ export default function SignUp() {
 
         if (res.changes === 1) {
           Alert.alert("Success", "Registration complete. Please log in.");
-
-          // ✅ FIXED NAVIGATION
           router.replace("/Login");
         } else {
           Alert.alert("Error", "User could not be registered.");
@@ -153,6 +151,12 @@ export default function SignUp() {
 
   return (
     <View style={styles.container}>
+
+      
+      <View style={styles.circle1} />
+      <View style={styles.circle2} />
+      <View style={styles.circle3} />
+
       <TouchableOpacity
         onPress={() =>
           Alert.alert("Exit App", "Do you want to exit?", [
@@ -162,7 +166,7 @@ export default function SignUp() {
         }
         style={styles.backButton}
       >
-        <Ionicons name="arrow-back" size={28} color="#ffffffff" />
+        <Ionicons name="arrow-back" size={28} color="#fff" />
       </TouchableOpacity>
 
       <View style={styles.card}>
@@ -221,7 +225,7 @@ export default function SignUp() {
           <ActivityIndicator size="large" color="#6C5CE7" />
         ) : (
           <Pressable style={styles.signUpButton} onPress={handleSignUp}>
-            <Text style={styles.signUpButtonText}>Sign Up </Text>
+            <Text style={styles.signUpButtonText}>Sign Up</Text>
           </Pressable>
         )}
 
@@ -238,13 +242,45 @@ export default function SignUp() {
   );
 }
 
-/* SAME STYLES */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f7f9ff",
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  circle1: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: "#FFD93D",
+    top: -50,
+    left: -60,
+    opacity: 0.35,
+  },
+
+  circle2: {
+    position: "absolute",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "#6C5CE7",
+    bottom: 80,
+    right: -50,
+    opacity: 0.2,
+  },
+
+  circle3: {
+    position: "absolute",
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: "#FF7675",
+    top: 200,
+    right: -20,
+    opacity: 0.25,
   },
 
   backButton: {

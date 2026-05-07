@@ -169,7 +169,7 @@ export default function ScrambledWordsGame() {
 
       {showPopup && <Popup />}
 
-      {/* TOP BIG ITEM */}
+  
       <Animated.Text
         style={[
           styles.emoji,
@@ -181,7 +181,7 @@ export default function ScrambledWordsGame() {
         {current.emoji}
       </Animated.Text>
 
-      {/* BLANKS */}
+     
       <View style={styles.blanks}>
         {current.word.split("").map((_, i) => (
           <View key={i} style={styles.blankBox}>
@@ -192,7 +192,7 @@ export default function ScrambledWordsGame() {
         ))}
       </View>
 
-      {/* SHUFFLED LETTERS */}
+     
       <View style={styles.letters}>
         {shuffledLetters.map((l, i) => (
           <TouchableOpacity
@@ -205,7 +205,7 @@ export default function ScrambledWordsGame() {
         ))}
       </View>
 
-      {/* NAV */}
+     
       <View style={styles.nav}>
         <TouchableOpacity style={styles.navBtn} onPress={prev}>
           <FontAwesome5 name="arrow-left" size={18} color="#fff" />
@@ -232,7 +232,7 @@ export default function ScrambledWordsGame() {
   return showReward ? <RewardUI /> : <GameUI />;
 }
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

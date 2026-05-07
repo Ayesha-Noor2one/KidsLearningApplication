@@ -7,8 +7,6 @@ import { getUsageTime, updateParentUsageTime } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const BORDER_COLOR = '#8B0000';
-const CARD_BG = '#FFD700';
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -33,20 +31,17 @@ export default function SettingsScreen() {
     loadUsageLimitTime();
 
     const prepareSound = async () => {
-  try {
-    const { sound } = await Audio.Sound.createAsync(
-      { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/bro.mpeg' },
-      {
-        shouldPlay: false,
-        isLooping: true,
-        volume: 0.1,
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/bro.mpeg' },
+          { shouldPlay: false, isLooping: true, volume: 0.1 }
+        );
+        soundRef.current = sound;
+      } catch (e) {
+        console.error('Error loading sound:', e);
       }
-    );
-    soundRef.current = sound;
-  } catch (e) {
-    console.error('Error loading sound:', e);
-  }
-};
+    };
+
     prepareSound();
 
     return () => {
@@ -73,18 +68,24 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.container}>
+
+      {/* background circles */}
+      <View style={styles.circle1} />
+      <View style={styles.circle2} />
+      <View style={styles.circle3} />
+
       <FontAwesome
         name="arrow-left"
         size={24}
-        color={BORDER_COLOR}
+        color="#6C5CE7"
         style={styles.backIcon}
         onPress={() => router.back()}
       />
 
-      <Text style={styles.header}>SETTINGS*</Text>
+      <Text style={styles.header}>SETTINGS</Text>
 
       <View style={styles.card}>
-        
+
         <View style={styles.row}>
           <Text style={styles.label}>Background Music</Text>
           <Switch
@@ -99,52 +100,138 @@ export default function SettingsScreen() {
           <Text style={styles.label}>App Timer</Text>
           <View style={styles.usageContainer}>
             <TextInput
-  style={styles.input}
-  keyboardType="numeric"
-  value={usageLimit.toString()}
-  onChangeText={(text) => {
-    
-    const minutes = parseInt(text) || 0;
-    setUsageLimit(minutes);
-  }}
-  onEndEditing={async () => {
-    try {
-      const parentId = await AsyncStorage.getItem('parentId');
-      const safeLimit = usageLimit < 1 ? 1 : usageLimit; 
-      setUsageLimit(safeLimit);
-      const res = await updateParentUsageTime(parentId, safeLimit);
-      if (!res || res.changes === 0) {
-        console.warn('No update in DB');
-      }
-    } catch (error) {
-      console.error('Error updating limit:', error);
-    }
-  }}
-/>
+              style={styles.input}
+              keyboardType="numeric"
+              value={usageLimit.toString()}
+              onChangeText={(text) => {
+                const minutes = parseInt(text) || 0;
+                setUsageLimit(minutes);
+              }}
+              onEndEditing={async () => {
+                try {
+                  const parentId = await AsyncStorage.getItem('parentId');
+                  const safeLimit = usageLimit < 1 ? 1 : usageLimit;
+                  setUsageLimit(safeLimit);
+                  await updateParentUsageTime(parentId, safeLimit);
+                } catch (error) {
+                  console.error('Error updating limit:', error);
+                }
+              }}
+            />
 
             <Text style={styles.usageText}>minutes/day</Text>
           </View>
         </View>
+
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F0F4F8', paddingHorizontal: 10, alignItems: 'center', justifyContent: 'center' },
-  backIcon: { position: 'absolute', top: 40, left: 20, zIndex: 2 },
-  input: {
-    width: 80, height: 40, borderWidth: 2, borderColor: BORDER_COLOR, borderRadius: 10,
-    textAlign: 'center', fontSize: 18, backgroundColor: '#fff', marginHorizontal: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#f7f9ff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  header: { fontSize: 32, fontWeight: 'bold', color: BORDER_COLOR, marginBottom: 30, textDecorationLine: 'underline' },
+
+  circle1: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: "#FFD93D",
+    top: -50,
+    left: -60,
+    opacity: 0.3,
+  },
+
+  circle2: {
+    position: "absolute",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "#6C5CE7",
+    bottom: 80,
+    right: -50,
+    opacity: 0.2,
+  },
+
+  circle3: {
+    position: "absolute",
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: "#FF7675",
+    top: 200,
+    right: -20,
+    opacity: 0.25,
+  },
+
+  backIcon: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 2,
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 25,
+    elevation: 5,
+    bachgroundColor: "#9183fa",
+  },
+
+  header: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#FF7675",
+    marginBottom: 30,
+  },
+
   card: {
-    width: SCREEN_WIDTH - 20, backgroundColor: CARD_BG, borderColor: BORDER_COLOR, borderWidth: 3, borderRadius: 20,
-    paddingVertical: 30, paddingHorizontal: 24, shadowColor: '#000', shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.4, shadowRadius: 12, elevation: 12,
+    width: SCREEN_WIDTH - 30,
+    backgroundColor: "#fff",
+    borderRadius: 35,
+    paddingVertical: 30,
+    paddingHorizontal: 24,
+    borderWidth: 4,
+    borderColor: "#9183fa",
+    elevation: 12,
   },
-  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 25 },
-  label: { fontSize: 20, fontWeight: '600', color: BORDER_COLOR },
-  usageContainer: { flexDirection: 'row', alignItems: 'center' },
-  usageText: { fontSize: 20, color: BORDER_COLOR, minWidth: 60, textAlign: 'center', fontWeight: '500' },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 25,
+  },
+
+  label: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: "#6C5CE7",
+  },
+
+  input: {
+    width: 80,
+    height: 40,
+    borderWidth: 2,
+    borderColor: "#d9dcff",
+    borderRadius: 12,
+    textAlign: 'center',
+    fontSize: 18,
+    backgroundColor: '#f4f6ff',
+    marginHorizontal: 8,
+  },
+
+  usageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  usageText: {
+    fontSize: 16,
+    color: "#FF7675",
+    fontWeight: "500",
+  },
 });

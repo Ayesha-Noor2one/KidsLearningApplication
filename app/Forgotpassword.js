@@ -76,12 +76,12 @@ export default function ForgotPassword() {
   return (
     <View style={styles.container}>
 
-      {/* 🌈 BACKGROUND CIRCLES (RESTORED) */}
+    
       <View style={styles.circle1} />
       <View style={styles.circle2} />
       <View style={styles.circle3} />
 
-      {/* BACK BUTTON */}
+     
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => router.push("/Login")}
@@ -91,7 +91,7 @@ export default function ForgotPassword() {
 
       <View style={styles.card}>
 
-        {/* ANIMATED ICONS */}
+       
         <View style={styles.iconRow}>
           <Animated.View style={[styles.bubble, {
             transform: [{ scale: pop1 }],
@@ -133,7 +133,7 @@ export default function ForgotPassword() {
   );
 }
 
-/* THEME STYLES (UNCHANGED + CIRCLES ADDED) */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  /* 🌈 BACKGROUND CIRCLES */
+ 
   circle1: {
     position: "absolute",
     width: 220,

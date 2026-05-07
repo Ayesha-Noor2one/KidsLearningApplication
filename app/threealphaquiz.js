@@ -14,7 +14,7 @@ import { addQuizResult } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const quiz="Alphabets Quiz";
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-// const LETTERS = "ABC".split("");
+
 
 
 export default function AlphabetTapGame() {
@@ -31,7 +31,7 @@ export default function AlphabetTapGame() {
   const [showPopup, setShowPopup] = useState(false);
   const [finished, setFinished] = useState(false);
 
-  // ⭐ NEW: animation lock + star
+ 
   const [isAnimating, setIsAnimating] = useState(false);
   const [showStar, setShowStar] = useState(false);
 
@@ -39,7 +39,7 @@ export default function AlphabetTapGame() {
   const floatAnim = useRef(new Animated.Value(0)).current;
   const mainBounce = useRef(new Animated.Value(1)).current;
 
-  const starAnim = useRef(new Animated.Value(0)).current; // ⭐ NEW
+  const starAnim = useRef(new Animated.Value(0)).current; 
 
   const optionAnimMap = useRef({}).current;
 
@@ -101,7 +101,7 @@ export default function AlphabetTapGame() {
     ]).start();
   };
 
-  // ⭐ NEW STAR ANIMATION
+ 
   const runStarAnimation = (callback) => {
     setShowStar(true);
     setIsAnimating(true);
@@ -122,12 +122,12 @@ export default function AlphabetTapGame() {
     ]).start(() => {
       setShowStar(false);
       setIsAnimating(false);
-      callback(); // move next ONLY after animation
+      callback(); 
     });
   };
 
   const onPressLetter =  (l) => {
-    if (isAnimating) return; // ⛔ block spam clicks
+    if (isAnimating) return; 
 
     const anim = optionAnimMap[l] || mainBounce;
     console.log("letter is " +l);
@@ -216,7 +216,7 @@ console.log("ONEssdf");
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
       <StatusBar barStyle="dark-content" />
 
-      {/* ⭐ STAR ANIMATION OVERLAY */}
+     
       {showStar && (
         <Animated.View
           style={[
@@ -243,12 +243,12 @@ console.log("ONEssdf");
         </Animated.View>
       )}
 
-      {/* BACK */}
+     
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* POPUP */}
+      
       {showPopup && (
         <View style={styles.popupOverlay}>
           <View style={styles.popupBox}>
@@ -440,7 +440,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 
-  /* ⭐ NEW STAR OVERLAY */
   starOverlay: {
     position: "absolute",
     top: "40%",

@@ -24,7 +24,7 @@ export default function FruitLearningScreen() {
 
   const lock = useRef(false);
 
-  // 🍎 FRUITS (MELON ADDED)
+ 
   const fruits = [
     { name: "APPLE", letters: ["A","P","P","L","E"], emoji: "🍎" },
     { name: "BANANA", letters: ["B","A","N","A","N","A"], emoji: "🍌" },
@@ -38,7 +38,7 @@ export default function FruitLearningScreen() {
 
   const fruit = fruits[index];
 
-  // 🌈 BG
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -54,7 +54,7 @@ export default function FruitLearningScreen() {
     outputRange: ["#FFE5E5", "#FFF3CD", "#E5FFE5"],
   });
 
-  // 🎈 FLOAT
+  
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -72,7 +72,7 @@ export default function FruitLearningScreen() {
     ).start();
   }, []);
 
-  // 🔊 AUTO VOICE
+  
   const speakFruit = () => {
     if (lock.current) return;
 
@@ -94,7 +94,7 @@ export default function FruitLearningScreen() {
 
     setTimeout(() => {
       lock.current = false;
-      setCanTapSpell(true); // ✅ enable after spelling ends
+      setCanTapSpell(true);
     }, delay);
   };
 
@@ -102,9 +102,9 @@ export default function FruitLearningScreen() {
     speakFruit();
   }, [index]);
 
-  // 🔤 LETTER TAP
+  
   const speakLetter = (l) => {
-    if (!canTapSpell) return; // ✅ block during auto speech
+    if (!canTapSpell) return;
     Speech.stop();
     Speech.speak(l, { rate: 0.9, pitch: 1.5 });
   };
@@ -124,23 +124,23 @@ export default function FruitLearningScreen() {
     if (index > 0) setIndex(index - 1);
   };
 
-  // ✅ EXIT (STOP ALL VOICE)
+ 
   const exitToMenu = () => {
     Speech.stop();
     setShowPopup(false);
     router.push("/four");
   };
 
-  // 🎉 REWARD SCREEN
+ 
   if (finished) {
     return (
       <View style={styles.rewardContainer}>
-        {/* BACK WITH POPUP */}
+       
         <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
 
-        {/* POPUP */}
+       
         {showPopup && (
           <View style={styles.popupOverlay}>
             <View style={styles.popupBox}>
@@ -186,15 +186,15 @@ export default function FruitLearningScreen() {
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
       <StatusBar barStyle="dark-content" />
 
-      {/* TITLE */}
+      
       <Text style={styles.title}>Learn Fruits 🍉</Text>
 
-      {/* BACK */}
+     
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* POPUP */}
+     
       {showPopup && (
         <View style={styles.popupOverlay}>
           <View style={styles.popupBox}>
@@ -219,7 +219,7 @@ export default function FruitLearningScreen() {
         </View>
       )}
 
-      {/* FRUIT */}
+      
       <Animated.Text
         style={[styles.emoji, { transform: [{ translateY: floatAnim }] }]}
         onPress={speakFruit}
@@ -227,15 +227,15 @@ export default function FruitLearningScreen() {
         {fruit.emoji}
       </Animated.Text>
 
-      {/* NAME */}
+     
       <Text style={styles.name}>{fruit.name}</Text>
 
-      {/* SPELLING */}
+      
       <View style={styles.letters}>
         {fruit.letters.map((l, i) => (
           <TouchableOpacity
             key={i}
-            disabled={!canTapSpell} // ✅ disabled until complete
+            disabled={!canTapSpell}
             onPress={() => speakLetter(l)}
             style={[
               styles.letterBox,
@@ -247,7 +247,7 @@ export default function FruitLearningScreen() {
         ))}
       </View>
 
-      {/* NAV */}
+     
       <View style={styles.nav}>
         <TouchableOpacity style={styles.navBtn} onPress={prev}>
           <FontAwesome name="chevron-left" size={24} color="#fff" />
@@ -261,7 +261,7 @@ export default function FruitLearningScreen() {
   );
 }
 
-/* STYLES SAME */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   title: { fontSize: 26, fontWeight: "bold", position: "absolute", top: 60 },

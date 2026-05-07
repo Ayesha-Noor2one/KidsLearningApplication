@@ -11,7 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 
-/* 🏠 EXPANDED DAILY OBJECTS */
+
 const objects = [
   { emoji: "🪑", name: "CHAIR" },
   { emoji: "🛏️", name: "BED" },
@@ -25,8 +25,6 @@ const objects = [
   { emoji: "🍽️", name: "PLATE" },
   { emoji: "🥄", name: "SPOON" },
   { emoji: "🍴", name: "FORK" },
-
-  /* 🆕 ADDED DAILY OBJECTS */
   { emoji: "🧼", name: "SOAP" },
   { emoji: "🚿", name: "SHOWER" },
   { emoji: "🪥", name: "BRUSH" },
@@ -56,7 +54,7 @@ export default function ObjectsLearningScreen() {
   const current = objects[index];
   const letters = current.name.split("");
 
-  /* 🌈 BACKGROUND ANIMATION */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -72,7 +70,7 @@ export default function ObjectsLearningScreen() {
     outputRange: ["#D7F9FF", "#FFF3C7", "#E5FFE5"],
   });
 
-  /* 🎈 FLOAT */
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -90,7 +88,7 @@ export default function ObjectsLearningScreen() {
     ).start();
   }, []);
 
-  /* 🔊 SPEECH LOCK SYSTEM */
+ 
   const speakObject = () => {
     if (lock.current) return;
 
@@ -119,14 +117,13 @@ export default function ObjectsLearningScreen() {
     speakObject();
   }, [index]);
 
-  /* 🔤 LETTER SPEAK */
+ 
   const speakLetter = (l) => {
     if (!canTapSpell) return;
     Speech.stop();
     Speech.speak(l, { rate: 0.9, pitch: 1.5 });
   };
 
-  /* ⏭ NAV */
   const next = () => {
     if (lock.current) return;
 
@@ -142,20 +139,20 @@ export default function ObjectsLearningScreen() {
     if (index > 0) setIndex(index - 1);
   };
 
-  /* ❌ EXIT */
+ 
   const exitGame = () => {
     Speech.stop();
     setShowPopup(false);
-    router.push("/three");
+    router.push("/five");
   };
 
-  /* 🎉 FINISH SCREEN */
+
   if (finished) {
     return (
       <View style={styles.rewardContainer}>
         <Text style={styles.rewardTitle}>🌟 Amazing!</Text>
         <Text style={styles.rewardSub}>You learned daily objects 🎉</Text>
-        <Text style={styles.stars}>⭐⭐⭐⭐⭐</Text>
+        <Text style={styles.stars}>🏆</Text>
 
         <TouchableOpacity
           style={styles.restartBtn}
@@ -176,7 +173,7 @@ export default function ObjectsLearningScreen() {
 
       <Text style={styles.title}>Daily Objects Learning</Text>
 
-      {/* BACK BUTTON */}
+     
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
@@ -205,7 +202,7 @@ export default function ObjectsLearningScreen() {
         </View>
       )}
 
-      {/* OBJECT */}
+    
       <Animated.Text
         style={[
           styles.emoji,
@@ -218,7 +215,7 @@ export default function ObjectsLearningScreen() {
 
       <Text style={styles.name}>{current.name}</Text>
 
-      {/* SPELLING */}
+   
       <View style={styles.letters}>
         {letters.map((l, i) => (
           <TouchableOpacity
@@ -232,7 +229,7 @@ export default function ObjectsLearningScreen() {
         ))}
       </View>
 
-      {/* NAV */}
+     
       <View style={styles.nav}>
         <TouchableOpacity style={styles.navBtn} onPress={prev}>
           <FontAwesome name="chevron-left" size={24} color="#fff" />
@@ -246,7 +243,7 @@ export default function ObjectsLearningScreen() {
   );
 }
 
-/* STYLES SAME AS YOUR ORIGINAL */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
 

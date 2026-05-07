@@ -12,7 +12,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 
-/* 🧠 WORDS */
+
 const items = [
   { emoji: "🍎", word: "APPLE" },
   { emoji: "🐶", word: "DOG" },
@@ -41,7 +41,7 @@ export default function ScrambledWordsGame() {
   const current = items[index];
   const letters = current.word.split("");
 
-  /* BG */
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -69,7 +69,7 @@ export default function ScrambledWordsGame() {
     outputRange: ["#D7F9FF", "#FFF3C7", "#E5FFE5"],
   });
 
-  /* FLOAT */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -88,7 +88,7 @@ export default function ScrambledWordsGame() {
     ).start();
   }, []);
 
-  /* EMOJI SCALE */
+  
   useEffect(() => {
     emojiAnim.setValue(0);
     Animated.spring(emojiAnim, {
@@ -97,7 +97,7 @@ export default function ScrambledWordsGame() {
     }).start();
   }, [index]);
 
-  /* SAFE SHUFFLE */
+ 
   const shuffle = (arr) => {
     let a = arr.slice();
     while (a.join("") === arr.join("")) {
@@ -106,7 +106,7 @@ export default function ScrambledWordsGame() {
     return a;
   };
 
-  /* START */
+
   const start = () => {
     setLocked(true);
     setShowCorrect(false);
@@ -182,7 +182,7 @@ export default function ScrambledWordsGame() {
     </View>
   );
 
-  /* REWARD SCREEN */
+ 
   if (rewardPopup) {
     return (
       <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
@@ -257,8 +257,7 @@ export default function ScrambledWordsGame() {
         {current.emoji}
       </Animated.Text>
 
-      {/* SCRAMBLED */}
-      <View style={styles.row}>
+           <View style={styles.row}>
         {shuffled.map((l, i) => (
           <View key={i} style={styles.card}>
             <Text style={styles.text}>{l}</Text>
@@ -267,7 +266,7 @@ export default function ScrambledWordsGame() {
         <Text style={styles.cross}>❌</Text>
       </View>
 
-      {/* CORRECT FIXED */}
+     
       {showCorrect && (
         <View style={styles.row}>
           {letters.map((l, i) => {

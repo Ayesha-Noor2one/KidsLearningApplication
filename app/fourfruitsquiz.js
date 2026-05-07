@@ -11,7 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 
-/* 🍎🥕 DATA */
+
 const DATA = [
   { id: 1, name: "Apple", emoji: "🍎", color: "#FF6B6B" },
   { id: 2, name: "Banana", emoji: "🍌", color: "#FFD93D" },
@@ -47,7 +47,7 @@ export default function KidsCreativeQuiz() {
 
   const getCount = () => (level < 3 ? 2 : level < 6 ? 3 : 4);
 
-  /* BG */
+
   useEffect(() => {
     Animated.loop(
       Animated.timing(bg, {
@@ -63,7 +63,6 @@ export default function KidsCreativeQuiz() {
     outputRange: ["#FFF7D6", "#E6F7FF"],
   });
 
-  /* TITLE */
   useEffect(() => {
     Animated.loop(
       Animated.timing(titleAnim, {
@@ -79,7 +78,7 @@ export default function KidsCreativeQuiz() {
     outputRange: ["#FF6B6B", "#6C5CE7"],
   });
 
-  /* REWARD STAR FLOAT */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -89,7 +88,7 @@ export default function KidsCreativeQuiz() {
     ).start();
   }, []);
 
-  /* ROUND */
+ 
   const generateRound = () => {
     setLocked(true);
 
@@ -116,7 +115,7 @@ export default function KidsCreativeQuiz() {
     generateRound();
   }, [level]);
 
-  /* SHAKE */
+  
   const shake = () => {
     shakeAnim.setValue(0);
     Animated.sequence([
@@ -126,9 +125,9 @@ export default function KidsCreativeQuiz() {
     ]).start();
   };
 
-  /* ⭐ SMOOTH STAR (FIXED) */
+ 
   const star = () => {
-    starAnim.stopAnimation();   // 🔥 prevent lag stacking
+    starAnim.stopAnimation();   
     starAnim.setValue(0);
 
     Animated.parallel([
@@ -169,7 +168,7 @@ export default function KidsCreativeQuiz() {
     }
   };
 
-  /* 🎉 REWARD SCREEN */
+  
   if (finished) {
     return (
       <Animated.View style={[styles.finish, { backgroundColor: bgColor }]}>
@@ -268,7 +267,7 @@ export default function KidsCreativeQuiz() {
   );
 }
 
-/* POPUP SAME */
+
 function Popup({ show, close, router }) {
   return (
     <Modal transparent visible={show}>

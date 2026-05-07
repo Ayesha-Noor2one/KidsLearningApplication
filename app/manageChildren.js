@@ -63,14 +63,13 @@ const ChildrenForm = () => {
     const userEmail = await AsyncStorage.getItem('userEmail');
     const parentId = await AsyncStorage.getItem('parentId');
 
-    if (editingIndex === null && children.length >= 50) {
-      return;
-    }
+    if (editingIndex === null && children.length >= 50) return;
 
     if (!name.trim()) {
       showToast('Name is required.');
       return;
     }
+
     if (!/^[A-Za-z]+$/.test(name.trim())) {
       showToast('Name must contain alphabets only.');
       return;
@@ -97,30 +96,18 @@ const ChildrenForm = () => {
       try {
         const res = await update(updatedChildren[editingIndex]);
         if (res.changes === 1) fetchProfileData();
-      } catch (error) {
-        console.error('Error updating child:', error);
-      }
+      } catch (error) {}
       setEditingIndex(null);
     } else {
       try {
-        const payload = {
-          name,
-          age,
-          email: userEmail,
-          password,
-          role: 'kid',
-        };
+        const payload = { name, age, email: userEmail, password, role: 'kid' };
         const res = await insertUser(payload);
         if (res.changes === 1) {
           const insertedId = res.lastInsertRowId;
-          const res2 = await insertKidUsageLimit(parentId, insertedId);
-          if (res2.changes === 1) {
-            fetchProfileData();
-          }
+          await insertKidUsageLimit(parentId, insertedId);
+          fetchProfileData();
         }
-      } catch (error) {
-        console.error('Error adding child:', error);
-      }
+      } catch (error) {}
     }
 
     clearForm();
@@ -131,9 +118,7 @@ const ChildrenForm = () => {
     try {
       const res = await deleteUser(children[index].id);
       if (res.changes === 1) fetchProfileData();
-    } catch (error) {
-      console.error('Error deleting child:', error);
-    }
+    } catch (error) {}
     setEditingIndex(null);
     clearForm();
     setShowForm(false);
@@ -160,123 +145,107 @@ const ChildrenForm = () => {
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
+          
+          
+          <View style={styles.circle1} />
+          <View style={styles.circle2} />
+          <View style={styles.circle3} />
+
           <View style={styles.container}>
+
+          
             <View style={styles.header}>
-              <TouchableOpacity onPress={() => router.push('/Settings')}>
-                <Ionicons name="arrow-back" size={24} color="#8B0000" />
+              <TouchableOpacity onPress={() => router.push('/Settings')} style={styles.backButton}>
+                <Ionicons name="arrow-back" size={22} color="#fff" />
               </TouchableOpacity>
               <Text style={styles.title}>Children List ({children.length})</Text>
               <View style={{ width: 24 }} />
             </View>
 
-            {children.length > 0 ? (
-              <FlatList
-                data={children}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={renderItem}
-                style={styles.list}
-                scrollEnabled={false}
-              />
-            ) : (
-              <Text style={styles.noChildren}>No children added yet.</Text>
-            )}
+           
+            <View style={styles.card}>
 
-            {showForm && (
-              <View style={styles.card}>
-                <Text style={styles.formTitle}>
-                  {editingIndex !== null ? 'Edit Child' : 'Add New Child'}
-                </Text>
-
-                <TextInput
-                  placeholder="Name"
-                  value={name}
-                  onChangeText={setName}
-                  style={styles.input}
-                  placeholderTextColor="#8B0000"
+              {children.length > 0 ? (
+                <FlatList
+                  data={children}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={renderItem}
+                  scrollEnabled={false}
                 />
+              ) : (
+                <Text style={styles.noChildren}>No children added yet.</Text>
+              )}
 
-                <TextInput
-                  placeholder="Age (3-5)"
-                  value={age}
-                  onChangeText={(text) => {
-                    if (text.length <= 1 && /^[3-5]?$/.test(text)) {
-                      setAge(text);
-                    }
-                  }}
-                  style={styles.input}
-                  keyboardType="numeric"
-                  maxLength={1}
-                  placeholderTextColor="#8B0000"
-                />
+              {showForm && (
+                <View>
+                  <Text style={styles.formTitle}>
+                    {editingIndex !== null ? 'Edit Child' : 'Add New Child'}
+                  </Text>
 
-                <View style={styles.passwordContainer}>
                   <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    style={styles.passwordInput}
-                    secureTextEntry={!showPassword}
-                    placeholderTextColor="#8B0000"
-                    maxLength={12}
+                    placeholder="Name"
+                    value={name}
+                    onChangeText={setName}
+                    style={styles.input}
+                    placeholderTextColor="#999"
                   />
-                  <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                    <Ionicons
-                      name={showPassword ? 'eye-off' : 'eye'}
-                      size={24}
-                      color="#8B0000"
-                      style={styles.eyeIcon}
+
+                  <TextInput
+                    placeholder="Age (3-5)"
+                    value={age}
+                    onChangeText={setAge}
+                    style={styles.input}
+                    keyboardType="numeric"
+                    placeholderTextColor="#999"
+                  />
+
+                  <View style={styles.passwordContainer}>
+                    <TextInput
+                      placeholder="Password"
+                      value={password}
+                      onChangeText={setPassword}
+                      style={styles.passwordInput}
+                      secureTextEntry={!showPassword}
+                      placeholderTextColor="#999"
                     />
-                  </TouchableOpacity>
-                </View>
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                      <Ionicons
+                        name={showPassword ? 'eye-off' : 'eye'}
+                        size={20}
+                        color="#6C5CE7"
+                      />
+                    </TouchableOpacity>
+                  </View>
 
-                <Button mode="contained" onPress={handleAddOrEdit} style={styles.addButton}>
-                  {editingIndex !== null ? 'Update Child' : 'Save Child'}
-                </Button>
-
-                <Button
-                  mode="outlined"
-                  onPress={() => {
-                    clearForm();
-                    setEditingIndex(null);
-                    setShowForm(false);
-                  }}
-                  style={styles.cancelButton}
-                >
-                  Cancel
-                </Button>
-
-                {editingIndex !== null && (
-                  <Button
-                    mode="contained"
-                    buttonColor="red"
-                    onPress={() => handleDelete(editingIndex)}
-                    style={styles.deleteButton}
-                  >
-                    Delete This Child
+                  <Button mode="contained" onPress={handleAddOrEdit} style={styles.signUpButton}>
+                    {editingIndex !== null ? 'Update Child' : 'Save Child'}
                   </Button>
-                )}
-              </View>
-            )}
 
-            {!showForm && children.length < 10 && (
-              <View style={styles.bottomButton}>
-                <Button
-                  mode="contained"
-                  onPress={() => {
-                    clearForm();
-                    setEditingIndex(null);
-                    setShowForm(true);
-                  }}
-                  style={styles.addNewButton}
-                >
-                  ➕ Add New Child
-                </Button>
-              </View>
-            )}
+                  <Button mode="outlined" onPress={() => setShowForm(false)}>
+                    Cancel
+                  </Button>
 
-            {children.length >= 50 && (
-              <Text style={styles.limitText}>Maximum 50 child profiles allowed.</Text>
-            )}
+                  {editingIndex !== null && (
+                    <Button onPress={() => handleDelete(editingIndex)} buttonColor="red">
+                      Delete This Child
+                    </Button>
+                  )}
+                </View>
+              )}
+
+              {!showForm && children.length < 50 && (
+                <View style={styles.bottomButton}>
+                  <Button mode="contained" onPress={() => setShowForm(true)} style={styles.signUpButton}>
+                    ➕ Add New Child
+                  </Button>
+                </View>
+              )}
+
+              {children.length >= 50 && (
+                <Text style={styles.limitText}>Maximum 50 child profiles allowed.</Text>
+              )}
+
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -289,119 +258,137 @@ export default ChildrenForm;
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#FFD700',
+    backgroundColor: "#f7f9ff",
   },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'flex-start',
-  },
+
   container: {
     padding: 20,
   },
+
+  circle1: {
+    position: "absolute",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "#FFD93D",
+    top: -40,
+    left: -50,
+    opacity: 0.3,
+  },
+
+  circle2: {
+    position: "absolute",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "#6C5CE7",
+    top:600,
+    left: -5,
+    opacity: 0.2,
+  },
+
+  circle3: {
+    position: "absolute",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: "#FF7675",
+    top: 400,
+    right: -20,
+    opacity: 0.2,
+  },
+
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
+
+  backButton: {
+    backgroundColor: "#6C5CE7",
+    padding: 10,
+    borderRadius: 25,
+  },
+
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#8B0000',
-    textAlign: 'center',
-    flex: 1,
+    fontWeight: "bold",
+    color: "#FF7675",
   },
-  noChildren: {
-    textAlign: 'center',
-    marginVertical: 10,
-    color: 'grey',
-  },
-  limitText: {
-    textAlign: 'center',
-    color: 'red',
-    marginTop: 5,
-  },
-  list: {
-    marginBottom: 20,
-  },
-  childItem: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    elevation: 2,
-  },
-  childText: {
-    fontSize: 14,
-    color: '#555',
-  },
-  bottomButton: {
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  addNewButton: {
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: '#8B0000',
-  },
+
   card: {
-    marginTop: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
+    borderRadius: 30,
     padding: 20,
-    borderRadius: 12,
-    elevation: 8,
-    shadowColor: '#8B0000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
-    borderColor: '#8B0000',
-    borderWidth: 2,
+    borderWidth: 3,
+    borderColor: "#9183fa",
+    elevation: 10,
   },
-  formTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+
+  childItem: {
+    backgroundColor: "#f4f6ff",
+    padding: 15,
+    borderRadius: 15,
     marginBottom: 10,
-    color: '#8B0000',
-    textAlign: 'center',
+    gap:5,
   },
+
+  childText: {
+    color: "#555",
+  },
+
   input: {
-    borderWidth: 1,
-    borderColor: '#8B0000',
-    borderRadius: 10,
+    backgroundColor: "#f4f6ff",
     padding: 12,
-    marginBottom: 15,
-    backgroundColor: '#f9f9f9',
-    color: '#8B0000',
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#8B0000',
+    borderRadius: 15,
     borderWidth: 1,
-    borderRadius: 10,
-    backgroundColor: '#f9f9f9',
-    marginBottom: 15,
-    paddingHorizontal: 10,
+    borderColor: "#d9dcff",
+    marginBottom: 12,
   },
+
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f4f6ff",
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    marginBottom: 12,
+  },
+
   passwordInput: {
     flex: 1,
     padding: 12,
-    color: '#8B0000',
-    backgroundColor: 'transparent',
   },
-  eyeIcon: {
-    marginLeft: 10,
-  },
-  addButton: {
+
+  signUpButton: {
+    backgroundColor: "#f97171ff",
+    borderRadius: 20,
     marginTop: 10,
-    backgroundColor: '#8B0000',
+    gap:5,
   },
-  cancelButton: {
-    marginTop: 10,
-    borderColor: '#999',
+
+  bottomButton: {
+    marginTop: 15,
   },
-  deleteButton: {
+
+  formTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#6C5CE7",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+
+  noChildren: {
+    textAlign: "center",
+    color: "#999",
+    marginVertical: 10,
+  },
+
+  limitText: {
+    textAlign: "center",
+    color: "red",
     marginTop: 10,
-    backgroundColor: 'red',
   },
 });

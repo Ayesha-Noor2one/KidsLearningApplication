@@ -42,7 +42,7 @@ export default function ShapeGame() {
 
   const target = SHAPES[level];
 
-  /* BG */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -57,14 +57,14 @@ export default function ShapeGame() {
     outputRange: ["#FFF3C7", "#D7F9FF"],
   });
 
-  /* SHUFFLE */
+ 
   useEffect(() => {
     setItems([...SHAPES].sort(() => Math.random() - 0.5));
     Speech.stop();
     Speech.speak(`Find ${target.name}`);
   }, [level]);
 
-  /* ⭐ STAR ANIMATION (FIXED TRIGGER) */
+  
   const playStar = (callback) => {
     setLocked(true);
 
@@ -87,7 +87,7 @@ export default function ShapeGame() {
     });
   };
 
-  /* DROP */
+ 
   const onDrop = (item, pan) => {
     if (locked) return;
 
@@ -96,7 +96,7 @@ export default function ShapeGame() {
     if (isCorrect) {
       setRight((r) => r + 1);
 
-      // ⭐ FIX: star animation now runs properly BEFORE level change
+
       playStar(() => {
         if (level + 1 < SHAPES.length) {
           setLevel((l) => l + 1);
@@ -142,7 +142,7 @@ export default function ShapeGame() {
     );
   };
 
-  /* FINISHED */
+ 
   if (finished) {
     return (
       <View style={styles.reward}>
@@ -186,7 +186,7 @@ export default function ShapeGame() {
                   <Text style={{ color: "#fff" }}>No</Text>
                 </TouchableOpacity>
 
-                {/* ✅ FIXED NAVIGATION */}
+             
                 <TouchableOpacity
                   style={[styles.btn, { backgroundColor: "green" }]}
                   onPress={() => {
@@ -210,7 +210,7 @@ export default function ShapeGame() {
       <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
         <StatusBar barStyle="dark-content" />
 
-        {/* POPUP */}
+       
         <Modal transparent visible={showPopup}>
           <View style={styles.popup}>
             <View style={styles.popupBox}>
@@ -239,12 +239,11 @@ export default function ShapeGame() {
           </View>
         </Modal>
 
-        {/* BACK */}
         <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
 
-        {/* ⭐ STAR FIXED ANIMATION */}
+      
         <Animated.View
           style={[
             styles.star,
@@ -270,22 +269,22 @@ export default function ShapeGame() {
           <Text style={{ fontSize: 70 }}>⭐</Text>
         </Animated.View>
 
-        {/* TITLE */}
+        
         <Text style={styles.title}>Match the Shape</Text>
 
-        {/* TARGET */}
+       
         <View style={[styles.target, { backgroundColor: target.color }]}>
           <Text style={styles.targetText}>{target.shape}</Text>
         </View>
 
-        {/* ITEMS */}
+     
         <View style={styles.row}>
           {items.map((i) => (
             <Draggable key={i.id} item={i} />
           ))}
         </View>
 
-        {/* SCORE */}
+        
         <View style={styles.score}>
           <Text>✔ {right}</Text>
           <Text>❌ {wrong}</Text>
@@ -296,7 +295,7 @@ export default function ShapeGame() {
   );
 }
 
-/* styles unchanged */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   title: { fontSize: 28, fontWeight: "bold", position: "absolute", top: 60 },

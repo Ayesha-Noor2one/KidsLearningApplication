@@ -39,7 +39,7 @@ export default function OppositesQuizGame() {
 
   const current = quiz[index];
 
-  /* BG */
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -54,7 +54,7 @@ export default function OppositesQuizGame() {
     outputRange: ["#F3F7FF", "#fbe3edff"],
   });
 
-  /* EMOJI ANIMATION */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -64,7 +64,7 @@ export default function OppositesQuizGame() {
     ).start();
   }, []);
 
-  /* FLOWER ANIMATION (RESULT) */
+ 
   useEffect(() => {
     if (showResult) {
       Animated.loop(
@@ -127,7 +127,7 @@ export default function OppositesQuizGame() {
     setSelected(null);
   };
 
-  /* POPUP */
+ 
   const Popup = () => (
     <Modal transparent visible={showPopup} animationType="fade">
       <View style={styles.popupOverlay}>
@@ -154,12 +154,12 @@ export default function OppositesQuizGame() {
     </Modal>
   );
 
-  /* ================= RESULT SCREEN ================= */
+ 
   if (showResult) {
     return (
       <View style={[styles.container, { backgroundColor: "#FFF7E0" }]}>
         
-        {/* FLOWER BIG */}
+      
         <Animated.Text
           style={{
             fontSize: 140,
@@ -170,21 +170,21 @@ export default function OppositesQuizGame() {
          🌺
         </Animated.Text>
 
-        {/* TITLE */}
+       
         <Text style={styles.title}>🎉 GREAT JOB 🎉</Text>
 
-        {/* SCORE UNDER FLOWER (ROW) */}
+       
         <View style={styles.bottomScore}>
           <Text style={styles.bottomText}>✔ {score}</Text>
           <Text style={styles.bottomText}>❌ {wrong}</Text>
         </View>
 
-        {/* PLAY AGAIN */}
+       
         <TouchableOpacity style={styles.btn} onPress={restart}>
           <Text style={{ color: "#fff" }}>Play Again</Text>
         </TouchableOpacity>
 
-        {/* BACK BUTTON (NOT REMOVED) */}
+       
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => setShowPopup(true)}
@@ -212,12 +212,12 @@ export default function OppositesQuizGame() {
 
       <Popup />
 
-      {/* QUESTION */}
+    
       <Text style={styles.hint}>
         Opposite of {current.question} is?
       </Text>
 
-      {/* EMOJI */}
+     
       <Animated.Text
         style={{
           fontSize: 150,
@@ -227,7 +227,7 @@ export default function OppositesQuizGame() {
         {current.questionIcon}
       </Animated.Text>
 
-      {/* OPTIONS */}
+     
       <Animated.View style={{ transform: [{ scale }, { translateX: shake }] }}>
         <View style={styles.optionRow}>
           {current.options.map((opt, i) => (
@@ -247,7 +247,7 @@ export default function OppositesQuizGame() {
         </View>
       </Animated.View>
 
-      {/* SCORE (GAME) */}
+     
       <View style={styles.bottomScore}>
         <Text style={styles.bottomText}>✔ {score}</Text>
         <Text style={styles.bottomText}>❌ {wrong}</Text>
@@ -256,7 +256,7 @@ export default function OppositesQuizGame() {
   );
 }
 
-/* ================= STYLES ================= */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
 

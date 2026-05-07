@@ -5,7 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { addQuizResult } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const quiz="Object Quiz";
-/* 🍎 WORD BANK */
+
 const WORDS = [
   { word: "APPLE", emoji: "🍎" },
   { word: "BANANA", emoji: "🍌" },
@@ -27,7 +27,7 @@ export default function WordBuildGame() {
 
   const shake = useRef(new Animated.Value(0)).current;
 
-  /* 🔀 SHUFFLE */
+ 
   const shuffleWord = () => {
     const arr = current.word.split("");
     setShuffled(arr.sort(() => Math.random() - 0.5));
@@ -39,7 +39,7 @@ export default function WordBuildGame() {
     Speech.speak(`Make ${current.word}`);
   }, [index]);
 
-  /* 🧠 SELECT LETTER */
+ 
   const pickLetter = (l, i) => {
     if (locked) return;
 
@@ -60,7 +60,7 @@ export default function WordBuildGame() {
     }
   };
 
-  /* ❌ SHAKE */
+ 
   const wrong = () => {
     shake.setValue(0);
     Animated.sequence([
@@ -70,7 +70,7 @@ export default function WordBuildGame() {
     ]).start();
   };
 
-  /* 🧹 REMOVE LETTER */
+ 
   const remove = (i) => {
     let copy = [...selected];
     copy.splice(i, 1);
@@ -93,13 +93,13 @@ const saveProgress = async () => {
   return (
     <View style={styles.container}>
 
-      {/* BACKGROUND TITLE */}
+     
       <Text style={styles.title}>🧠 Build the Word</Text>
 
-      {/* ICON */}
+     
       <Text style={styles.emoji}>{current.emoji}</Text>
 
-      {/* SELECTED WORD AREA */}
+      
       <View style={styles.selectedBox}>
         {Array.from({ length: current.word.length }).map((_, i) => (
           <TouchableOpacity key={i} onPress={() => remove(i)}>
@@ -112,7 +112,7 @@ const saveProgress = async () => {
         ))}
       </View>
 
-      {/* SHUFFLED LETTERS */}
+     
       <Animated.View style={{ transform: [{ translateX: shake }] }}>
         <View style={styles.grid}>
           {shuffled.map((l, i) => (
@@ -125,14 +125,13 @@ const saveProgress = async () => {
         </View>
       </Animated.View>
 
-      {/* LIGHT HINT ROW */}
       <View style={styles.hintRow}>
         {current.word.split("").map((l, i) => (
           <Text key={i} style={styles.hint}>{l}</Text>
         ))}
       </View>
 
-      {/* NEXT / RESET */}
+     
       <TouchableOpacity
         style={styles.nextBtn}
         onPress={() => {
@@ -146,7 +145,7 @@ const saveProgress = async () => {
   );
 }
 
-/* 🎨 STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

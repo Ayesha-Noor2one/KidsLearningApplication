@@ -15,7 +15,7 @@ import { addQuizResult } from './database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const quiz="Color Quiz";
 
-/* 🎨 COLORS */
+
 const COLORS = [
   { color: "#FF3B30", name: "red" },
   { color: "#FF9500", name: "orange" },
@@ -27,7 +27,7 @@ const COLORS = [
   { color: "#5AC8FA", name: "sky" },
 ];
 
-/* 🧩 SHAPES */
+
 const SHAPES = [
   { name: "heart", color: "#FF3B30", path: "M150 50 C 60 50, 60 180, 150 220 C 240 180,240 50,150 50" },
   { name: "star", color: "#FFCC00", path: "M150 40 L180 120 L260 120 L200 170 L220 250 L150 200 L80 250 L100 170 L40 120 L120 120 Z" },
@@ -61,7 +61,7 @@ export default function PaintGame() {
 
   const shape = SHAPES[level];
 
-  /* BG */
+  
   useEffect(() => {
     Animated.loop(
       Animated.timing(bg, {
@@ -77,7 +77,7 @@ export default function PaintGame() {
     outputRange: ["#FFE9F3", "#E6F7FF"],
   });
 
-  /* TITLE */
+
   useEffect(() => {
     Animated.loop(
       Animated.timing(titleAnim, {
@@ -93,7 +93,7 @@ export default function PaintGame() {
     outputRange: ["#FF3B30", "#007AFF"],
   });
 
-  /* STAR FLOAT */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -103,7 +103,7 @@ export default function PaintGame() {
     ).start();
   }, []);
 
-  /* START */
+ 
   useEffect(() => {
     if (level < SHAPES.length) {
       setFillColor(null);
@@ -111,7 +111,7 @@ export default function PaintGame() {
     }
   }, [level]);
 
-  /* SHAKE */
+ 
   const wrongShake = () => {
     Animated.sequence([
       Animated.timing(shake, { toValue: 10, duration: 50, useNativeDriver: true }),
@@ -120,7 +120,7 @@ export default function PaintGame() {
     ]).start();
   };
 
-  /* LOGIC */
+  
   const handleFill = () => {
     if (selectedColor === shape.color) {
       setFillColor(selectedColor);
@@ -141,17 +141,17 @@ export default function PaintGame() {
     }
   };
 
-  /* 🎉 REWARD SCREEN */
+
   if (reward) {
     return (
       <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
 
-        {/* BACK BTN */}
+        
         <TouchableOpacity onPress={() => setPopup(true)} style={styles.backBtn}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
 
-        {/* POPUP */}
+       
         <Modal visible={popup} transparent>
           <View style={styles.overlay}>
             <View style={styles.popup}>
@@ -172,7 +172,7 @@ export default function PaintGame() {
 
         <Text style={{ fontSize: 30 }}>🎉 Great Job!</Text>
 
-        {/* ⭐ BIG CENTER STAR */}
+      
         <Animated.Text
           style={{
             fontSize: 120,
@@ -183,11 +183,11 @@ export default function PaintGame() {
           ⭐
         </Animated.Text>
 
-        {/* ✅ COUNTS */}
+     
         <Text style={{ fontSize: 18 }}>✔ Right: {right}</Text>
         <Text style={{ fontSize: 18 }}>❌ Wrong: {wrong}</Text>
 
-        {/* 🔁 PLAY AGAIN */}
+        
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {
@@ -220,12 +220,12 @@ const saveProgress = async () => {
   return (
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
 
-      {/* BACK */}
+      
       <TouchableOpacity onPress={() => setPopup(true)} style={styles.backBtn}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* POPUP */}
+     
       <Modal visible={popup} transparent>
         <View style={styles.overlay}>
           <View style={styles.popup}>
@@ -244,12 +244,12 @@ const saveProgress = async () => {
         </View>
       </Modal>
 
-      {/* TITLE */}
+      
       <Animated.Text style={[styles.title, { color: titleColor }]}>
         Fill the shape
       </Animated.Text>
 
-      {/* CARD */}
+     
       <Animated.View style={[styles.card, { transform: [{ translateX: shake }] }]}>
         <Svg height="300" width="300">
           <Path
@@ -261,14 +261,14 @@ const saveProgress = async () => {
           />
         </Svg>
 
-        {/* TARGET */}
+    
         <View style={styles.target}>
           <View style={[styles.dot, { backgroundColor: shape.color }]} />
           <Text>target</Text>
         </View>
       </Animated.View>
 
-      {/* COLORS */}
+      
       <View style={styles.colors}>
         {COLORS.map((c, i) => (
           <TouchableOpacity
@@ -283,7 +283,7 @@ const saveProgress = async () => {
         ))}
       </View>
 
-      {/* SCORE */}
+     
       <View style={styles.score}>
         <Text>✔ {right}</Text>
         <Text>❌ {wrong}</Text>
@@ -293,7 +293,7 @@ const saveProgress = async () => {
   );
 }
 
-/* STYLE */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", paddingTop: 60 },
 
@@ -315,13 +315,13 @@ target: {
   top: 15,
   flexDirection: "row",
   alignItems: "center",
-  paddingHorizontal: 10,   // 👈 width barhata hai
-  paddingVertical: 6,      // 👈 height barhata hai
-  backgroundColor: "#ffffffcc", // 👈 thora visible box
+  paddingHorizontal: 10,  
+  paddingVertical: 6,    
+  backgroundColor: "#ffffffcc", 
   borderRadius: 15
 },
 
-  dot: { width: 14, height: 14, borderRadius: 10, marginRight: 5 },
+  dot: { width: 25, height: 25, borderRadius: 15, marginRight: 5 },
 
   colors: {
     flexDirection: "row",
@@ -331,8 +331,8 @@ target: {
   },
 
   colorBtn: {
-    width: 55,
-    height: 55,
+    width: 65,
+    height: 65,
     borderRadius: 30,
     margin: 6
   },

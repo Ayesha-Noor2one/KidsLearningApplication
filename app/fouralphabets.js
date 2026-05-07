@@ -233,7 +233,7 @@ export default function AlphabetLearningScreen() {
   );
 }
 
-/* POPUP FIXED */
+
 const Popup = ({ onClose, onYes }) => (
   <View style={styles.popupOverlay}>
     <View style={styles.popupBox}>
@@ -252,7 +252,7 @@ const Popup = ({ onClose, onYes }) => (
   </View>
 );
 
-/* CLEAN STYLES */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
 

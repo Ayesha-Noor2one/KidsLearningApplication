@@ -58,7 +58,7 @@ export default function ABCObjectQuiz() {
 
   const current = data[index];
 
-  /* 🎨 BG */
+ 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -73,7 +73,7 @@ export default function ABCObjectQuiz() {
     outputRange: ["#EAF7FF", "#FFF3E0"],
   });
 
-  /* OPTIONS */
+ 
   const generateOptions = () => {
     const letters = data.map(d => d.letter);
     const wrongArr = [];
@@ -92,7 +92,6 @@ export default function ABCObjectQuiz() {
     generateOptions();
   }, [index]);
 
-  /* ICON */
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -155,12 +154,12 @@ export default function ABCObjectQuiz() {
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
       <StatusBar barStyle="dark-content" />
 
-      {/* BACK */}
+     
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowExit(true)}>
         <FontAwesome name="arrow-left" size={20} color="#fff" />
       </TouchableOpacity>
 
-      {/* TITLE */}
+     
       <Text style={styles.title}>
         <Text style={{ color: "#FF6B6B" }}>A</Text>
         <Text style={{ color: "#4ECDC4" }}>B</Text>
@@ -181,7 +180,7 @@ export default function ABCObjectQuiz() {
         ))}
       </Animated.View>
 
-      {/* SPELLING */}
+      
       <Text style={styles.spell}>{current.name}</Text>
 
       <Animated.View style={[styles.star, { opacity: starAnim }]}>
@@ -190,7 +189,7 @@ export default function ABCObjectQuiz() {
 
       <Text style={styles.score}>✔ {right} ❌ {wrong}</Text>
 
-      {/* EXIT POPUP */}
+     
       {showExit && (
         <View style={styles.modal}>
           <View style={styles.popup}>
@@ -210,7 +209,7 @@ export default function ABCObjectQuiz() {
   );
 }
 
-/* 🎉 REWARD SCREEN */
+
 const RewardScreen = ({ right, wrong, setIndex, setRight, setWrong, setShowReward, navigation }) => {
   const heart = useRef(new Animated.Value(0)).current;
   const [showExit,setShowExit]=useState(false);

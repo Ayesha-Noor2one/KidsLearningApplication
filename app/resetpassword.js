@@ -28,7 +28,7 @@ export default function ResetPassword() {
   const route = useRoute();
   const { email } = useLocalSearchParams();
 
-  /* 🎈 small animation (same vibe as other screens) */
+ 
   const pop1 = useRef(new Animated.Value(0)).current;
   const pop2 = useRef(new Animated.Value(0)).current;
   const pop3 = useRef(new Animated.Value(0)).current;
@@ -97,7 +97,7 @@ export default function ResetPassword() {
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
 
-          {/* BACK BUTTON */}
+        
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => router.push("/Forgotpassword")}
@@ -105,14 +105,14 @@ export default function ResetPassword() {
             <Ionicons name="arrow-back" size={26} color="#fff" />
           </TouchableOpacity>
 
-          {/* BACKGROUND CIRCLES */}
+        
           <View style={styles.circle1} />
           <View style={styles.circle2} />
           <View style={styles.circle3} />
 
           <View style={styles.box}>
 
-            {/* animated bubbles header */}
+           
             <View style={styles.iconRow}>
               <Animated.View style={[styles.bubble, { transform: [{ scale: pop1 }] }]} />
               <Animated.View style={[styles.bubbleBig, { transform: [{ scale: pop2 }] }]} />
@@ -122,7 +122,7 @@ export default function ResetPassword() {
 
             <Text style={styles.title}>Reset Password 🔐</Text>
 
-            {/* NEW PASSWORD */}
+           
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
@@ -144,7 +144,7 @@ export default function ResetPassword() {
               </TouchableOpacity>
             </View>
 
-            {/* CONFIRM PASSWORD */}
+           
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
@@ -176,7 +176,7 @@ export default function ResetPassword() {
   );
 }
 
-/* THEME MATCHED STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

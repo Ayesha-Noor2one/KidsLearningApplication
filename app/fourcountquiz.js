@@ -47,10 +47,10 @@ export default function CountingCollectGame() {
 
   const fingerAnim = useRef(new Animated.Value(0)).current;
 
-  // ✅ FIX: proper flower animation
+  
   const flowerAnim = useRef(new Animated.Value(1)).current;
 
-  /* BACKGROUND + FINGER */
+ 
   useEffect(() => {
     generateLevel();
 
@@ -93,7 +93,7 @@ export default function CountingCollectGame() {
     ).start();
   }, [level]);
 
-  /* ✅ FIX: START FLOWER ANIMATION WHEN RESULT SCREEN OPENS */
+ 
   useEffect(() => {
     if (showResult) {
       flowerAnim.setValue(1);
@@ -223,20 +223,20 @@ export default function CountingCollectGame() {
     );
   }
 
-  /* RESULT SCREEN */
+ 
   if (showResult) {
     return (
       <View style={styles.resultContainer}>
 
-        {/* BACK BUTTON (KEEPED) */}
+       
         <TouchableOpacity style={styles.back} onPress={() => setShowPopup(true)}>
           <FontAwesome5 name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
 
-        {/* TITLE ABOVE FLOWER */}
+      
         <Text style={styles.title}>🎉 GOOD JOB 🎉</Text>
 
-        {/* BIG ANIMATED FLOWER */}
+       
         <Animated.Text
           style={[
             styles.flower,
@@ -246,10 +246,9 @@ export default function CountingCollectGame() {
          🌻
         </Animated.Text>
 
-        {/* SCORE BELOW FLOWER */}
+     
         <Text style={styles.score}>✔ {right} ❌ {wrong}</Text>
 
-        {/* PLAY AGAIN */}
         <TouchableOpacity
           style={styles.playBtn}
           onPress={() => {
@@ -370,7 +369,7 @@ const styles = StyleSheet.create({
 
   emoji: { fontSize: 30 },
 
-  /* ✅ UPDATED DICE ROW */
+
   diceRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -407,7 +406,7 @@ const styles = StyleSheet.create({
 
   collectEmoji: { fontSize: 26, margin: 2 },
 
-  thumb: { fontSize: 55 }, // UPDATED
+  thumb: { fontSize: 55 }, 
 
   scoreRow: {
     position: "absolute",
@@ -416,7 +415,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
 
-  /* ✅ RESULT SCREEN FIXED */
+  
   resultContainer: {
     flex: 1,
     justifyContent: "center",

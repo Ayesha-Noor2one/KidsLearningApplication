@@ -23,7 +23,7 @@ export default function BodyPartsGame() {
 
   const mountedRef = useRef(true);
   const lock = useRef(false);
-  const speakId = useRef(0); // ⭐ IMPORTANT FIX
+  const speakId = useRef(0);
 
   const bgAnim = useRef(new Animated.Value(0)).current;
   const floatAnim = useRef(new Animated.Value(0)).current;
@@ -52,7 +52,7 @@ export default function BodyPartsGame() {
     outputRange: ["#D7F9FF", "#FFE5E5", "#E5FFE5"],
   });
 
-  /* ✅ SUPER SAFE STOP (FIX stopTracking CRASH) */
+ 
   const safeStop = () => {
     try {
       Speech.stop();
@@ -73,11 +73,11 @@ export default function BodyPartsGame() {
     ]).start();
   };
 
-  /* 🔥 FIXED SPEECH (NO CRASH EVEN ON "MOUTH") */
+ 
   const speak = () => {
     if (lock.current || !mountedRef.current) return;
 
-    const mySpeakId = ++speakId.current; // cancel old speech
+    const mySpeakId = ++speakId.current;
 
     lock.current = true;
     setCanTap(false);
@@ -93,7 +93,7 @@ export default function BodyPartsGame() {
         onDone: () => {
           const playLetter = () => {
             if (!mountedRef.current) return;
-            if (mySpeakId !== speakId.current) return; // ignore old speech
+            if (mySpeakId !== speakId.current) return; 
 
             if (i >= letters.length) {
               lock.current = false;
@@ -154,7 +154,7 @@ if (finished) {
   return (
     <View style={styles.reward}>
       
-      {/* BACK BUTTON (same as main screen) */}
+     
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => setShowPopup(true)}
@@ -180,7 +180,7 @@ if (finished) {
         <Text style={{ color: "#fff" }}>Play Again</Text>
       </TouchableOpacity>
 
-      {/* POPUP (same logic as main screen) */}
+     
       <Modal transparent visible={showPopup} animationType="fade">
         <View style={styles.overlay}>
           <View style={styles.popup}>
@@ -221,7 +221,7 @@ if (finished) {
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      {/* POPUP */}
+     
       <Modal transparent visible={showPopup} animationType="fade">
         <View style={styles.overlay}>
           <View style={styles.popup}>
@@ -279,7 +279,7 @@ if (finished) {
   );
 }
 
-/* styles same */
+
 const styles = StyleSheet.create({
   container: 
   { flex: 1,

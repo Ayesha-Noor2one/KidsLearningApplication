@@ -89,7 +89,7 @@ export default function VegetableLearningScreen() {
     ]).start();
   };
 
-  // 🔊 SPEAK FULL WORD → ONLY THEN ENABLE TAP
+ 
   const speakVegetable = () => {
     if (lock.current || !current) return;
 
@@ -111,7 +111,7 @@ export default function VegetableLearningScreen() {
       delay += 350;
     });
 
-    // ✅ ONLY AFTER FULL SPEECH END → ENABLE TAP
+    
     setTimeout(() => {
       lock.current = false;
       setCanTapSpell(true);
@@ -123,7 +123,7 @@ export default function VegetableLearningScreen() {
   }, [index]);
 
   const speakLetter = (l, i) => {
-    if (!canTapSpell) return; // 🔒 BLOCK UNTIL SPEECH FINISH
+    if (!canTapSpell) return; 
     bounceLetter(i);
     Speech.stop();
     Speech.speak(l);
@@ -150,7 +150,7 @@ export default function VegetableLearningScreen() {
     router.push("/four");
   };
 
-  // ---------------- EXIT POPUP (FIXED OVERLAP) ----------------
+ 
   const Popup = () => (
     <Modal transparent visible={showPopup} animationType="fade">
       <View style={styles.popupOverlay}>
@@ -171,12 +171,12 @@ export default function VegetableLearningScreen() {
     </Modal>
   );
 
-  // ---------------- REWARD ----------------
+ 
   if (finished) {
     return (
       <View style={styles.rewardContainer}>
 
-        {/* BACK BUTTON RESTORED */}
+       
         <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
@@ -205,7 +205,7 @@ export default function VegetableLearningScreen() {
 
       <Text style={styles.title}>Learn Vegetables 🥦</Text>
 
-      {/* BACK BUTTON */}
+     
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
@@ -221,7 +221,7 @@ export default function VegetableLearningScreen() {
 
       <Text style={styles.name}>{current.name}</Text>
 
-      {/* COLORFUL SPELLING */}
+    
       <View style={styles.letters}>
         {(current?.name || "").split("").map((l, i) => (
           <TouchableOpacity key={i} disabled={!canTapSpell} onPress={() => speakLetter(l, i)}>
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
 
-  // ---------------- POPUP ----------------
+ 
   popupOverlay: {
     position: "absolute",
     top: 0,
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  // ---------------- REWARD ----------------
+ 
   rewardContainer: {
     flex: 1,
     justifyContent: "center",

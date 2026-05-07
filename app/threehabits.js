@@ -93,7 +93,7 @@ export default function GoodHabitsLearningGame() {
 
   const current = habits[index];
 
-  // 🎨 BG SMOOTH LOOP
+
   useEffect(() => {
     const loop = () => {
       Animated.sequence([
@@ -113,7 +113,7 @@ export default function GoodHabitsLearningGame() {
     };
     loop();
 
-    // FLOATING LOOP (emoji + icon)
+    
     Animated.loop(
       Animated.sequence([
         Animated.timing(floatAnim, {
@@ -157,7 +157,7 @@ export default function GoodHabitsLearningGame() {
     outputRange: ["-6deg", "6deg"],
   });
 
-  // 🔊 SPEECH FIXED
+ 
   const speak = () => {
     Speech.stop();
     Speech.speak(current.line, { rate: 0.9 });
@@ -264,7 +264,7 @@ export default function GoodHabitsLearningGame() {
         ))}
       </View>
 
-      {/* FLOATING EMOJI */}
+      
       <Animated.Text
         style={[
           styles.emoji,
@@ -280,7 +280,7 @@ export default function GoodHabitsLearningGame() {
         {current.emoji}
       </Animated.Text>
 
-      {/* FLOATING EXTRA ICON */}
+     
       <Animated.Text
         style={{
           fontSize: 50,
@@ -292,7 +292,7 @@ export default function GoodHabitsLearningGame() {
 
       <Text style={styles.nameBig}>{current.name}</Text>
 
-      {/* CARDS */}
+    
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         {current.name.split(" ").map((l, i) => (
           <Animated.View
@@ -317,7 +317,7 @@ export default function GoodHabitsLearningGame() {
         ))}
       </View>
 
-      {/* NAV */}
+      
       <View style={styles.nav}>
         <TouchableOpacity style={styles.navBtn} onPress={prev}>
           <FontAwesome5 name="arrow-left" size={18} color="#fff" />

@@ -25,7 +25,7 @@ export default function ShapesLearningGame() {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
-  // ✅ SHAPES DATA
+ 
   const shapes = [
     { name: "Circle", emoji: "⚪", spell: "C I R C L E" },
     { name: "Square", emoji: "⬛", spell: "S Q U A R E" },
@@ -39,7 +39,7 @@ export default function ShapesLearningGame() {
 
   const current = shapes[index];
 
-  /* ✅ ANIMATIONS (FIXED CLEAN VERSION) */
+
   useEffect(() => {
     Animated.loop(
       Animated.timing(bgAnim, {
@@ -191,7 +191,7 @@ export default function ShapesLearningGame() {
         ))}
       </View>
 
-      {/* SHAPE ANIMATION */}
+   
       <Animated.Text
         style={[
           styles.emoji,
@@ -245,7 +245,7 @@ export default function ShapesLearningGame() {
   return showReward ? <RewardUI /> : <GameUI />;
 }
 
-/* SAME STYLES (UNCHANGED UI) */
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
   titleRow: { flexDirection: "row", position: "absolute", top: 60 },

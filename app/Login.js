@@ -192,7 +192,7 @@ export default function Login() {
   );
 }
 
-/* STYLES SAME */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

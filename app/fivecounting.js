@@ -32,7 +32,7 @@ export default function CountingGame() {
   const starFloat = useRef(new Animated.Value(0)).current;
   const bgAnim = useRef(new Animated.Value(0)).current;
 
-  /* 🌈 BACKGROUND */
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -49,7 +49,7 @@ export default function CountingGame() {
     outputRange: ["#D7F9FF", "#FFF3C7", "#E8FFE8", "#FFE4F2"]
   });
 
-  /* INIT LEVEL */
+  
   useEffect(() => {
     const newItems = [...Array(level)].map((_, i) => ({
       id: i,
@@ -59,7 +59,7 @@ export default function CountingGame() {
     setCollected(0);
   }, [level]);
 
-  /* FLOAT ANIMATION */
+ 
   useEffect(() => {
     animations.current = items.map(() => new Animated.Value(0));
 
@@ -81,7 +81,7 @@ export default function CountingGame() {
     });
   }, [items]);
 
-  /* 🔊 SPEECH WITH LOCK */
+  
   const speakWord = (text, callback) => {
     setSpeechLock(true);
     setIsBusy(true);
@@ -102,7 +102,7 @@ export default function CountingGame() {
     });
   };
 
-  /* COLLECT */
+ 
   const handleCollect = (id) => {
     if (isBusy || speechLock) return;
 
@@ -139,7 +139,7 @@ export default function CountingGame() {
     );
   };
 
-  /* REWARD */
+ 
   useEffect(() => {
     if (showReward) {
       Animated.loop(
@@ -157,7 +157,7 @@ export default function CountingGame() {
     }
   }, [showReward]);
 
-  /* REWARD SCREEN */
+
   if (showReward) {
     return (
       <View style={styles.rewardContainer}>
@@ -193,7 +193,7 @@ export default function CountingGame() {
       <Text style={styles.title}>Count & Spell</Text>
       <Text style={styles.levelText}>Level {level}/10</Text>
 
-      {/* CARD */}
+    
       <View style={styles.card}>
         <Text style={styles.number}>{level}</Text>
 
@@ -221,7 +221,7 @@ export default function CountingGame() {
         </Text>
       </View>
 
-      {/* COLLECTION */}
+     
       <View style={styles.collectionBox}>
         {Array.from({ length: collected }).map((_, i) => (
           <Text key={i} style={styles.collectedEmoji}>
@@ -230,7 +230,7 @@ export default function CountingGame() {
         ))}
       </View>
 
-      {/* ✨ NEW SPELLING BAR */}
+    
       <View style={styles.spellBar}>
         {numberWords.map((w, i) => (
           <Text
@@ -249,7 +249,7 @@ export default function CountingGame() {
   );
 }
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
 
   collectedEmoji: { fontSize: 30, margin: 3 },
 
-  /* SPELL BAR */
+  
   spellBar: {
     flexDirection: "row",
     flexWrap: "wrap",

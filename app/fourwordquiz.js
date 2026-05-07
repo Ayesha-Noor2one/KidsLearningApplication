@@ -10,7 +10,7 @@ import * as Speech from "expo-speech";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-/* 🎯 WORD BANK */
+
 const WORDS = [
   { word: "APPLE", emoji: "🍎" },
   { word: "CAR", emoji: "🚗" },
@@ -210,7 +210,6 @@ export default function WordBuildGame() {
   );
 }
 
-/* 🎉 REWARD SCREEN (UPDATED) */
 const RewardScreen = ({ right, navigation, setShowReward, setIndex, setRight, setWrongCount }) => {
   const heart = useRef(new Animated.Value(0)).current;
   const [showExit, setShowExit] = useState(false);
@@ -251,7 +250,7 @@ const RewardScreen = ({ right, navigation, setShowReward, setIndex, setRight, se
         <Text style={{ color: "#fff" }}>Play Again</Text>
       </TouchableOpacity>
 
-      {/* ✅ NEW POPUP */}
+    
       {showExit && (
         <View style={styles.modal}>
           <View style={styles.popup}>
@@ -279,7 +278,7 @@ const RewardScreen = ({ right, navigation, setShowReward, setIndex, setRight, se
   );
 };
 
-/* 🎨 STYLES (same as before) */
+
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
   backBtn: {
