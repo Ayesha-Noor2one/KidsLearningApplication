@@ -36,7 +36,6 @@ export default function ColorLearningGame() {
 
   const current = colors[index];
 
- 
   useEffect(() => {
     bgAnim.setValue(0);
     Animated.timing(bgAnim, {
@@ -51,7 +50,6 @@ export default function ColorLearningGame() {
     outputRange: ["#ffffff", current.hex + "33"],
   });
 
-  
   useEffect(() => {
     floatAnim.setValue(0);
     emojiAnim.setValue(0);
@@ -115,6 +113,12 @@ export default function ColorLearningGame() {
     speak();
   }, [index]);
 
+  const openPopup = () => {
+    Speech.stop();
+    setSpeaking(false);
+    setShowPopup(true);
+  };
+
   const next = () => {
     if (speaking) return;
     if (index < colors.length - 1) setIndex(index + 1);
@@ -137,7 +141,6 @@ export default function ColorLearningGame() {
     router.push("/five");
   };
 
- 
   const Popup = () => (
     <View style={styles.overlay}>
       <View style={styles.popup}>
@@ -164,7 +167,6 @@ export default function ColorLearningGame() {
     </View>
   );
 
- 
   const AnimatedEmoji = () => (
     <Animated.Text
       style={[
@@ -190,7 +192,7 @@ export default function ColorLearningGame() {
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
       <StatusBar barStyle="dark-content" />
 
-      <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
+      <TouchableOpacity style={styles.backBtn} onPress={openPopup}>
         <FontAwesome5 name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
@@ -231,7 +233,7 @@ export default function ColorLearningGame() {
 
   const RewardUI = () => (
     <Animated.View style={[styles.rewardContainer, { backgroundColor: bgColor }]}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
+      <TouchableOpacity style={styles.backBtn} onPress={openPopup}>
         <FontAwesome5 name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
@@ -248,8 +250,7 @@ export default function ColorLearningGame() {
   );
 
   return showReward ? <RewardUI /> : <GameUI />;
-};
-
+}
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#6C5CE7",
     padding: 10,
     borderRadius: 20,
+    zIndex: 20,
   },
 
   rewardContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
@@ -295,7 +297,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  
   overlay: {
     position: "absolute",
     top: 0,
@@ -305,6 +306,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.7)",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 999,
+    elevation: 999,
   },
 
   popup: {
@@ -312,6 +315,7 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 18,
     alignItems: "center",
+    elevation: 20,
   },
 
   popBtn: {

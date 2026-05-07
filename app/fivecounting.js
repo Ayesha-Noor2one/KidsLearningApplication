@@ -32,7 +32,6 @@ export default function CountingGame() {
   const starFloat = useRef(new Animated.Value(0)).current;
   const bgAnim = useRef(new Animated.Value(0)).current;
 
-
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -49,7 +48,6 @@ export default function CountingGame() {
     outputRange: ["#D7F9FF", "#FFF3C7", "#E8FFE8", "#FFE4F2"]
   });
 
-  
   useEffect(() => {
     const newItems = [...Array(level)].map((_, i) => ({
       id: i,
@@ -59,7 +57,6 @@ export default function CountingGame() {
     setCollected(0);
   }, [level]);
 
- 
   useEffect(() => {
     animations.current = items.map(() => new Animated.Value(0));
 
@@ -81,18 +78,16 @@ export default function CountingGame() {
     });
   }, [items]);
 
-  
   const speakWord = (text, callback) => {
     setSpeechLock(true);
     setIsBusy(true);
 
     Speech.stop();
+
     Speech.speak(text, {
       rate: 0.85,
       pitch: 1.1,
       onDone: () => {
-        setSpeechLock(false);
-        setIsBusy(false);
         callback && callback();
       },
       onStopped: () => {
@@ -102,7 +97,27 @@ export default function CountingGame() {
     });
   };
 
- 
+  const spellEachLetter = (word, callback) => {
+    let index = 0;
+
+    const speakNext = () => {
+      if (index < word.length) {
+        Speech.speak(word[index].toUpperCase(), {
+          onDone: () => {
+            index++;
+            speakNext();
+          }
+        });
+      } else {
+        setSpeechLock(false);
+        setIsBusy(false);
+        callback && callback();
+      }
+    };
+
+    speakNext();
+  };
+
   const handleCollect = (id) => {
     if (isBusy || speechLock) return;
 
@@ -116,30 +131,33 @@ export default function CountingGame() {
     setCollected(newCount);
 
     speakWord(numberWords[newCount - 1], () => {
-      if (newCount === level) {
-        speakWord(`${numberWords[level - 1]}!`, () => {
+      spellEachLetter(numberWords[newCount - 1], () => {
+        if (newCount === level) {
           if (level === 10) {
             setShowReward(true);
           } else {
             setLevel(prev => prev + 1);
           }
-        });
-      }
+        }
+      });
     });
   };
 
   const handleBack = () => {
+    Speech.stop();
+    setSpeechLock(false);
+    setIsBusy(false);
+
     Alert.alert(
       "Exit Game?",
       "Do you want to go back?",
       [
         { text: "No", style: "cancel" },
-        { text: "Yes", onPress: () => router.push("/three") }
+        { text: "Yes", onPress: () => router.push("/five") }
       ]
     );
   };
 
- 
   useEffect(() => {
     if (showReward) {
       Animated.loop(
@@ -156,7 +174,6 @@ export default function CountingGame() {
       ).start();
     }
   }, [showReward]);
-
 
   if (showReward) {
     return (
@@ -193,7 +210,6 @@ export default function CountingGame() {
       <Text style={styles.title}>Count & Spell</Text>
       <Text style={styles.levelText}>Level {level}/10</Text>
 
-    
       <View style={styles.card}>
         <Text style={styles.number}>{level}</Text>
 
@@ -221,7 +237,6 @@ export default function CountingGame() {
         </Text>
       </View>
 
-     
       <View style={styles.collectionBox}>
         {Array.from({ length: collected }).map((_, i) => (
           <Text key={i} style={styles.collectedEmoji}>
@@ -230,25 +245,15 @@ export default function CountingGame() {
         ))}
       </View>
 
-    
       <View style={styles.spellBar}>
-        {numberWords.map((w, i) => (
-          <Text
-            key={i}
-            style={[
-              styles.spellText,
-              i + 1 === level && styles.activeSpell
-            ]}
-          >
-            {w}
-          </Text>
-        ))}
+        <Text style={[styles.spellText, { color: `hsl(${level * 35},80%,45%)` }]}>
+          {numberWords[level - 1].toUpperCase()}
+        </Text>
       </View>
 
     </Animated.View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -310,25 +315,13 @@ const styles = StyleSheet.create({
 
   collectedEmoji: { fontSize: 30, margin: 3 },
 
-  
   spellBar: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    marginTop: 20,
-    paddingHorizontal: 10
+    marginTop: 20
   },
 
   spellText: {
-    margin: 4,
-    fontSize: 14,
-    color: "#777"
-  },
-
-  activeSpell: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000"
+    fontSize: 24,
+    fontWeight: "bold"
   },
 
   rewardContainer: {

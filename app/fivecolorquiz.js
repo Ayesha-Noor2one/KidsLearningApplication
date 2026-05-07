@@ -12,6 +12,9 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import * as Speech from "expo-speech";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Color Quiz";
 
 const { width } = Dimensions.get("window");
 
@@ -114,11 +117,32 @@ export default function ColorDragGame() {
 
   const nextRound = () => {
     if (round >= MAX_ROUNDS) {
+      saveProgress();
       setGameOver(true);
       return;
     }
     setRound((r) => r + 1);
     setTimeout(newRound, 300);
+  };
+
+  const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      console.log(kidId);
+      console.log(quiz);
+      console.log(score.right);
+      console.log(score.wrong);
+      
+      
+      await addQuizResult(kidId, quiz, score.right,score.wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
   };
 
   const resetItem = (id) => {

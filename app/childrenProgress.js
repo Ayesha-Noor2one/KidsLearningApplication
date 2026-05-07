@@ -29,6 +29,16 @@ const ProgressList = () => {
     "Pattern Quiz"
   ];
 
+  //  AGE 5 MODULES
+  const modules5 = [
+    "Color Quiz",
+    "Odd Quiz",
+    "Scramble Quiz",
+    "Pattern Quiz",
+    "Pick things Quiz",
+    "Word Quiz"
+  ];
+
   useEffect(() => {
     fetchProgress();
   }, []);
@@ -50,9 +60,14 @@ const ProgressList = () => {
           quizMap[q.quiz_name] = q;
         });
 
-        // 👇 AGE BASED MODULE SELECTION
-        const kidAge = user.age || 3; // default 3
-        const modules = kidAge >= 4 ? modules4 : modules3;
+
+        const kidAge = user.age;
+        const modules =
+          kidAge == 5
+            ? modules5
+            : kidAge == 4
+              ? modules4
+              : modules3;
 
         const moduleStatuses = modules.map(module => {
           const quiz = quizMap[module];

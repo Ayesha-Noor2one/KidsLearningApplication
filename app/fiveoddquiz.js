@@ -11,6 +11,9 @@ import {
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Odd Quiz";
 
 const LEVELS = [
   { items: ["🍎", "🍎", "🍇", "🍎"], odd: "🍇", msg: "Find the odd fruit" },
@@ -102,6 +105,7 @@ export default function OddOneOutGame() {
         if (level + 1 < LEVELS.length) {
           setLevel((l) => l + 1);
         } else {
+          saveProgress();
           setShowResult(true);
 
           Animated.loop(
@@ -117,6 +121,21 @@ export default function OddOneOutGame() {
       setWrong((w) => w + 1);
       shake();
     }
+  };
+
+  const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
   };
 
   const restart = () => {

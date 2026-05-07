@@ -7,10 +7,24 @@ import {
   Animated,
   StatusBar,
   Easing,
+  Alert,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
+import { addQuizResult } from "./database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const quiz = "Scramble Quiz";
+
+const COLORS = [
+  "#FF7675",
+  "#74B9FF",
+  "#55EFC4",
+  "#FFEAA7",
+  "#A29BFE",
+  "#FD79A8",
+];
 
 export default function ScrambledWordsGame() {
   const router = useRouter();
@@ -21,8 +35,12 @@ export default function ScrambledWordsGame() {
   const [showReward, setShowReward] = useState(false);
   const [speaking, setSpeaking] = useState(false);
 
+  const [right, setRight] = useState(0);
+  const [wrong, setWrong] = useState(0);
+
   const floatAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
+  const bgAnim = useRef(new Animated.Value(0)).current;
 
   const items = [
     { emoji: "🍎", word: "APPLE" },
@@ -34,11 +52,11 @@ export default function ScrambledWordsGame() {
   ];
 
   const current = items[index];
-
   const shuffledLetters = useRef([]).current;
 
   if (shuffledLetters.length === 0 || shuffledLetters.word !== current.word) {
     shuffledLetters.splice(0);
+
     const arr = current.word.split("");
     const shuffled = arr
       .map((v) => ({ v, sort: Math.random() }))
@@ -52,15 +70,37 @@ export default function ScrambledWordsGame() {
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
+        Animated.timing(bgAnim, {
+          toValue: 1,
+          duration: 3000,
+          useNativeDriver: false,
+        }),
+        Animated.timing(bgAnim, {
+          toValue: 0,
+          duration: 3000,
+          useNativeDriver: false,
+        }),
+      ])
+    ).start();
+  }, []);
+
+  const bgColor = bgAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["#F3F6FF", "#FFF3E0"],
+  });
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
         Animated.timing(floatAnim, {
           toValue: -20,
-          duration: 1200,
+          duration: 1000,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(floatAnim, {
           toValue: 0,
-          duration: 1200,
+          duration: 1000,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
@@ -68,8 +108,9 @@ export default function ScrambledWordsGame() {
     ).start();
   }, []);
 
-  const speak = () => {
-    Speech.stop();
+  const speak = async () => {
+    await Speech.stop();
+
     setSpeaking(true);
 
     Speech.speak(`Spell ${current.word}`, {
@@ -80,12 +121,12 @@ export default function ScrambledWordsGame() {
     Animated.sequence([
       Animated.timing(scaleAnim, {
         toValue: 1.2,
-        duration: 200,
+        duration: 250,
         useNativeDriver: true,
       }),
       Animated.timing(scaleAnim, {
         toValue: 1,
-        duration: 200,
+        duration: 250,
         useNativeDriver: true,
       }),
     ]).start();
@@ -102,74 +143,128 @@ export default function ScrambledWordsGame() {
     const newSelected = [...selected, letter];
     setSelected(newSelected);
 
-    if (newSelected.join("") === current.word) {
+    const typed = newSelected.join("");
+
+    if (!current.word.startsWith(typed)) {
+      setWrong((w) => w + 1);
+      setSelected([]);
+      return;
+    }
+
+    if (typed === current.word) {
+      setRight((r) => r + 1);
+
       setTimeout(() => {
         if (index < items.length - 1) {
           setIndex(index + 1);
         } else {
-          setShowReward(true);
+          endIt();
         }
       }, 600);
     }
   };
 
-  const next = () => {
-    if (index < items.length - 1) setIndex(index + 1);
-    else setShowReward(true);
+  const endIt = async () => {
+    await saveProgress();
+    setShowReward(true);
   };
 
-  const prev = () => {
-    if (index > 0) setIndex(index - 1);
+  const saveProgress = async () => {
+    const kidId = await AsyncStorage.getItem("kidId");
+    console.log(kidId);
+    console.log(quiz);
+    console.log(right);
+    console.log(wrong);
+    
+    
+    await addQuizResult(kidId, quiz, right, wrong);
   };
 
   const restart = () => {
     setIndex(0);
+    setSelected([]);
+    setRight(0);
+    setWrong(0);
     setShowReward(false);
   };
 
-  const exitToMenu = () => {
-    Speech.stop();
+  const exitToMenu = async () => {
+    await Speech.stop();
     setShowPopup(false);
-    router.push("/four");
+    router.push("/five");
   };
 
   const Popup = () => (
     <View style={styles.popupOverlay}>
       <View style={styles.popupBox}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
-          Exit Game?
-        </Text>
+        <Text style={styles.popupTitle}>Exit Game?</Text>
 
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            style={[styles.popBtn, { backgroundColor: "red" }]}
+            style={[styles.popBtn, { backgroundColor: "#E74C3C" }]}
             onPress={() => setShowPopup(false)}
           >
-            <Text style={{ color: "#fff" }}>No</Text>
+            <Text style={styles.popText}>No</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.popBtn, { backgroundColor: "green" }]}
+            style={[styles.popBtn, { backgroundColor: "#2ECC71" }]}
             onPress={exitToMenu}
           >
-            <Text style={{ color: "#fff" }}>Yes</Text>
+            <Text style={styles.popText}>Yes</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 
-  const GameUI = () => (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
-
-      <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
+  const RewardUI = () => (
+    <View style={styles.rewardContainer}>
+      <TouchableOpacity
+        style={styles.backBtn}
+        onPress={() => {
+          Speech.stop();
+          setShowPopup(true);
+        }}
+      >
         <FontAwesome5 name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
       {showPopup && <Popup />}
 
-  
+      <Text style={styles.rewardEmoji}>🏆</Text>
+      <Text style={styles.rewardText}>Great Job!</Text>
+
+      <Text style={styles.scoreText}>
+        ✔ {right}     ❌ {wrong}
+      </Text>
+
+      <TouchableOpacity style={styles.restartBtn} onPress={restart}>
+        <Text style={{ color: "#fff" }}>Play Again</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  if (showReward) return <RewardUI />;
+
+  return (
+    <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
+      <StatusBar barStyle="dark-content" />
+
+      <TouchableOpacity
+        style={styles.backBtn}
+        onPress={() => {
+          Speech.stop();
+          setShowPopup(true);
+        }}
+      >
+        <FontAwesome5 name="arrow-left" size={18} color="#fff" />
+      </TouchableOpacity>
+
+      {showPopup && <Popup />}
+
+      <Text style={styles.title}>SPELL THE WORD</Text>
+
       <Animated.Text
         style={[
           styles.emoji,
@@ -181,7 +276,6 @@ export default function ScrambledWordsGame() {
         {current.emoji}
       </Animated.Text>
 
-     
       <View style={styles.blanks}>
         {current.word.split("").map((_, i) => (
           <View key={i} style={styles.blankBox}>
@@ -192,12 +286,14 @@ export default function ScrambledWordsGame() {
         ))}
       </View>
 
-     
       <View style={styles.letters}>
         {shuffledLetters.map((l, i) => (
           <TouchableOpacity
             key={i}
-            style={styles.letterBox}
+            style={[
+              styles.letterBox,
+              { backgroundColor: COLORS[i % COLORS.length] },
+            ]}
             onPress={() => handlePress(l)}
           >
             <Text style={styles.letterText}>{l}</Text>
@@ -205,40 +301,27 @@ export default function ScrambledWordsGame() {
         ))}
       </View>
 
-     
-      <View style={styles.nav}>
-        <TouchableOpacity style={styles.navBtn} onPress={prev}>
-          <FontAwesome5 name="arrow-left" size={18} color="#fff" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navBtn} onPress={next}>
-          <FontAwesome5 name="arrow-right" size={18} color="#fff" />
-        </TouchableOpacity>
+      <View style={styles.score}>
+        <Text style={styles.scoreText}>✔ {right}</Text>
+        <Text style={styles.scoreText}>❌ {wrong}</Text>
       </View>
-    </View>
+    </Animated.View>
   );
-
-  const RewardUI = () => (
-    <View style={styles.rewardContainer}>
-      <Text style={styles.rewardEmoji}>🏆</Text>
-      <Text style={styles.rewardText}>Great Spelling!</Text>
-
-      <TouchableOpacity style={styles.restartBtn} onPress={restart}>
-        <Text style={{ color: "#fff" }}>Play Again</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  return showReward ? <RewardUI /> : <GameUI />;
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F3F6FF",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  title: {
+    position: "absolute",
+    top: 55,
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#6C5CE7",
   },
 
   emoji: {
@@ -274,29 +357,27 @@ const styles = StyleSheet.create({
   },
 
   letterBox: {
-    backgroundColor: "#6C5CE7",
     margin: 6,
-    padding: 12,
-    borderRadius: 10,
+    padding: 14,
+    borderRadius: 12,
   },
 
   letterText: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
   },
 
-  nav: {
-    flexDirection: "row",
+  score: {
     position: "absolute",
-    bottom: 50,
-    gap: 40,
+    bottom: 30,
+    flexDirection: "row",
+    gap: 25,
   },
 
-  navBtn: {
-    backgroundColor: "#888",
-    padding: 12,
-    borderRadius: 30,
+  scoreText: {
+    fontSize: 22,
+    fontWeight: "bold",
   },
 
   backBtn: {
@@ -310,48 +391,63 @@ const styles = StyleSheet.create({
 
   rewardContainer: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#FFF8E1",
   },
 
   rewardEmoji: {
-    fontSize: 100,
+    fontSize: 120,
   },
 
   rewardText: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
-    marginTop: 10,
+    marginVertical: 10,
   },
 
   restartBtn: {
     marginTop: 20,
     backgroundColor: "#FF6F00",
-    padding: 12,
-    borderRadius: 10,
+    padding: 14,
+    borderRadius: 12,
   },
 
   popupOverlay: {
     position: "absolute",
     top: 0,
-    bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "rgba(0,0,0,0.7)",
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.65)",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 100,
   },
 
   popupBox: {
     backgroundColor: "#fff",
     padding: 25,
-    borderRadius: 15,
+    borderRadius: 16,
+    alignItems: "center",
+  },
+
+  popupTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 15,
   },
 
   popBtn: {
-    padding: 10,
+    padding: 12,
     marginHorizontal: 10,
-    borderRadius: 8,
+    borderRadius: 10,
+    minWidth: 80,
+    alignItems: "center",
+  },
+
+  popText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });

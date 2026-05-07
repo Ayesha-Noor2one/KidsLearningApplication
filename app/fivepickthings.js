@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
+import { addQuizResult, saveProgressToDB } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Pick things Quiz";
 
 const { width } = Dimensions.get("window");
 
@@ -95,6 +98,7 @@ export default function RuleGame() {
   };
 
   const showRewardScreen = () => {
+    saveProgress();
     setShowReward(true);
 
     Animated.loop(
@@ -112,7 +116,20 @@ export default function RuleGame() {
       ])
     ).start();
   };
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   const nextLevel = () => {
     if (level + 1 < LEVELS.length) {
       setTimeout(() => setLevel((p) => p + 1), 800);

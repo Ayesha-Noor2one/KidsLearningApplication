@@ -207,7 +207,7 @@ const saveProgress = async () => {
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>🌈 Pattern Game 🧠</Text>
+      <Text style={styles.title}>🌈 Pattern Game </Text>
       <Text style={styles.hint}>Find the missing number</Text>
 
       <Animated.View

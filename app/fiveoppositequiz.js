@@ -11,6 +11,9 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
+import { addQuizResult } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quizName="Word Quiz";
 
 export default function OppositesQuizGame() {
   const router = useRouter();
@@ -114,9 +117,25 @@ export default function OppositesQuizGame() {
         setIndex(index + 1);
         setSelected(null);
       } else {
+        saveProgress()
         setShowResult(true);
       }
     }, 600);
+  };
+
+  const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quizName, score,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
+
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
   };
 
   const restart = () => {

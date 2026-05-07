@@ -103,7 +103,7 @@ export default function ThreeYearsGames() {
     { title: "Alphabets", route: "/fouralphabets", color: "#fe62abff", emoji: "🅰️" },
     { title: "Animals", route: "/fouanimals", color: "#72b1f4ff", emoji: "🐶" },
     { title: "Birds", route: "/fourbirds", color: "#16d510ff", emoji: "🐦" },
-    { title: "Parts of Body", route: "/fourpartsofbody", color: "#d7da0dff", emoji: "👀" },
+    { title: "Parts of Body", route: "/fourpartsbody", color: "#d7da0dff", emoji: "👀" },
     { title: "Fruits", route: "/fourfruits", color: "#f57272ff", emoji: "🍎" },
     { title: "Vegetables", route: "/fourvegetables", color: "#8847f9ff", emoji: "🥕" },
   ];
