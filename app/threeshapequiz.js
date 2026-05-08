@@ -16,6 +16,9 @@ import {
   PanGestureHandler,
   State,
 } from "react-native-gesture-handler";
+import { addQuizResult, saveProgressToDB } from './database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const quiz="Shape Quiz";
 
 const SHAPES = [
   { id: 1, shape: "●", name: "Circle", color: "#FF6B6B" },
@@ -101,6 +104,7 @@ export default function ShapeGame() {
         if (level + 1 < SHAPES.length) {
           setLevel((l) => l + 1);
         } else {
+          saveProgress();
           setFinished(true);
         }
       });
@@ -113,7 +117,20 @@ export default function ShapeGame() {
       }).start();
     }
   };
+const saveProgress = async () => {
+      console.log('saveprogress ..............');
+      
+      const kidId = await AsyncStorage.getItem('kidId');
+      
+      await addQuizResult(kidId, quiz, right,wrong);
+      console.log('completed');
+      
+      showCompletedMessage();
+  };
 
+  const showCompletedMessage = () => {
+    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+  };
   const Draggable = ({ item }) => {
     const pan = useRef(new Animated.ValueXY()).current;
 

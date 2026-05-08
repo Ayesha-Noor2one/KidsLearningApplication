@@ -13,7 +13,7 @@ const ProgressList = () => {
   const modules3 = [
     "Alphabets Quiz",
     "Color Quiz",
-    "Object Quiz",
+    "Shape Quiz",
     "Count Quiz",
     "Habit Quiz",
     "Match Quiz"

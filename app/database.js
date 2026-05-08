@@ -3,7 +3,7 @@ import * as SQLite from 'expo-sqlite';
 let db; 
 export const initDatabase = async () => {
   if (!db) {
-    db = await SQLite.openDatabaseAsync('kidAppFinals.db'); 
+    db = await SQLite.openDatabaseAsync('kidAppFinalsDb.db'); 
     await setupDatabase(db); 
   }
   return db; 
@@ -237,8 +237,8 @@ export const updateParent = async (payload) => {
 
   try {
     const result = await db.runAsync(
-      `UPDATE users SET name = ?, age = ?, password = ?, email = ? WHERE id = ?`,
-      [name, age, password, email, id]
+      `UPDATE users SET name = ?, age = ?, password = ? WHERE id = ?`,
+      [name, age, password, id]
     );
     return result;
   } catch (error) {

@@ -171,7 +171,7 @@ export default function ObjectsLearningScreen() {
 
         <Text style={styles.rewardTitle}>🌟 Great Job!</Text>
         <Text style={styles.rewardSub}>You learned all objects 🎉</Text>
-        <Text style={styles.stars}>⭐⭐⭐⭐⭐</Text>
+        <Text style={styles.stars}>⭐</Text>
 
         <TouchableOpacity
           style={styles.restartBtn}
@@ -260,9 +260,9 @@ export default function ObjectsLearningScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
-  title: { fontSize: 26, fontWeight: "bold", position: "absolute", top: 60 },
-  emoji: { fontSize: 120 },
-  name: { fontSize: 28, fontWeight: "bold", marginTop: 10 },
+  title: { fontSize: 36, fontWeight: "bold", position: "absolute", top: 60,color: "#ff000055" },
+  emoji: { fontSize: 180 },
+  name: { fontSize: 38, fontWeight: "bold", marginTop: 10,color: "#2d2dff55" },
   letters: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
   letterBox: { margin: 5, padding: 12, borderRadius: 15 },
   letter: { fontSize: 22, fontWeight: "bold" },

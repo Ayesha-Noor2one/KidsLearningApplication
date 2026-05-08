@@ -9,13 +9,11 @@ const AboutScreen = () => {
   return (
     <View style={styles.container}>
 
-      {/* Background circles */}
       <View style={styles.circle1} />
       <View style={styles.circle2} />
       <View style={styles.circle3} />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-
         <View style={styles.card}>
 
           <View style={styles.header}>
@@ -33,13 +31,9 @@ const AboutScreen = () => {
 
           <View style={styles.section}>
             <Text style={styles.paragraph}>
-              Kid's Learning App is more than just an app — it’s a safe, colorful,
-              and interactive playground for curious little minds! Designed especially for
-              toddlers and preschoolers, this app transforms everyday learning into exciting
-              adventures. Whether your child is tracing letters, identifying shapes, or
-              exploring the solar system, each screen is built to spark joy, build
-              confidence, and encourage discovery through sound, animation, and hands-on
-              interaction. Best part? It works offline, so learning never stops — even when
+              Kid's Learning App is more than just an app! it’s a safe and colorful
+              playground for little minds! Designed especially for preschoolers.
+              Best part? It works offline, so learning never stops even when
               Wi-Fi does!
             </Text>
           </View>
@@ -49,7 +43,7 @@ const AboutScreen = () => {
 
             <View style={styles.listItem}>
               <FontAwesome5 name="font" size={20} color="#FF7675" />
-              <Text style={styles.text}> Alphabet learning with pictures & sounds</Text>
+              <Text style={styles.text}> Alphabet learning with icons & sounds</Text>
             </View>
 
             <View style={styles.listItem}>
@@ -64,12 +58,7 @@ const AboutScreen = () => {
 
             <View style={styles.listItem}>
               <MaterialCommunityIcons name="fruit-cherries" size={20} color="#4D96FF" />
-              <Text style={styles.text}> Fruits & vegetables flashcards</Text>
-            </View>
-
-            <View style={styles.listItem}>
-              <FontAwesome5 name="book-open" size={20} color="#FF9F1C" />
-              <Text style={styles.text}> Stories and poems</Text>
+              <Text style={styles.text}> Fruits & vegetables</Text>
             </View>
 
             <View style={styles.listItem}>
@@ -78,18 +67,8 @@ const AboutScreen = () => {
             </View>
 
             <View style={styles.listItem}>
-              <Ionicons name="planet" size={20} color="#00B4D8" />
-              <Text style={styles.text}> Explore the solar system</Text>
-            </View>
-
-            <View style={styles.listItem}>
               <FontAwesome5 name="volume-up" size={20} color="#FF6B6B" />
               <Text style={styles.text}> Interactive sound learning</Text>
-            </View>
-
-            <View style={styles.listItem}>
-              <MaterialCommunityIcons name="draw" size={20} color="#6BCB77" />
-              <Text style={styles.text}> Tracing letters and numbers</Text>
             </View>
           </View>
 
@@ -97,13 +76,13 @@ const AboutScreen = () => {
             <Text style={styles.heading}>👩‍💻 Developed By</Text>
             <Text style={styles.text}>
               An Information Technology student who’s passionate about building
-              magical learning experiences for the tiniest learners on the planet 🌍✨
+              magical learning experiences for the tiniest learners. 🌍✨
             </Text>
           </View>
 
         </View>
-
       </ScrollView>
+
     </View>
   );
 };

@@ -24,39 +24,35 @@ export default function AlphabetLearningScreen() {
   const lock = useRef(false);
 
   const alphabets = [
-    { letter: "A", word: "APPLE", emoji: "🍎" },
-    { letter: "B", word: "BALL", emoji: "⚽" },
-    { letter: "C", word: "CAT", emoji: "🐱" },
-    { letter: "D", word: "DOG", emoji: "🐶" },
-    { letter: "E", word: "EGG", emoji: "🥚" },
-    { letter: "F", word: "FISH", emoji: "🐟" },
-    { letter: "G", word: "GRAPES", emoji: "🍇" },
-    { letter: "H", word: "HAT", emoji: "🎩" },
-    { letter: "I", word: "ICE", emoji: "🧊" },
-    { letter: "J", word: "JUICE", emoji: "🧃" },
-    { letter: "K", word: "KITE", emoji: "🪁" },
-    { letter: "L", word: "LION", emoji: "🦁" },
-    { letter: "M", word: "MANGO", emoji: "🥭" },
-    { letter: "N", word: "NEST", emoji: "🪺" },
-    { letter: "O", word: "ORANGE", emoji: "🍊" },
-    { letter: "P", word: "PEN", emoji: "🖊️" },
-    { letter: "Q", word: "QUEEN", emoji: "👑" },
-    { letter: "R", word: "RABBIT", emoji: "🐰" },
-    { letter: "S", word: "SUN", emoji: "☀️" },
-    { letter: "T", word: "TREE", emoji: "🌳" },
-    { letter: "U", word: "UMBRELLA", emoji: "☂️" },
-    { letter: "V", word: "VAN", emoji: "🚐" },
-    { letter: "W", word: "WATERMELON", emoji: "🍉" },
-    { letter: "X", word: "XYLOPHONE", emoji: "🎼" },
-    { letter: "Y", word: "YACHT", emoji: "🛥️" },
-    { letter: "Z", word: "ZEBRA", emoji: "🦓" },
+    { letter: "A", items: [{ word: "APPLE", emoji: "🍎" }, { word: "ANT", emoji: "🐜" }] },
+    { letter: "B", items: [{ word: "BALL", emoji: "⚽" }, { word: "BEE", emoji: "🐝" }] },
+    { letter: "C", items: [{ word: "CAT", emoji: "🐱" }, { word: "CAR", emoji: "🚗" }] },
+    { letter: "D", items: [{ word: "DOG", emoji: "🐶" }, { word: "DUCK", emoji: "🦆" }] },
+    { letter: "E", items: [{ word: "EGG", emoji: "🥚" }, { word: "ELEPHANT", emoji: "🐘" }] },
+    { letter: "F", items: [{ word: "FISH", emoji: "🐟" }, { word: "FROG", emoji: "🐸" }] },
+    { letter: "G", items: [{ word: "GRAPES", emoji: "🍇" }, { word: "GOAT", emoji: "🐐" }] },
+    { letter: "H", items: [{ word: "HAT", emoji: "🎩" }, { word: "HORSE", emoji: "🐴" }] },
+    { letter: "I", items: [{ word: "ICE", emoji: "🧊" }, { word: "IGLOO", emoji: "🏠" }] },
+    { letter: "J", items: [{ word: "JUICE", emoji: "🧃" }, { word: "JET", emoji: "✈️" }] },
+    { letter: "K", items: [{ word: "KITE", emoji: "🪁" }, { word: "KEY", emoji: "🔑" }] },
+    { letter: "L", items: [{ word: "LION", emoji: "🦁" }, { word: "LEAF", emoji: "🍃" }] },
+    { letter: "M", items: [{ word: "MANGO", emoji: "🥭" }, { word: "MOON", emoji: "🌙" }] },
+    { letter: "N", items: [{ word: "NEST", emoji: "🪺" }, { word: "NOSE", emoji: "👃" }] },
+    { letter: "O", items: [{ word: "ORANGE", emoji: "🍊" }, { word: "OWL", emoji: "🦉" }] },
+    { letter: "P", items: [{ word: "PEN", emoji: "🖊️" }, { word: "PIG", emoji: "🐷" }] },
+    { letter: "Q", items: [{ word: "QUEEN", emoji: "👑" }, { word: "QUILT", emoji: "🛏️" }] },
+    { letter: "R", items: [{ word: "RABBIT", emoji: "🐰" }, { word: "RAIN", emoji: "🌧️" }] },
+    { letter: "S", items: [{ word: "SUN", emoji: "☀️" }, { word: "STAR", emoji: "⭐" }] },
+    { letter: "T", items: [{ word: "TREE", emoji: "🌳" }, { word: "TRAIN", emoji: "🚂" }] },
+    { letter: "U", items: [{ word: "UMBRELLA", emoji: "☂️" }, { word: "UNICORN", emoji: "🦄" }] },
+    { letter: "V", items: [{ word: "VAN", emoji: "🚐" }, { word: "VIOLIN", emoji: "🎻" }] },
+    { letter: "W", items: [{ word: "WATERMELON", emoji: "🍉" }, { word: "WATCH", emoji: "⌚" }] },
+    { letter: "X", items: [{ word: "XYLOPHONE", emoji: "🎼" }, { word: "X-RAY", emoji: "🩻" }] },
+    { letter: "Y", items: [{ word: "YACHT", emoji: "🛥️" }, { word: "YOYO", emoji: "🪀" }] },
+    { letter: "Z", items: [{ word: "ZEBRA", emoji: "🦓" }, { word: "ZIP", emoji: "🤐" }] },
   ];
 
   const current = alphabets[index];
-
-  const letterAnims = useRef(
-    current.word.split("").map(() => new Animated.Value(1))
-  ).current;
 
   const bgColor = bgAnim.interpolate({
     inputRange: [0, 1, 2],
@@ -82,21 +78,6 @@ export default function AlphabetLearningScreen() {
     ).start();
   }, []);
 
-  const bounceLetter = (i) => {
-    Animated.sequence([
-      Animated.timing(letterAnims[i], {
-        toValue: 1.4,
-        duration: 150,
-        useNativeDriver: true,
-      }),
-      Animated.timing(letterAnims[i], {
-        toValue: 1,
-        duration: 150,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
   const speakAlphabet = () => {
     if (lock.current) return;
 
@@ -104,40 +85,24 @@ export default function AlphabetLearningScreen() {
     setCanTapSpell(false);
     Speech.stop();
 
-    Speech.speak(current.letter);
-
-    let delay = 800;
-
-    setTimeout(() => {
-      Speech.speak(`for ${current.word}`);
-    }, delay);
-
-    delay += 800;
-
-    current.word.split("").forEach((l, i) => {
-      setTimeout(() => {
-        bounceLetter(i);
-        Speech.speak(l);
-      }, delay);
-      delay += 400;
+    Speech.speak(`${current.letter}`, {
+      onDone: () => {
+        Speech.speak(
+          `${current.letter} for ${current.items[0].word}. ${current.letter} for ${current.items[1].word}`,
+          {
+            onDone: () => {
+              lock.current = false;
+              setCanTapSpell(true);
+            },
+          }
+        );
+      },
     });
-
-    setTimeout(() => {
-      lock.current = false;
-      setCanTapSpell(true);
-    }, delay);
   };
 
   useEffect(() => {
     speakAlphabet();
   }, [index]);
-
-  const speakLetter = (l, i) => {
-    if (!canTapSpell) return;
-    bounceLetter(i);
-    Speech.stop();
-    Speech.speak(l);
-  };
 
   const next = () => {
     if (lock.current) return;
@@ -152,6 +117,7 @@ export default function AlphabetLearningScreen() {
 
   const exitToMenu = () => {
     Speech.stop();
+    lock.current = false;
     setShowPopup(false);
     router.push("/three");
   };
@@ -159,7 +125,10 @@ export default function AlphabetLearningScreen() {
   if (finished) {
     return (
       <View style={styles.rewardContainer}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => {
+          Speech.stop();
+          setShowPopup(true);
+        }}>
           <FontAwesome name="arrow-left" size={18} color="#fff" />
         </TouchableOpacity>
 
@@ -187,36 +156,29 @@ export default function AlphabetLearningScreen() {
 
       <Text style={styles.title}>Learn Alphabets</Text>
 
-      <TouchableOpacity style={styles.backBtn} onPress={() => setShowPopup(true)}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => {
+        Speech.stop();
+        setShowPopup(true);
+      }}>
         <FontAwesome name="arrow-left" size={18} color="#fff" />
       </TouchableOpacity>
 
       {showPopup && <Popup onClose={() => setShowPopup(false)} onYes={exitToMenu} />}
 
-      <Animated.Text
-        style={[styles.emoji, { transform: [{ translateY: floatAnim }] }]}
-        onPress={speakAlphabet}
-      >
-        {current.emoji}
-      </Animated.Text>
-
       <Text style={styles.name}>{current.letter}</Text>
 
-      <View style={styles.letters}>
-        {current.word.split("").map((l, i) => (
-          <TouchableOpacity key={i} disabled={!canTapSpell} onPress={() => speakLetter(l, i)}>
-            <Animated.View
-              style={[
-                styles.letterBox,
-                {
-                  transform: [{ scale: letterAnims[i] }],
-                  backgroundColor: `hsl(${i * 40},80%,85%)`,
-                },
-              ]}
-            >
-              <Text style={styles.letter}>{l}</Text>
-            </Animated.View>
-          </TouchableOpacity>
+      <View style={styles.itemsRow}>
+        {current.items.map((item, i) => (
+          <Animated.View
+            key={i}
+            style={[
+              styles.itemBox,
+              { transform: [{ translateY: floatAnim }] }
+            ]}
+          >
+            <Text style={styles.emoji}>{item.emoji}</Text>
+            <Text style={styles.word}>{item.word}</Text>
+          </Animated.View>
         ))}
       </View>
 
@@ -232,7 +194,6 @@ export default function AlphabetLearningScreen() {
     </Animated.View>
   );
 }
-
 
 const Popup = ({ onClose, onYes }) => (
   <View style={styles.popupOverlay}>
@@ -252,31 +213,31 @@ const Popup = ({ onClose, onYes }) => (
   </View>
 );
 
-
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
+  title: { fontSize: 26, fontWeight: "bold", position: "absolute", top: 60,color:"#350ff370" },
+  name: { fontSize: 150, fontWeight: "bold", marginBottom: 20,top:-15 },
 
-  title: { fontSize: 26, fontWeight: "bold", position: "absolute", top: 60 },
+  itemsRow: { flexDirection: "row", gap: 20 },
 
-  emoji: { fontSize: 120 },
+  itemBox: {
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 30,
+    borderRadius: 20
+  },
 
-  name: { fontSize: 50, fontWeight: "bold", marginTop: 10 },
-
-  letters: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
-
-  letterBox: { margin: 5, padding: 12, borderRadius: 15 },
-
-  letter: { fontSize: 22, fontWeight: "bold" },
+  emoji: { fontSize: 80 },
+  word: { fontSize: 30, fontWeight: "bold",color:"#e20d0d70", marginTop: 10 },
 
   nav: { flexDirection: "row", position: "absolute", bottom: 60, gap: 40 },
-
   navBtn: { backgroundColor: "#00000055", padding: 12, borderRadius: 30 },
 
   backBtn: {
     position: "absolute",
     top: 40,
     left: 15,
-    backgroundColor: "#00000070",
+    backgroundColor: "#e2232370",
     padding: 10,
     borderRadius: 20,
     zIndex: 10,
@@ -284,10 +245,7 @@ const styles = StyleSheet.create({
 
   popupOverlay: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    top: 0,left: 0,right: 0,bottom: 0,
     backgroundColor: "rgba(0,0,0,0.75)",
     justifyContent: "center",
     alignItems: "center",
@@ -300,18 +258,13 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 20,
     alignItems: "center",
-    elevation: 10,
   },
 
   popupTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 20 },
-
   popupRow: { flexDirection: "row", gap: 15 },
-
   popBtn: { paddingVertical: 10, paddingHorizontal: 30, borderRadius: 10 },
-
   noBtn: { backgroundColor: "red" },
   yesBtn: { backgroundColor: "green" },
-
   popText: { color: "#fff", fontWeight: "bold" },
 
   rewardContainer: {
@@ -322,7 +275,6 @@ const styles = StyleSheet.create({
   },
 
   rewardTitle: { fontSize: 30, fontWeight: "bold" },
-
   rewardSub: { marginTop: 10, fontSize: 18 },
 
   restartBtn: {

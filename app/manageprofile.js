@@ -59,43 +59,22 @@ const EditProfileScreen = () => {
 
   const validateForm = () => {
     if (!name.trim()) return Alert.alert("Validation Error", "Name cannot be empty");
-    if (!email.trim()) return Alert.alert("Validation Error", "Email cannot be empty");
-    if (!isValidEmail(email)) return Alert.alert("Validation Error", "Enter valid email");
     if (!password) return Alert.alert("Validation Error", "Password cannot be empty");
     if (password.length < 6) return Alert.alert("Validation Error", "Min 6 characters");
     return true;
   };
 
   const handleSave = async () => {
+  
     if (!validateForm()) return;
 
     try {
       const payload = { id, name, email, password };
 
-      if (email !== originalEmail) {
-        const existing = await findByEmail(email);
-        if (existing && existing.id !== id) {
-          Alert.alert("Email already exists");
-          return;
-        }
-
-        const otp = generateOTP();
-        const otpGeneratedAt = Date.now();
-
-        router.push({
-          pathname: "/updateVerification",
-          params: {
-            otp,
-            otpGeneratedAt,
-            rest: JSON.stringify(payload),
-            isEdit: true
-          },
-        });
-      } else {
-        await updateParent(payload);
+         await updateParent(payload);
         Alert.alert("Success", "Profile updated successfully.");
         router.back();
-      }
+      
     } catch (error) {
       Alert.alert("Error", "Failed to update profile.");
     }
@@ -133,9 +112,10 @@ const EditProfileScreen = () => {
           onChangeText={handleInputChange(setEmail)}
           placeholder="Email"
           placeholderTextColor="#999"
+          editable={false}
         />
 
-        {/* ✅ FIXED PASSWORD FIELD */}
+        
         <View style={styles.passwordBox}>
           <TextInput
             style={styles.input}

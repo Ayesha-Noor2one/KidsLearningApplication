@@ -5,13 +5,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
+  Alert,
 } from "react-native";
 import * as Speech from "expo-speech";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { addQuizResult } from './database';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const quiz="Word Quiz";
+import { addQuizResult } from "./database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const quiz = "Word Quiz";
 
 const WORDS = [
   { word: "APPLE", emoji: "🍎" },
@@ -48,8 +50,16 @@ export default function WordBuildGame() {
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(bgAnim, { toValue: 1, duration: 3000, useNativeDriver: false }),
-        Animated.timing(bgAnim, { toValue: 0, duration: 3000, useNativeDriver: false }),
+        Animated.timing(bgAnim, {
+          toValue: 1,
+          duration: 3000,
+          useNativeDriver: false,
+        }),
+        Animated.timing(bgAnim, {
+          toValue: 0,
+          duration: 3000,
+          useNativeDriver: false,
+        }),
       ])
     ).start();
   }, []);
@@ -62,8 +72,16 @@ export default function WordBuildGame() {
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(emojiAnim, { toValue: 1, duration: 800, useNativeDriver: true }),
-        Animated.timing(emojiAnim, { toValue: 0, duration: 800, useNativeDriver: true }),
+        Animated.timing(emojiAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(emojiAnim, {
+          toValue: 0,
+          duration: 800,
+          useNativeDriver: true,
+        }),
       ])
     ).start();
   }, []);
@@ -105,35 +123,41 @@ export default function WordBuildGame() {
       setRight((r) => r + 1);
 
       setTimeout(() => {
-        if (index < WORDS.length - 1) setIndex(index + 1);
-        else {
+        if (index < WORDS.length - 1) {
+          setIndex(index + 1);
+        } else {
           saveProgress();
-          setShowReward(true);}
+          setShowReward(true);
+        }
       }, 800);
     }
   };
 
   const saveProgress = async () => {
-      console.log('saveprogress ..............');
-      
-      const kidId = await AsyncStorage.getItem('kidId');
-      
-      await addQuizResult(kidId, quiz, right,wrong);
-      console.log('completed');
-      
-      showCompletedMessage();
-  };
+    const kidId = await AsyncStorage.getItem("kidId");
+    await addQuizResult(kidId, quiz, right + 1, wrongCount);
 
-  const showCompletedMessage = () => {
-    Alert.alert('Congratulations!', 'You have learned all the numbers!');
+    Alert.alert("Congratulations!", "You have learned all the words!");
   };
 
   const wrong = () => {
     shake.setValue(0);
     Animated.sequence([
-      Animated.timing(shake, { toValue: 10, duration: 50, useNativeDriver: true }),
-      Animated.timing(shake, { toValue: -10, duration: 50, useNativeDriver: true }),
-      Animated.timing(shake, { toValue: 0, duration: 50, useNativeDriver: true }),
+      Animated.timing(shake, {
+        toValue: 10,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shake, {
+        toValue: -10,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shake, {
+        toValue: 0,
+        duration: 50,
+        useNativeDriver: true,
+      }),
     ]).start();
   };
 
@@ -148,6 +172,7 @@ export default function WordBuildGame() {
     return (
       <RewardScreen
         right={right}
+        wrongCount={wrongCount}
         navigation={navigation}
         setShowReward={setShowReward}
         setIndex={setIndex}
@@ -158,7 +183,6 @@ export default function WordBuildGame() {
 
   return (
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
-
       <TouchableOpacity style={styles.backBtn} onPress={() => setShowExit(true)}>
         <FontAwesome name="arrow-left" size={20} color="#fff" />
       </TouchableOpacity>
@@ -183,19 +207,26 @@ export default function WordBuildGame() {
         <View style={styles.grid}>
           {shuffled.map((l, i) => (
             <TouchableOpacity key={i} onPress={() => pickLetter(l)}>
-              <View style={[styles.box, { backgroundColor: ["#FF6B6B","#4ECDC4","#FFD93D","#6C5CE7","#00C853"][i % 5] }]}>
+              <View
+                style={[
+                  styles.box,
+                  {
+                    backgroundColor: [
+                      "#FF6B6B",
+                      "#4ECDC4",
+                      "#FFD93D",
+                      "#6C5CE7",
+                      "#00C853",
+                    ][i % 5],
+                  },
+                ]}
+              >
                 <Text style={styles.letter}>{l}</Text>
               </View>
             </TouchableOpacity>
           ))}
         </View>
       </Animated.View>
-
-      <View style={styles.hintRow}>
-        {current.word.split("").map((l, i) => (
-          <Text key={i} style={styles.hint}>{l}</Text>
-        ))}
-      </View>
 
       <View style={styles.bottomScore}>
         <Text>✅ {right}</Text>
@@ -229,15 +260,31 @@ export default function WordBuildGame() {
   );
 }
 
-const RewardScreen = ({ right, navigation, setShowReward, setIndex, setRight, setWrongCount }) => {
+const RewardScreen = ({
+  right,
+  wrongCount,
+  navigation,
+  setShowReward,
+  setIndex,
+  setRight,
+  setWrongCount,
+}) => {
   const heart = useRef(new Animated.Value(0)).current;
   const [showExit, setShowExit] = useState(false);
 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(heart, { toValue: 1, duration: 600, useNativeDriver: true }),
-        Animated.timing(heart, { toValue: 0, duration: 600, useNativeDriver: true }),
+        Animated.timing(heart, {
+          toValue: 1,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(heart, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: true,
+        }),
       ])
     ).start();
   }, []);
@@ -249,13 +296,13 @@ const RewardScreen = ({ right, navigation, setShowReward, setIndex, setRight, se
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => setShowExit(true)}>
-        <FontAwesome name="arrow-left" size={20} color="#fff" />
-      </TouchableOpacity>
+      <Animated.Text style={{ fontSize: 80, transform: [{ scale }] }}>
+        💗
+      </Animated.Text>
 
-      <Animated.Text style={{ fontSize: 80, transform: [{ scale }] }}>💗</Animated.Text>
       <Text style={{ fontSize: 26, marginTop: 10 }}>Great Job!</Text>
-      <Text style={{ marginTop: 20 }}>✅ {right}</Text>
+      <Text style={{ marginTop: 20 }}>✅ Correct: {right}</Text>
+      <Text style={{ marginTop: 10 }}>❌ Wrong: {wrongCount}</Text>
 
       <TouchableOpacity
         style={styles.playAgain}
@@ -268,35 +315,9 @@ const RewardScreen = ({ right, navigation, setShowReward, setIndex, setRight, se
       >
         <Text style={{ color: "#fff" }}>Play Again</Text>
       </TouchableOpacity>
-
-    
-      {showExit && (
-        <View style={styles.modal}>
-          <View style={styles.popup}>
-            <Text style={styles.popupTitle}>Exit Game?</Text>
-
-            <View style={styles.popupBtns}>
-              <TouchableOpacity
-                style={[styles.popupBtn, { backgroundColor: "#2ecc71" }]}
-                onPress={() => navigation.navigate("four")}
-              >
-                <Text style={styles.popupText}>Yes</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.popupBtn, { backgroundColor: "#e74c3c" }]}
-                onPress={() => setShowExit(false)}
-              >
-                <Text style={styles.popupText}>No</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      )}
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center" },
@@ -330,8 +351,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   letter: { fontSize: 22, color: "#fff", fontWeight: "bold" },
-  hintRow: { flexDirection: "row", marginTop: 20 },
-  hint: { fontSize: 22, margin: 3, color: "#bbb" },
   bottomScore: {
     position: "absolute",
     bottom: 30,

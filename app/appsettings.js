@@ -1,75 +1,73 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Dimensions, TextInput, Switch } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
-import { getUsageTime, updateParentUsageTime } from './database';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Slider from '@react-native-community/slider';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
+let globalSound = null;
+let globalMusicOn = false;
+let globalVolume = 0.1;
+
 export default function SettingsScreen() {
   const router = useRouter();
-  const [musicOn, setMusicOn] = useState(false);
-  const [usageLimit, setUsageLimit] = useState(1);
-  const soundRef = useRef(null);
+
+  const [musicOn, setMusicOn] = useState(globalMusicOn);
+  const [volume, setVolume] = useState(globalVolume);
+
+  const isLoaded = useRef(false);
 
   useEffect(() => {
-    const loadUsageLimitTime = async () => {
-      try {
-        const parentId = await AsyncStorage.getItem('parentId');
-        const res = await getUsageTime(parentId);
-        if (res?.allowedHours && res.allowedHours >= 1) {
-          setUsageLimit(res.allowedHours);
-        } else {
-          setUsageLimit(1);
-        }
-      } catch (error) {
-        console.error('Error loading profile data:', error);
-      }
-    };
-    loadUsageLimitTime();
-
-    const prepareSound = async () => {
-      try {
+    const init = async () => {
+      if (!globalSound) {
         const { sound } = await Audio.Sound.createAsync(
-          { uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/bro.mpeg' },
-          { shouldPlay: false, isLooping: true, volume: 0.1 }
+          {
+            uri: 'https://raw.githubusercontent.com/Ayesha-Noor2one/KidsLearningApplication/main/assets/sounds/bro.mpeg'
+          },
+          {
+            shouldPlay: false,
+            isLooping: true,
+            volume: globalVolume
+          }
         );
-        soundRef.current = sound;
-      } catch (e) {
-        console.error('Error loading sound:', e);
+
+        globalSound = sound;
+        isLoaded.current = true;
       }
     };
 
-    prepareSound();
-
-    return () => {
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-      }
-    };
+    init();
   }, []);
 
   const handleMusicToggle = async (value) => {
-    if (!soundRef.current) return;
-    try {
-      if (value) {
-        await soundRef.current.playAsync();
-        setMusicOn(true);
-      } else {
-        await soundRef.current.pauseAsync();
-        setMusicOn(false);
-      }
-    } catch (e) {
-      console.error('Music toggle error:', e);
+    if (!globalSound) return;
+
+    if (value) {
+      await globalSound.setVolumeAsync(volume);
+      await globalSound.playAsync();
+      globalMusicOn = true;
+      setMusicOn(true);
+    } else {
+      await globalSound.pauseAsync();
+      globalMusicOn = false;
+      setMusicOn(false);
+    }
+  };
+
+  const handleVolumeChange = async (val) => {
+    setVolume(val);
+    globalVolume = val;
+
+    if (globalSound && globalMusicOn) {
+      await globalSound.setVolumeAsync(val);
     }
   };
 
   return (
     <View style={styles.container}>
 
-      {/* background circles */}
       <View style={styles.circle1} />
       <View style={styles.circle2} />
       <View style={styles.circle3} />
@@ -96,31 +94,23 @@ export default function SettingsScreen() {
           />
         </View>
 
-        <View style={styles.row}>
-          <Text style={styles.label}>App Timer</Text>
-          <View style={styles.usageContainer}>
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              value={usageLimit.toString()}
-              onChangeText={(text) => {
-                const minutes = parseInt(text) || 0;
-                setUsageLimit(minutes);
-              }}
-              onEndEditing={async () => {
-                try {
-                  const parentId = await AsyncStorage.getItem('parentId');
-                  const safeLimit = usageLimit < 1 ? 1 : usageLimit;
-                  setUsageLimit(safeLimit);
-                  await updateParentUsageTime(parentId, safeLimit);
-                } catch (error) {
-                  console.error('Error updating limit:', error);
-                }
-              }}
-            />
+        <View style={styles.volumeBox}>
+          <Text style={styles.label}>Music Volume</Text>
 
-            <Text style={styles.usageText}>minutes/day</Text>
-          </View>
+          <Slider
+            style={{ width: '100%', height: 40 }}
+            minimumValue={0}
+            maximumValue={1}
+            value={volume}
+            onValueChange={handleVolumeChange}
+            minimumTrackTintColor="#6C5CE7"
+            maximumTrackTintColor="#ccc"
+            thumbTintColor="#FF7675"
+          />
+
+          <Text style={styles.volumeText}>
+            Volume: {Math.round(volume * 100)}%
+          </Text>
         </View>
 
       </View>
@@ -178,7 +168,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     elevation: 5,
-    bachgroundColor: "#9183fa",
   },
 
   header: {
@@ -212,26 +201,14 @@ const styles = StyleSheet.create({
     color: "#6C5CE7",
   },
 
-  input: {
-    width: 80,
-    height: 40,
-    borderWidth: 2,
-    borderColor: "#d9dcff",
-    borderRadius: 12,
-    textAlign: 'center',
-    fontSize: 18,
-    backgroundColor: '#f4f6ff',
-    marginHorizontal: 8,
+  volumeBox: {
+    marginTop: 10,
   },
 
-  usageContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  usageText: {
-    fontSize: 16,
+  volumeText: {
+    textAlign: "center",
+    marginTop: 5,
     color: "#FF7675",
-    fontWeight: "500",
+    fontWeight: "600",
   },
 });

@@ -63,7 +63,7 @@ const ChildrenForm = () => {
     const userEmail = await AsyncStorage.getItem('userEmail');
     const parentId = await AsyncStorage.getItem('parentId');
 
-    if (editingIndex === null && children.length >= 50) return;
+    if (editingIndex === null && children.length >= 30) return;
 
     if (!name.trim()) {
       showToast('Name is required.');
@@ -233,7 +233,7 @@ const ChildrenForm = () => {
                 </View>
               )}
 
-              {!showForm && children.length < 50 && (
+              {!showForm && children.length < 30 && (
                 <View style={styles.bottomButton}>
                   <Button mode="contained" onPress={() => setShowForm(true)} style={styles.signUpButton}>
                     ➕ Add New Child
@@ -241,8 +241,8 @@ const ChildrenForm = () => {
                 </View>
               )}
 
-              {children.length >= 50 && (
-                <Text style={styles.limitText}>Maximum 50 child profiles allowed.</Text>
+              {children.length >= 30 && (
+                <Text style={styles.limitText}>Maximum 30 child profiles allowed.</Text>
               )}
 
             </View>

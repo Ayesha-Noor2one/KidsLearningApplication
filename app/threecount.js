@@ -203,7 +203,7 @@ export default function CountingGame() {
   return (
     <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
 
-      <TouchableOpacity style={styles.backBtn} onPress={handleBack}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => router.push("/three")}>
         <Text style={{color:"#fff", fontSize:20}}>←</Text>
       </TouchableOpacity>
 
