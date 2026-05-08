@@ -116,7 +116,7 @@ const ProgressList = () => {
           message = 'Excellent Job';
         } else if (mod.wrong < 5 && mod.right > 0) {
           message = 'Good Job';
-        } else if (mod.wrong > 5 && mod.right > 0) {
+        } else if (mod.wrong >= 5 && mod.right > 0) {
           message = 'Keep Practicing';
         }
 
